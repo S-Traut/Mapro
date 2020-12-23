@@ -3,15 +3,15 @@ locateButton.onclick = onLocate;
 
 function onLocate() {
     if ("geolocation" in navigator) {
-        console.log(navigator.geolocation.getCurrentPosition(success, error, options));
+        navigator.geolocation.getCurrentPosition(success, error, options);
 
     }
 }
 
 function success(pos) {
     var crd = pos.coords;
-    sessionStorage.setItem('userLatitude', crd.latitude);
-    sessionStorage.setItem('userLongitude', crd.longitude); 
+    document.cookie = (`userLongitude=${crd.longitude}`);
+    document.cookie = (`userLatitude=${crd.latitude}`);
     location.href = "/home";
 }
 
