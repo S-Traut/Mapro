@@ -13,9 +13,8 @@ class PreHomeController extends AbstractController
      */
     public function index(): Response
     {
-        return $this->json([
-            'message' => 'Welcome to your new controller!',
-            'path' => 'src/Controller/PreHomeController.php',
-        ]);
+        return $this->render("pages/prehome.html.twig", [
+            
+        ]); 
     }
 }
