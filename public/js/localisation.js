@@ -1,5 +1,10 @@
-if ("geolocation" in navigator) {
-    console.log(navigator.geolocation.getCurrentPosition(success, error, options));
+var locateButton = document.getElementById("Locate");
+locateButton.onclick = onLocate;
+
+function onLocate() {
+    if ("geolocation" in navigator) {
+        console.log(navigator.geolocation.getCurrentPosition(success, error, options));
+    }
 }
 
 function success(pos) {
