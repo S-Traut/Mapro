@@ -13,8 +13,12 @@ class PreHomeController extends AbstractController
      */
     public function index(): Response
     {
+        if(isset($_COOKIE['userLongitude']) && isset($_COOKIE['userLatitude']))
+            return $this->redirectToRoute('home');
+
+
         return $this->render("pages/prehome.html.twig", [
             
-        ]); 
+        ]);
     }
 }
