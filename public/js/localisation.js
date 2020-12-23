@@ -10,12 +10,8 @@ function onLocate() {
 
 function success(pos) {
     var crd = pos.coords;
-
-    console.log('Votre position actuelle est :');
-    console.log(`Latitude : ${crd.latitude}`);
-    console.log(`Longitude : ${crd.longitude}`);
-    console.log(`La précision est de ${crd.accuracy} mètres.`);
-    
+    sessionStorage.setItem('userLatitude', crd.latitude);
+    sessionStorage.setItem('userLongitude', crd.longitude); 
     location.href = "/home";
 }
 
