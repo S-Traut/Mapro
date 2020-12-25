@@ -1,9 +1,25 @@
 {% extends "base.html.twig" %}
 
+{% block stylesheets %}
+    <link rel="stylesheet" href="css/prehome.css">
+{% endblock %}
+
 {% block body %}
-    <button type="button" id="Locate" class="btn btn-primary">Localisation</button>
+	<div class="row" id="main-content">
+		<div class="col-sm-7">
+			<h2>Le commerce local, en ligne, et à coté de chez vous!</h2>
+			<div class="search">
+
+				<button type="button" id="Locate" class="btn btn-primary"><b>Me localiser</b></button>
+			</div>
+			<p>Utilisateur courant ?<br><a href="#">conntectez-vous !</a></p>
+		</div>
+        <div class="col-5 d-none d-lg-block">
+			<p>Populaire</p>
+		</div>
+	</div>
 {% endblock %}
 
 {% block javascripts %}
-    <script src="{{ asset('js/localisation.js') }}"></script>
+	<script src="{{ asset('js/localisation.js') }}"></script>
 {% endblock %}
