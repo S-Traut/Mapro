@@ -1,4 +1,4 @@
-var locateButton = document.getElementById("Locate");
+var locateButton = document.getElementById("locate");
 locateButton.onclick = onLocate;
 
 function onLocate() {
