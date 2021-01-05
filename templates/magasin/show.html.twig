@@ -1,0 +1,22 @@
+{% block title %}Hello MagasinController ! & {{ magasin.id }}{% endblock %}
+
+
+{% block content %}
+        <ul>
+            <li>
+                {{ magasin.nom }}
+            </li>
+            <li>
+                {{ magasin.description }}
+            </li>
+            <li>
+                {{ magasin.tel }}
+            </li>
+            <li>
+                {{ magasin.email }}
+            </li>
+            <li>
+                {{ magasin.image }}
+            </li>
+        </ul>
+{% endblock %}
