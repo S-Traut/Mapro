@@ -59,12 +59,6 @@ class Magasin
     private $typeMagasin;
 
     /**
-     * @ORM\OneToOne(targetEntity=Image::class, cascade={"persist", "remove"})
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $image;
-
-    /**
      * @ORM\OneToOne(targetEntity=Localisation::class, cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=false)
      */
@@ -176,17 +170,6 @@ class Magasin
         return $this;
     }
 
-    public function getImage(): ?Image
-    {
-        return $this->image;
-    }
-
-    public function setImage(Image $image): self
-    {
-        $this->image = $image;
-
-        return $this;
-    }
 
     public function getLocalisation(): ?Localisation
     {

@@ -51,16 +51,6 @@ class Article
      */
     private $statistiqueArticle;
 
-    /**
-     * @ORM\OneToMany(targetEntity=Image::class, mappedBy="article")
-     */
-    private $image;
-
-    public function __construct()
-    {
-        $this->image = new ArrayCollection();
-    }
-
     public function getId(): ?int
     {
         return $this->id;
@@ -139,36 +129,6 @@ class Article
         }
 
         $this->statistiqueArticle = $statistiqueArticle;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Image[]
-     */
-    public function getImage(): Collection
-    {
-        return $this->image;
-    }
-
-    public function addImage(Image $image): self
-    {
-        if (!$this->image->contains($image)) {
-            $this->image[] = $image;
-            $image->setArticle($this);
-        }
-
-        return $this;
-    }
-
-    public function removeImage(Image $image): self
-    {
-        if ($this->image->removeElement($image)) {
-            // set the owning side to null (unless already changed)
-            if ($image->getArticle() === $this) {
-                $image->setArticle(null);
-            }
-        }
 
         return $this;
     }
