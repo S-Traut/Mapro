@@ -10,14 +10,18 @@ use Symfony\Component\Routing\Annotation\Route;
 class HomeController extends AbstractController
 {
     /**
-     * @Route("/home", name="home")
+     * @Route("/", name="landing")
      */
-    public function index(Request $request): Response
-    { 
-        $cookies = $request->cookies;
-        return $this->render('pages/home.html.twig', [
-            'Longitude' => $cookies->get('userLongitude'),
-            'Latitude' => $cookies->get('userLatitude')
-        ]);
+    public function show(Request $request): Response
+    {
+        if(isset($_COOKIE['userLongitude']) && isset($_COOKIE['userLatitude']))
+        {
+            $cookies = $request->cookies;
+            return $this->render('home/home.html.twig', [
+                'Longitude' => $cookies->get('userLongitude'),
+                'Latitude' => $cookies->get('userLatitude')
+            ]);
+        }    
+        return $this->render("home/prehome.html.twig", []);
     }
 }
