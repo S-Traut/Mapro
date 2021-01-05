@@ -51,6 +51,25 @@ class Article
      */
     private $statistiqueArticle;
 
+<<<<<<< HEAD
+=======
+    /**
+     * @ORM\OneToMany(targetEntity=Image::class, mappedBy="article")
+     */
+    private $image;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Magasin::class, inversedBy="articles")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $magasin;
+
+    public function __construct()
+    {
+        $this->image = new ArrayCollection();
+    }
+
+>>>>>>> develop
     public function getId(): ?int
     {
         return $this->id;
@@ -132,4 +151,49 @@ class Article
 
         return $this;
     }
+<<<<<<< HEAD
+=======
+
+    /**
+     * @return Collection|Image[]
+     */
+    public function getImage(): Collection
+    {
+        return $this->image;
+    }
+
+    public function addImage(Image $image): self
+    {
+        if (!$this->image->contains($image)) {
+            $this->image[] = $image;
+            $image->setArticle($this);
+        }
+
+        return $this;
+    }
+
+    public function removeImage(Image $image): self
+    {
+        if ($this->image->removeElement($image)) {
+            // set the owning side to null (unless already changed)
+            if ($image->getArticle() === $this) {
+                $image->setArticle(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getMagasin(): ?Magasin
+    {
+        return $this->magasin;
+    }
+
+    public function setMagasin(?Magasin $magasin): self
+    {
+        $this->magasin = $magasin;
+
+        return $this;
+    }
+>>>>>>> develop
 }

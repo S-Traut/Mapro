@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\MagasinRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -61,8 +63,26 @@ class Magasin
     /**
      * @ORM\OneToOne(targetEntity=Localisation::class, cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=false)
+<<<<<<< HEAD
+=======
      */
     private $localisation;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $image;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Article::class, mappedBy="magasin")
+>>>>>>> develop
+     */
+    private $articles;
+
+    public function __construct()
+    {
+        $this->articles = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -170,6 +190,8 @@ class Magasin
         return $this;
     }
 
+<<<<<<< HEAD
+=======
 
     public function getLocalisation(): ?Localisation
     {
@@ -179,6 +201,49 @@ class Magasin
     public function setLocalisation(Localisation $localisation): self
     {
         $this->localisation = $localisation;
+
+        return $this;
+    }
+
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+
+    public function setImage(string $image): self
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+>>>>>>> develop
+
+    /**
+     * @return Collection|Article[]
+     */
+    public function getArticles(): Collection
+    {
+        return $this->articles;
+    }
+
+    public function addArticle(Article $article): self
+    {
+        if (!$this->articles->contains($article)) {
+            $this->articles[] = $article;
+            $article->setMagasin($this);
+        }
+
+        return $this;
+    }
+
+    public function removeArticle(Article $article): self
+    {
+        if ($this->articles->removeElement($article)) {
+            // set the owning side to null (unless already changed)
+            if ($article->getMagasin() === $this) {
+                $article->setMagasin(null);
+            }
+        }
 
         return $this;
     }
