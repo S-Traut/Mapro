@@ -15,7 +15,7 @@ class HomeController extends AbstractController
     public function index(Request $request): Response
     { 
         $cookies = $request->cookies;
-        return $this->render('pages/home.html.twig', [
+        return $this->render('home/home.html.twig', [
             'Longitude' => $cookies->get('userLongitude'),
             'Latitude' => $cookies->get('userLatitude')
         ]);

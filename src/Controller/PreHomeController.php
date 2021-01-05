@@ -17,7 +17,7 @@ class PreHomeController extends AbstractController
             return $this->redirectToRoute('home');
 
 
-        return $this->render("pages/prehome.html.twig", [
+        return $this->render("home/prehome.html.twig", [
             
         ]);
     }
