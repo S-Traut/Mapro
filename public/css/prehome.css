@@ -1,0 +1,16 @@
+#main-content {
+    margin-top: 100px;
+    height: 500px;
+}
+
+#popular-articles {
+    border: 1px gray solid;
+    text-align: center;
+    color:gray;
+}
+
+.search {
+    display:flex;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
