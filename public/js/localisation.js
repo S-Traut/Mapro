@@ -12,7 +12,7 @@ function success(pos) {
     var crd = pos.coords;
     document.cookie = (`userLongitude=${crd.longitude}`);
     document.cookie = (`userLatitude=${crd.latitude}`);
-    location.href = "/home";
+    location.href = "/";
 }
 
 function error(err) {
