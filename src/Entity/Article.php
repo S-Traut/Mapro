@@ -51,8 +51,6 @@ class Article
      */
     private $statistiqueArticle;
 
-<<<<<<< HEAD
-=======
     /**
      * @ORM\OneToMany(targetEntity=Image::class, mappedBy="article")
      */
@@ -69,7 +67,6 @@ class Article
         $this->image = new ArrayCollection();
     }
 
->>>>>>> develop
     public function getId(): ?int
     {
         return $this->id;
@@ -151,8 +148,6 @@ class Article
 
         return $this;
     }
-<<<<<<< HEAD
-=======
 
     /**
      * @return Collection|Image[]
@@ -195,5 +190,4 @@ class Article
 
         return $this;
     }
->>>>>>> develop
 }
