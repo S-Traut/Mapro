@@ -56,6 +56,12 @@ class Article
      */
     private $image;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Magasin::class, inversedBy="articles")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $magasin;
+
     public function __construct()
     {
         $this->image = new ArrayCollection();
@@ -169,6 +175,18 @@ class Article
                 $image->setArticle(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getMagasin(): ?Magasin
+    {
+        return $this->magasin;
+    }
+
+    public function setMagasin(?Magasin $magasin): self
+    {
+        $this->magasin = $magasin;
 
         return $this;
     }
