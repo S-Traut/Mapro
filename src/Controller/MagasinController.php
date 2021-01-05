@@ -19,8 +19,8 @@ class MagasinController extends AbstractController
         {
             throw $this->createNotFoundException('Magasin Inexistant !');
         }
-        return $this->render('pages/magasin.html.twig', [
-            'Magasin' => $magasinRepository->find($id)
+        return $this->render('magasin/show.html.twig', [
+            'magasin' => $magasinRepository->find($id)
         ]);
     }
 }

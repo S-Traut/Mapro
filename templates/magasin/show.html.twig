@@ -1,22 +1,48 @@
-{% block title %}Hello MagasinController ! & {{ magasin.id }}{% endblock %}
+{% extends "base.html.twig" %}
 
+{% block body %}
 
-{% block content %}
-        <ul>
-            <li>
-                {{ magasin.nom }}
-            </li>
-            <li>
-                {{ magasin.description }}
-            </li>
-            <li>
-                {{ magasin.tel }}
-            </li>
-            <li>
-                {{ magasin.email }}
-            </li>
-            <li>
-                {{ magasin.image }}
-            </li>
-        </ul>
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <img src='{{ magasin.image }}'>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <ul>
+                    <li>
+                        {{ magasin.nom }}
+                    </li>
+                    <li>
+                        {{ magasin.description }}
+                    </li>
+                    <li>
+                        {{ magasin.tel }}
+                    </li>
+                    <li>
+                        {{ magasin.email }}
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <p>PRODUITS EN VENTE</p>
+            </div>
+        </div>
+        <div class="row">
+            <p>ARTICLES POPULAIRES</p>
+            <div class="col-xs-6"></div>
+            <div class="col-xs-6"></div>
+            <div class="col-xs-6"></div>
+            <div class="col-xs-6"></div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                TOUS LES ARTICLES
+            </div>
+        </div>
+    </div>
+      
 {% endblock %}
