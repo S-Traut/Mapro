@@ -63,8 +63,6 @@ class Magasin
     /**
      * @ORM\OneToOne(targetEntity=Localisation::class, cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=false)
-<<<<<<< HEAD
-=======
      */
     private $localisation;
 
@@ -75,7 +73,6 @@ class Magasin
 
     /**
      * @ORM\OneToMany(targetEntity=Article::class, mappedBy="magasin")
->>>>>>> develop
      */
     private $articles;
 
@@ -190,8 +187,6 @@ class Magasin
         return $this;
     }
 
-<<<<<<< HEAD
-=======
 
     public function getLocalisation(): ?Localisation
     {
@@ -216,7 +211,6 @@ class Magasin
 
         return $this;
     }
->>>>>>> develop
 
     /**
      * @return Collection|Article[]
