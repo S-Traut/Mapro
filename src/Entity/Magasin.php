@@ -55,16 +55,10 @@ class Magasin
     private $statistiqueMagasin;
 
     /**
-     * @ORM\OneToOne(targetEntity=TypeMagasin::class, cascade={"persist", "remove"})
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\ManyToOne(targetEntity=TypeMagasin::class, cascade={"persist", "remove"})
+     * @ORM\JoinColumn(nullable=true)
      */
     private $typeMagasin;
-
-    /**
-     * @ORM\OneToOne(targetEntity=Localisation::class, cascade={"persist", "remove"})
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $localisation;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -75,6 +69,21 @@ class Magasin
      * @ORM\OneToMany(targetEntity=Article::class, mappedBy="magasin")
      */
     private $articles;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $adresse;
+
+    /**
+     * @ORM\Column(type="float")
+     */
+    private $latitude;
+
+    /**
+     * @ORM\Column(type="float")
+     */
+    private $longitude;
 
     public function __construct()
     {
@@ -187,19 +196,6 @@ class Magasin
         return $this;
     }
 
-
-    public function getLocalisation(): ?Localisation
-    {
-        return $this->localisation;
-    }
-
-    public function setLocalisation(Localisation $localisation): self
-    {
-        $this->localisation = $localisation;
-
-        return $this;
-    }
-
     public function getImage(): ?string
     {
         return $this->image;
@@ -238,6 +234,42 @@ class Magasin
                 $article->setMagasin(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getAdresse(): ?string
+    {
+        return $this->adresse;
+    }
+
+    public function setAdresse(string $adresse): self
+    {
+        $this->adresse = $adresse;
+
+        return $this;
+    }
+
+    public function getLatitude(): ?float
+    {
+        return $this->latitude;
+    }
+
+    public function setLatitude(float $latitude): self
+    {
+        $this->latitude = $latitude;
+
+        return $this;
+    }
+
+    public function getLongitude(): ?float
+    {
+        return $this->longitude;
+    }
+
+    public function setLongitude(float $longitude): self
+    {
+        $this->longitude = $longitude;
 
         return $this;
     }
