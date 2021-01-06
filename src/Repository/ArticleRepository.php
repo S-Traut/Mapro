@@ -40,6 +40,18 @@ class ArticleRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+
+    public function findByNameAndShop($value, $id)
+    {
+        return $this->createQueryBuilder('a')
+            ->where('a.nom LIKE :val%')
+            ->setParameter('val', $value)
+            ->andWhere('a.magasin = :valId')
+            ->setParameter('valId', $id)
+            ->getQuery()
+            ->getResult();
+    }
+
     // /**
     //  * @return Article[] Returns an array of Article objects
     //  */
