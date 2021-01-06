@@ -18,13 +18,15 @@ class MagasinController extends AbstractController
     {   
         $magasin = $magasinRepository->find($id);
         $articles = $articleRepository->findArticlesByMagasinId($id);
+        $articlesPop = $articleRepository->findArticlesPopulaires($id);
         if(!$magasin && !$articles)
         {
             throw $this->createNotFoundException('Magasin Inexistant !');
         }
         return $this->render('magasin/show.html.twig', [
             'magasin' => $magasin,
-            'articles' => $articles
+            'articles' => $articles,
+            'articlesPop' => $articlesPop
         ]);
     }
 }
