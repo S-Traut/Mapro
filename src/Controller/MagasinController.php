@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Repository\ArticleRepository;
 use App\Repository\MagasinRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -11,16 +12,19 @@ use Symfony\Component\Routing\Annotation\Route;
 class MagasinController extends AbstractController
 {
     /**
-     * @Route("/magasin/{id<\d+>}")
+     * @Route("/shop/{id<\d+>}")
      */
-    public function show(MagasinRepository $magasinRepository, $id)
+    public function show(MagasinRepository $magasinRepository, $id, ArticleRepository $articleRepository)
     {   
-        if(!$magasinRepository->find($id))
+        $magasin = $magasinRepository->find($id);
+        $articles = $articleRepository->findArticlesByMagasinId($id);
+        if(!$magasin && !$articles)
         {
             throw $this->createNotFoundException('Magasin Inexistant !');
         }
         return $this->render('magasin/show.html.twig', [
-            'magasin' => $magasinRepository->find($id)
+            'magasin' => $magasin,
+            'articles' => $articles
         ]);
     }
 }
