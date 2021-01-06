@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20210105150026 extends AbstractMigration
+final class Version20210105152410 extends AbstractMigration
 {
     public function getDescription() : string
     {
@@ -23,7 +23,9 @@ final class Version20210105150026 extends AbstractMigration
         $this->addSql('ALTER TABLE article ADD magasin_id INT NOT NULL');
         $this->addSql('ALTER TABLE article ADD CONSTRAINT FK_23A0E6620096AE3 FOREIGN KEY (magasin_id) REFERENCES magasin (id)');
         $this->addSql('CREATE INDEX IDX_23A0E6620096AE3 ON article (magasin_id)');
-        $this->addSql('ALTER TABLE magasin ADD image VARCHAR(255) NOT NULL');
+        $this->addSql('ALTER TABLE magasin DROP FOREIGN KEY FK_54AF5F273DA5256D');
+        $this->addSql('DROP INDEX UNIQ_54AF5F273DA5256D ON magasin');
+        $this->addSql('ALTER TABLE magasin ADD image VARCHAR(255) NOT NULL, DROP image_id');
     }
 
     public function down(Schema $schema) : void
@@ -32,6 +34,8 @@ final class Version20210105150026 extends AbstractMigration
         $this->addSql('ALTER TABLE article DROP FOREIGN KEY FK_23A0E6620096AE3');
         $this->addSql('DROP INDEX IDX_23A0E6620096AE3 ON article');
         $this->addSql('ALTER TABLE article DROP magasin_id');
-        $this->addSql('ALTER TABLE magasin DROP image');
+        $this->addSql('ALTER TABLE magasin ADD image_id INT NOT NULL, DROP image');
+        $this->addSql('ALTER TABLE magasin ADD CONSTRAINT FK_54AF5F273DA5256D FOREIGN KEY (image_id) REFERENCES image (id) ON UPDATE NO ACTION ON DELETE NO ACTION');
+        $this->addSql('CREATE UNIQUE INDEX UNIQ_54AF5F273DA5256D ON magasin (image_id)');
     }
 }
