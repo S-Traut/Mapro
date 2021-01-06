@@ -19,8 +19,17 @@
 		<meta name="viewport" content="width=device-width, initial-scale=2.5"> {% block stylesheets %}{% endblock %}
 		</head>
 		<body>
-			<div class="container"> {% block body %}{% endblock %}
+			<div class="container">
+				<div id="recherche">
+					{% block recherche %}
+						<div class="input-group mb-3">
+							<input type="text" class="form-control" placeholder="faire une recherche" aria-label="Recipient's username" aria-describedby="button-addon2">
+							<button class="btn btn-outline-secondary" type="button" id="button-addon2">Recherche</button>
+						</div>
+					{% endblock %}
 				</div>
-				{% block javascripts %}{% endblock %}
-			</body>
-		</html>
+				{% block body %}{% endblock %}
+			</div>
+			{% block javascripts %}{% endblock %}
+		</body>
+	</html>
