@@ -27,6 +27,6 @@ class MagasinController extends AbstractController
             'magasin' => $magasin,
             'articles' => $articles,
             'articlesPop' => $articlesPop
-        ]);
+        ]); 
     }
 }
