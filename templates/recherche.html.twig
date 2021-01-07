@@ -1,0 +1,32 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+
+	<h1>Votre recherche</h1>
+
+	<div class="form-group">
+
+		{{ form_start(searchForm) }}
+		{{ form_row(searchForm) }}
+
+		<button class="btn btn-primary">rechercher</button>
+		{{ form_end(searchForm) }}
+	</div>
+
+	<section id="content">
+
+		{% for magasin in magasins %}
+			<article>
+				<div class="card border-light mb-3" id="articlesRecents" style="max-width: 25rem;margin:1.5em;">
+					<div class="card-header">
+
+						<h3>{{ magasin.nom }}</h3>
+						<img src="{{magasin.image}}" alt="some">
+
+					</div>
+				</div>
+			</article>
+		{% endfor %}
+
+	</section>
+{% endblock %}

@@ -19,6 +19,17 @@ class MagasinRepository extends ServiceEntityRepository
         parent::__construct($registry, Magasin::class);
     }
 
+    public function search($nom)
+    {
+        return $this->createQueryBuilder('Magasin')
+            ->andWhere('Magasin.nom LIKE :nom')
+            ->setParameter('nom', '%' . $nom . '%')
+            ->getQuery()
+            ->execute();
+    }
+
+
+
     // /**
     //  * @return Magasin[] Returns an array of Magasin objects
     //  */

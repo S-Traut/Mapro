@@ -54,17 +54,6 @@ class Magasin
      */
     private $statistiqueMagasin;
 
-    /**
-     * @ORM\OneToOne(targetEntity=TypeMagasin::class, cascade={"persist", "remove"})
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $typeMagasin;
-
-    /**
-     * @ORM\OneToOne(targetEntity=Localisation::class, cascade={"persist", "remove"})
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $localisation;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -75,6 +64,21 @@ class Magasin
      * @ORM\OneToMany(targetEntity=Article::class, mappedBy="magasin")
      */
     private $articles;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $longitude;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $latitude;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=TypeMagasin::class, inversedBy="magasins")
+     */
+    private $type;
 
     public function __construct()
     {
@@ -238,6 +242,42 @@ class Magasin
                 $article->setMagasin(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getLongitude(): ?string
+    {
+        return $this->longitude;
+    }
+
+    public function setLongitude(string $longitude): self
+    {
+        $this->longitude = $longitude;
+
+        return $this;
+    }
+
+    public function getLatitude(): ?string
+    {
+        return $this->latitude;
+    }
+
+    public function setLatitude(string $latitude): self
+    {
+        $this->latitude = $latitude;
+
+        return $this;
+    }
+
+    public function getType(): ?TypeMagasin
+    {
+        return $this->type;
+    }
+
+    public function setType(?TypeMagasin $type): self
+    {
+        $this->type = $type;
 
         return $this;
     }
