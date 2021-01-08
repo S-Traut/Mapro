@@ -10,11 +10,10 @@ class AppFixtures extends Fixture
 {
     public function load(ObjectManager $manager)
     {
-        $typeArticle = new TypeArticle();
+        
 
-        $typeArticle->setType("testFixture");
-    
-        $manager->persist($typeArticle);
+
+        
         $manager->flush();
     }
 }
