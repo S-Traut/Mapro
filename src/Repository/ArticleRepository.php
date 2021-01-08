@@ -19,6 +19,39 @@ class ArticleRepository extends ServiceEntityRepository
         parent::__construct($registry, Article::class);
     }
 
+    public function findArticlesByMagasinId($id)
+    {
+        return $this->createQueryBuilder('a')
+            ->andWhere('a.magasin = :val')
+            ->setParameter('val', $id)
+            ->getQuery()
+            ->getResult();
+    }
+    
+    public function findArticlesPopulaires($id)
+    {
+        return $this->createQueryBuilder('a')
+            ->join('a.statistiqueArticle','s')
+            ->where('a.magasin = :val')
+            ->setParameter('val', $id)
+            ->orderBy('s.nbvue','DESC')
+            ->setMaxResults(4)
+            ->getQuery()
+            ->getResult();
+    }
+
+
+    public function findByNameAndShop($value, $id)
+    {
+        return $this->createQueryBuilder('a')
+            ->where('a.nom LIKE :val%')
+            ->setParameter('val', $value)
+            ->andWhere('a.magasin = :valId')
+            ->setParameter('valId', $id)
+            ->getQuery()
+            ->getResult();
+    }
+
     // /**
     //  * @return Article[] Returns an array of Article objects
     //  */
