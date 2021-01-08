@@ -39,12 +39,8 @@ class TypeMagasin
 
         return $this;
     }
-<<<<<<< HEAD
 
     public function __toString() {
         return $this->type;
     }
 }
-=======
-}
->>>>>>> develop
