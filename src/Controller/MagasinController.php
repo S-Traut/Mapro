@@ -6,6 +6,7 @@ use App\Entity\Localisation;
 use App\Entity\Magasin;
 use App\Entity\TypeMagasin;
 use App\Form\CreationMagasinType;
+use App\Repository\ArticleRepository;
 use App\Repository\MagasinRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -16,6 +17,24 @@ use phpDocumentor\Reflection\Location;
 
 class MagasinController extends AbstractController
 {
+    /**
+    * @Route("/magasin/{id<\d+>}")
+    */
+    public function show(MagasinRepository $magasinRepository, $id, ArticleRepository $articleRepository)
+    {   
+        $magasin = $magasinRepository->find($id);
+        $articles = $articleRepository->findArticlesByMagasinId($id);
+        $articlesPop = $articleRepository->findArticlesPopulaires($id);
+        if(!$magasin && !$articles)
+        {
+            throw $this->createNotFoundException('Magasin Inexistant !');
+        }
+        return $this->render('magasin/show.html.twig', [
+            'magasin' => $magasin,
+            'articles' => $articles,
+            'articlesPop' => $articlesPop
+        ]); 
+    }
     /**
      * @Route("/magasin/new")
      * 
@@ -46,22 +65,5 @@ class MagasinController extends AbstractController
             'form' => $form->createView()
         ]);
     }
-    /*
-    * @Route("/shop/{id<\d+>}")
-    */
-    public function show(MagasinRepository $magasinRepository, $id, ArticleRepository $articleRepository)
-    {   
-        $magasin = $magasinRepository->find($id);
-        $articles = $articleRepository->findArticlesByMagasinId($id);
-        $articlesPop = $articleRepository->findArticlesPopulaires($id);
-        if(!$magasin && !$articles)
-        {
-            throw $this->createNotFoundException('Magasin Inexistant !');
-        }
-        return $this->render('magasin/show.html.twig', [
-            'magasin' => $magasin,
-            'articles' => $articles,
-            'articlesPop' => $articlesPop
-        ]); 
-    }
+    
 }
