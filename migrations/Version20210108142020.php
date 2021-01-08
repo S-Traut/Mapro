@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20210106090341 extends AbstractMigration
+final class Version20210108142020 extends AbstractMigration
 {
     public function getDescription() : string
     {
@@ -23,7 +23,7 @@ final class Version20210106090341 extends AbstractMigration
         $this->addSql('CREATE TABLE article (id INT AUTO_INCREMENT NOT NULL, magasin_id INT NOT NULL, type_id INT NOT NULL, nom VARCHAR(255) NOT NULL, description VARCHAR(255) NOT NULL, prix VARCHAR(255) NOT NULL, etat TINYINT(1) NOT NULL, INDEX IDX_23A0E6620096AE3 (magasin_id), INDEX IDX_23A0E66C54C8C93 (type_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE image (id INT AUTO_INCREMENT NOT NULL, article_id INT NOT NULL, image VARCHAR(255) NOT NULL, INDEX IDX_C53D045F7294869C (article_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE localisation (id INT AUTO_INCREMENT NOT NULL, utilisateur_id INT NOT NULL, adresse VARCHAR(255) NOT NULL, longitude VARCHAR(255) DEFAULT NULL, latitude VARCHAR(255) DEFAULT NULL, INDEX IDX_BFD3CE8FFB88E14F (utilisateur_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
-        $this->addSql('CREATE TABLE magasin (id INT AUTO_INCREMENT NOT NULL, type_magasin_id INT NOT NULL, localisation_id INT NOT NULL, nom VARCHAR(255) NOT NULL, description VARCHAR(255) NOT NULL, tel VARCHAR(255) NOT NULL, email VARCHAR(255) NOT NULL, siren VARCHAR(255) NOT NULL, etat TINYINT(1) NOT NULL, image VARCHAR(255) NOT NULL, UNIQUE INDEX UNIQ_54AF5F273D0ABCC6 (type_magasin_id), UNIQUE INDEX UNIQ_54AF5F27C68BE09C (localisation_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
+        $this->addSql('CREATE TABLE magasin (id INT AUTO_INCREMENT NOT NULL, type_magasin_id INT DEFAULT NULL, nom VARCHAR(255) NOT NULL, description VARCHAR(255) NOT NULL, tel VARCHAR(255) NOT NULL, email VARCHAR(255) NOT NULL, siren VARCHAR(255) NOT NULL, etat TINYINT(1) NOT NULL, image VARCHAR(255) NOT NULL, adresse VARCHAR(255) NOT NULL, latitude DOUBLE PRECISION NOT NULL, longitude DOUBLE PRECISION NOT NULL, INDEX IDX_54AF5F273D0ABCC6 (type_magasin_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE statistique_article (id INT AUTO_INCREMENT NOT NULL, article_id INT NOT NULL, date DATE NOT NULL, nbvue INT NOT NULL, UNIQUE INDEX UNIQ_7BD87D827294869C (article_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE statistique_magasin (id INT AUTO_INCREMENT NOT NULL, magasin_id INT NOT NULL, date DATE NOT NULL, nbvue INT NOT NULL, UNIQUE INDEX UNIQ_2D4D2CC320096AE3 (magasin_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE type_article (id INT AUTO_INCREMENT NOT NULL, type VARCHAR(255) NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
@@ -34,7 +34,6 @@ final class Version20210106090341 extends AbstractMigration
         $this->addSql('ALTER TABLE image ADD CONSTRAINT FK_C53D045F7294869C FOREIGN KEY (article_id) REFERENCES article (id)');
         $this->addSql('ALTER TABLE localisation ADD CONSTRAINT FK_BFD3CE8FFB88E14F FOREIGN KEY (utilisateur_id) REFERENCES utilisateur (id)');
         $this->addSql('ALTER TABLE magasin ADD CONSTRAINT FK_54AF5F273D0ABCC6 FOREIGN KEY (type_magasin_id) REFERENCES type_magasin (id)');
-        $this->addSql('ALTER TABLE magasin ADD CONSTRAINT FK_54AF5F27C68BE09C FOREIGN KEY (localisation_id) REFERENCES localisation (id)');
         $this->addSql('ALTER TABLE statistique_article ADD CONSTRAINT FK_7BD87D827294869C FOREIGN KEY (article_id) REFERENCES article (id)');
         $this->addSql('ALTER TABLE statistique_magasin ADD CONSTRAINT FK_2D4D2CC320096AE3 FOREIGN KEY (magasin_id) REFERENCES magasin (id)');
     }
@@ -44,7 +43,6 @@ final class Version20210106090341 extends AbstractMigration
         // this down() migration is auto-generated, please modify it to your needs
         $this->addSql('ALTER TABLE image DROP FOREIGN KEY FK_C53D045F7294869C');
         $this->addSql('ALTER TABLE statistique_article DROP FOREIGN KEY FK_7BD87D827294869C');
-        $this->addSql('ALTER TABLE magasin DROP FOREIGN KEY FK_54AF5F27C68BE09C');
         $this->addSql('ALTER TABLE article DROP FOREIGN KEY FK_23A0E6620096AE3');
         $this->addSql('ALTER TABLE statistique_magasin DROP FOREIGN KEY FK_2D4D2CC320096AE3');
         $this->addSql('ALTER TABLE article DROP FOREIGN KEY FK_23A0E66C54C8C93');
