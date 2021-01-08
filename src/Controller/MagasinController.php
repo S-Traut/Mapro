@@ -17,20 +17,6 @@ use phpDocumentor\Reflection\Location;
 class MagasinController extends AbstractController
 {
     /**
-     * @Route("/magasin/{id<\d+>}")
-     */
-    public function show(MagasinRepository $magasinRepository, $id)
-    {   
-        if(!$magasinRepository->find($id))
-        {
-            throw $this->createNotFoundException('Magasin Inexistant !');
-        }
-        return $this->render('magasin/magasin.html.twig', [
-            'Magasin' => $magasinRepository->find($id)
-        ]);
-    }
-
-    /**
      * @Route("/magasin/new")
      * 
      * @return void
@@ -59,5 +45,23 @@ class MagasinController extends AbstractController
             'magasin' => $magasin,
             'form' => $form->createView()
         ]);
+    }
+    /*
+    * @Route("/shop/{id<\d+>}")
+    */
+    public function show(MagasinRepository $magasinRepository, $id, ArticleRepository $articleRepository)
+    {   
+        $magasin = $magasinRepository->find($id);
+        $articles = $articleRepository->findArticlesByMagasinId($id);
+        $articlesPop = $articleRepository->findArticlesPopulaires($id);
+        if(!$magasin && !$articles)
+        {
+            throw $this->createNotFoundException('Magasin Inexistant !');
+        }
+        return $this->render('magasin/show.html.twig', [
+            'magasin' => $magasin,
+            'articles' => $articles,
+            'articlesPop' => $articlesPop
+        ]); 
     }
 }

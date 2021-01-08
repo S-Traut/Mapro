@@ -22,6 +22,7 @@ class TypeMagasin
      */
     private $type;
 
+
     public function getId(): ?int
     {
         return $this->id;
@@ -38,8 +39,12 @@ class TypeMagasin
 
         return $this;
     }
+<<<<<<< HEAD
 
     public function __toString() {
         return $this->type;
     }
 }
+=======
+}
+>>>>>>> develop
