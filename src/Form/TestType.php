@@ -4,11 +4,10 @@ namespace App\Form;
 
 use App\Entity\Magasin;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class CreationMagasinType extends AbstractType
+class TestType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -18,13 +17,13 @@ class CreationMagasinType extends AbstractType
             ->add('tel')
             ->add('email')
             ->add('siren')
+            ->add('etat')
+            ->add('image')
             ->add('adresse')
+            ->add('latitude')
+            ->add('longitude')
+            ->add('statistiqueMagasin')
             ->add('typeMagasin')
-            ->add('Save', SubmitType::class, [
-                'attr' => [
-                    'class' => 'btn btn-primary',
-                ]
-            ])
         ;
     }
 
