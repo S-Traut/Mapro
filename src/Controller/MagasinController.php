@@ -18,7 +18,7 @@ use phpDocumentor\Reflection\Location;
 class MagasinController extends AbstractController
 {
     /**
-    * @Route("/magasin/{id<\d+>}")
+    * @Route("/shop/{id<\d+>}")
     */
     public function show(MagasinRepository $magasinRepository, $id, ArticleRepository $articleRepository)
     {   
@@ -36,7 +36,7 @@ class MagasinController extends AbstractController
         ]); 
     }
     /**
-     * @Route("/magasin/new")
+     * @Route("/shop/new")
      * 
      * @return void
      */
@@ -57,13 +57,11 @@ class MagasinController extends AbstractController
             $em->persist($magasin);
             dump($magasin);
             $em->flush();
-            return $this->redirectToRoute('/shop/'.$magasin->getId());
+            return $this->redirectToRoute("landing");
         }
-
         return $this->render('magasin/new.html.twig' , [
             'magasin' => $magasin,
             'form' => $form->createView()
         ]);
     }
-    
 }
