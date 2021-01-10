@@ -24,15 +24,6 @@ class TypeMagasin
      */
     private $type;
 
-    /**
-     * @ORM\OneToMany(targetEntity=Magasin::class, mappedBy="type")
-     */
-    private $magasins;
-
-    public function __construct()
-    {
-        $this->magasins = new ArrayCollection();
-    }
 
     public function getId(): ?int
     {
@@ -51,33 +42,8 @@ class TypeMagasin
         return $this;
     }
 
-    /**
-     * @return Collection|Magasin[]
-     */
-    public function getMagasins(): Collection
+    public function __toString()
     {
-        return $this->magasins;
-    }
-
-    public function addMagasin(Magasin $magasin): self
-    {
-        if (!$this->magasins->contains($magasin)) {
-            $this->magasins[] = $magasin;
-            $magasin->setType($this);
-        }
-
-        return $this;
-    }
-
-    public function removeMagasin(Magasin $magasin): self
-    {
-        if ($this->magasins->removeElement($magasin)) {
-            // set the owning side to null (unless already changed)
-            if ($magasin->getType() === $this) {
-                $magasin->setType(null);
-            }
-        }
-
-        return $this;
+        return $this->type;
     }
 }

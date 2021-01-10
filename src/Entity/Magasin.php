@@ -80,9 +80,29 @@ class Magasin
      */
     private $type;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $adresse;
+
+    /**
+     * @ORM\Column(type="float")
+     */
+    private $latitude;
+
+    /**
+     * @ORM\Column(type="float")
+     */
+    private $longitude;
+
     public function __construct()
     {
         $this->articles = new ArrayCollection();
+    }
+
+    public function __toString()
+    {
+        return $this->name;
     }
 
     public function getId(): ?int
@@ -191,19 +211,6 @@ class Magasin
         return $this;
     }
 
-
-    public function getLocalisation(): ?Localisation
-    {
-        return $this->localisation;
-    }
-
-    public function setLocalisation(Localisation $localisation): self
-    {
-        $this->localisation = $localisation;
-
-        return $this;
-    }
-
     public function getImage(): ?string
     {
         return $this->image;
@@ -246,24 +253,12 @@ class Magasin
         return $this;
     }
 
-    public function getLongitude(): ?string
-    {
-        return $this->longitude;
-    }
-
-    public function setLongitude(string $longitude): self
-    {
-        $this->longitude = $longitude;
-
-        return $this;
-    }
-
-    public function getLatitude(): ?string
+    public function getLatitude(): ?float
     {
         return $this->latitude;
     }
 
-    public function setLatitude(string $latitude): self
+    public function setLatitude(float $latitude): self
     {
         $this->latitude = $latitude;
 
@@ -278,6 +273,15 @@ class Magasin
     public function setType(?TypeMagasin $type): self
     {
         $this->type = $type;
+    }
+    public function getLongitude(): ?float
+    {
+        return $this->longitude;
+    }
+
+    public function setLongitude(float $longitude): self
+    {
+        $this->longitude = $longitude;
 
         return $this;
     }

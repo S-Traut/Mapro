@@ -41,12 +41,6 @@ class Article
     private $etat;
 
     /**
-     * @ORM\OneToOne(targetEntity=TypeArticle::class, cascade={"persist", "remove"})
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $type;
-
-    /**
      * @ORM\OneToOne(targetEntity=StatistiqueArticle::class, mappedBy="article", cascade={"persist", "remove"})
      */
     private $statistiqueArticle;
@@ -61,6 +55,12 @@ class Article
      * @ORM\JoinColumn(nullable=false)
      */
     private $magasin;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=TypeArticle::class, inversedBy="articles")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $type;
 
     public function __construct()
     {
@@ -120,18 +120,6 @@ class Article
         return $this;
     }
 
-    public function getType(): ?TypeArticle
-    {
-        return $this->type;
-    }
-
-    public function setType(TypeArticle $type): self
-    {
-        $this->type = $type;
-
-        return $this;
-    }
-
     public function getStatistiqueArticle(): ?StatistiqueArticle
     {
         return $this->statistiqueArticle;
@@ -187,6 +175,18 @@ class Article
     public function setMagasin(?Magasin $magasin): self
     {
         $this->magasin = $magasin;
+
+        return $this;
+    }
+
+    public function getType(): ?TypeArticle
+    {
+        return $this->type;
+    }
+
+    public function setType(?TypeArticle $type): self
+    {
+        $this->type = $type;
 
         return $this;
     }
