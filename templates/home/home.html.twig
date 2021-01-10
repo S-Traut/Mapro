@@ -3,12 +3,16 @@
 
 {% block body %}
 
+	<!-- cacher la recherche -->
+	{% block recherche %}{% endblock %}
+
 	<div class="form-group">
 
 		{{ form_start(searchForm) }}
-		{{ form_row(searchForm) }}
 
-		<button class="btn btn-primary">rechercher</button>
+		{{ form_widget(searchForm) }}
+
+		<button class="btn btn-outline-secondary">Rechercher</button>
 		{{ form_end(searchForm) }}
 	</div>
 
