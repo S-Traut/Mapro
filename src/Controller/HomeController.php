@@ -17,55 +17,45 @@ class HomeController extends AbstractController
     /**
      * @Route("/", name="landing")
      */
-    public function show(Request $request): Response
+    public function show(Request $request, MagasinRepository $magasinRepo, PaginatorInterface $paginator): Response
     {
+
         if (isset($_COOKIE['userLongitude']) && isset($_COOKIE['userLatitude'])) {
+
+            //récupérer les coordonnées géo de l'utilisateur
             $cookies = $request->cookies;
+            $longitude = $cookies->get('userLongitude');
+            $latitude = $cookies->get('userLatitude');
+
+            //creation de la searchForm
+            $searchForm = $this->createForm(SearchType::class);
+            $searchForm->handleRequest($request);
+
+            if ($searchForm->isSubmitted() && $searchForm->isValid()) {
+
+                $nom = $searchForm->getData();
+                $donnees = $magasinRepo->search($nom, $longitude, $latitude);
+
+                if ($donnees == null) {
+                    $this->addFlash('erreur', 'Aucun magasin trouvé');
+                }
+
+                //pagination
+                $magasins = $paginator->paginate($donnees, $request->query->getInt('page', 1), 4);
+
+                return $this->render('home/resultathome.html.twig', [
+                    'magasins' => $magasins,
+                    'searchForm' => $searchForm->createView()
+                ]);
+            }
+
             return $this->render('home/home.html.twig', [
                 'Longitude' => $cookies->get('userLongitude'),
-                'Latitude' => $cookies->get('userLatitude')
+                'Latitude' => $cookies->get('userLatitude'),
+                'searchForm' => $searchForm->createView()
             ]);
         }
+
         return $this->render("home/prehome.html.twig", []);
-    }
-
-    /**
-     * @Route("/recherche", name="search")
-     */
-    public function recherche(Request $request, MagasinRepository $magasinRepo, PaginatorInterface $paginator)
-    {
-
-        $searchForm = $this->createForm(SearchType::class);
-        $searchForm->handleRequest($request);
-
-
-        $donnees = $magasinRepo->findAll();
-
-        if ($searchForm->isSubmitted() && $searchForm->isValid()) {
-
-            $nom = $searchForm->getData();
-
-            $donnees = $magasinRepo->search($nom);
-
-
-            if ($donnees == null) {
-                $this->addFlash('erreur', 'Aucun magasin trouvé');
-            }
-        }
-
-        // Paginate the results of the query
-        $magasins = $paginator->paginate(
-            // Doctrine Query, not results
-            $donnees,
-            // Define the page parameter
-            $request->query->getInt('page', 1),
-            // Items per page
-            4
-        );
-
-        return $this->render('recherche.html.twig', [
-            'magasins' => $magasins,
-            'searchForm' => $searchForm->createView()
-        ]);
     }
 }

@@ -12,6 +12,25 @@
 		{{ form_end(searchForm) }}
 	</div>
 
+	<section id="content">
+
+		{% for magasin in magasins %}
+			<article>
+				<div class="card border-light mb-3" id="articlesRecents" style="max-width: 25rem;margin:1.5em;">
+					<div class="magasin">
+						<img src="{{magasin.image}}" alt="">
+						<div class="info">
+							<h4>{{ magasin.nom }}</h4>
+							<p>{{magasin.description}}</p>
+						</div>
+
+					</div>
+				</div>
+			</article>
+		{% endfor %}
+
+	</section>
+
 	<!-- grille catégories -->
 	<section class="categories-container">
 		<div class="title">
