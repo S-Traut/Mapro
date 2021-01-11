@@ -24,6 +24,11 @@ class TypeMagasin
      */
     private $type;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Magasin::class, mappedBy="type")
+     */
+    private $magasins;
+
 
     public function getId(): ?int
     {

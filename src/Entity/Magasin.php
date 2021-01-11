@@ -85,16 +85,6 @@ class Magasin
      */
     private $adresse;
 
-    /**
-     * @ORM\Column(type="float")
-     */
-    private $latitude;
-
-    /**
-     * @ORM\Column(type="float")
-     */
-    private $longitude;
-
     public function __construct()
     {
         $this->articles = new ArrayCollection();
