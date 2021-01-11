@@ -14,13 +14,18 @@ class ArticleController extends AbstractController
      */
     public function show(ArticleRepository $articleRepository, $id)
     {
-        $article = $articleRepository->findBy($id);
+        
+        $article = $articleRepository->find($id);
+        $magasin = $article->getMagasin()->getNom();
+        $images = $article->getImage();
         if(!$article)
         {
             throw $this->createNotFoundException('Article Inexistant !');
         }
         return $this->render('article/show.html.twig', [
-            'article' => $article
+            'article' => $article,
+            'magasin' => $magasin,
+            'images' => $images
         ]);
     }
 }
