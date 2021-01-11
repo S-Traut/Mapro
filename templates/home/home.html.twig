@@ -6,14 +6,16 @@
 	<!-- cacher la recherche -->
 	{% block recherche %}{% endblock %}
 
-	<div class="form-group">
+	<div class="recherche-mag">
+		<div class="form-group">
 
-		{{ form_start(searchForm) }}
+			{{ form_start(searchForm) }}
 
-		{{ form_widget(searchForm) }}
+			{{ form_widget(searchForm) }}
 
-		<button class="btn btn-outline-secondary">Rechercher</button>
-		{{ form_end(searchForm) }}
+			<button class="btn btn-outline-secondary">Rechercher</button>
+			{{ form_end(searchForm) }}
+		</div>
 	</div>
 
 	<!-- grille catégories -->
@@ -22,42 +24,42 @@
 			<h2>Catégories</h2>
 		</div>
 		<div class="categories">
-			<div class="content">
+			<a href="/categorie/1" id="cat1" class="content">
 				<img src="image/boucherie.jpg" alt="image1">
 				<div class="overlay">
 					<div class="text">Boucherie</div>
 				</div>
-			</div>
-			<div class="content">
+			</a>
+			<a href="/categorie/2" id="cat2" class="content">
 				<img src="image/pharmacie.jpg" alt="image2">
 				<div class="overlay">
 					<div class="text">Pharmacie</div>
 				</div>
-			</div>
-			<div class="content">
+			</a>
+			<a href="/categorie/3" id="cat3" class="content">
 				<img src="image/animalier.jpg" alt="image3">
 				<div class="overlay">
 					<div class="text">Animalier</div>
 				</div>
-			</div>
-			<div class="content">
+			</a>
+			<a href="/categorie/4" id="cat4" class="content">
 				<img src="image/boulangerie.jpg" alt="image4">
 				<div class="overlay">
 					<div class="text">Boulangerie</div>
 				</div>
-			</div>
-			<div class="content">
+			</a>
+			<a href="/categorie/5" id="cat5" class="content">
 				<img src="image/epicerie.jpg" alt="image5">
 				<div class="overlay">
 					<div class="text">Epicerie</div>
 				</div>
-			</div>
-			<div class="content">
+			</a>
+			<a href="/categorie/6" id="cat6" class="content">
 				<img src="image/vetements.jpg" alt="image6">
 				<div class="overlay">
 					<div class="text">Vêtements</div>
 				</div>
-			</div>
+			</a>
 		</div>
 	</section>
 
@@ -83,4 +85,8 @@
 	</section>
 
 
+{% endblock %}
+
+{% block javascripts %}
+	<script src="{{ asset('js/categories.js') }}"></script>
 {% endblock %}

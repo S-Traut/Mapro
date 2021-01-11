@@ -271,7 +271,7 @@ class Magasin
 
         return $this;
     }
-    
+
     public function getAdresse(): ?string
     {
         return $this->adresse;
