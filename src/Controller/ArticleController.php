@@ -46,10 +46,10 @@ class ArticleController extends AbstractController
         
         $form = $this->createForm(ArticleType::class, $article);
         $form->handleRequest($request);
-
+        dump($this->getUser());
         if($form->isSubmitted() && $form->isValid()){
             $article->setEtat(1);
-           // $article->setMagasin();
+            $article->setMagasin($this->getUser()->getMagasins()[0]);
             $em->persist($article);
             $em->flush();
             return $this->redirectToRoute('landing');
