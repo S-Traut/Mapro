@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Localisation;
 use App\Entity\Magasin;
 use App\Entity\TypeMagasin;
+use App\Entity\Utilisateur;
 use App\Form\CreationMagasinType;
 use App\Repository\ArticleRepository;
 use App\Repository\MagasinRepository;
@@ -14,6 +15,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\ORM\EntityManagerInterface;
 use phpDocumentor\Reflection\Location;
+use Symfony\Component\Security\Core\Security;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 class MagasinController extends AbstractController
 {
@@ -42,10 +45,12 @@ class MagasinController extends AbstractController
      */
     public function new(Request $request, EntityManagerInterface $em)
     {
-        $magasin = new Magasin();
+        if($this->isGranted('ROLE_USER') == false)
+            return $this->redirectToRoute("app_login");
 
+        $magasin = new Magasin();
         $form = $this->createForm(CreationMagasinType::class, $magasin);
-        $form->handleRequest($request);
+        $form->handleRequest($request);       
 
         if ($form->isSubmitted() && $form->isValid()) {
             //PLACEHOLDERS
@@ -53,9 +58,8 @@ class MagasinController extends AbstractController
             $magasin->setEtat(0);
             $magasin->setLatitude(0);
             $magasin->setLongitude(0);
-
+            $magasin->setIdUtilisateur($this->getUser());
             $em->persist($magasin);
-            dump($magasin);
             $em->flush();
             return $this->redirectToRoute("landing");
         }

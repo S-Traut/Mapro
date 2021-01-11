@@ -78,12 +78,17 @@ class Magasin
     /**
      * @ORM\ManyToOne(targetEntity=TypeMagasin::class, inversedBy="magasins")
      */
-    private $type;
+    private $typeMagasin;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
     private $adresse;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="magasins")
+     */
+    private $idUtilisateur;
 
     public function __construct()
     {
@@ -255,15 +260,6 @@ class Magasin
         return $this;
     }
 
-    public function getType(): ?TypeMagasin
-    {
-        return $this->type;
-    }
-
-    public function setType(?TypeMagasin $type): self
-    {
-        $this->type = $type;
-    }
     public function getLongitude(): ?float
     {
         return $this->longitude;
@@ -272,6 +268,30 @@ class Magasin
     public function setLongitude(float $longitude): self
     {
         $this->longitude = $longitude;
+
+        return $this;
+    }
+    
+    public function getAdresse(): ?string
+    {
+        return $this->adresse;
+    }
+
+    public function setAdresse(string $adresse): self
+    {
+        $this->adresse = $adresse;
+
+        return $this;
+    }
+
+    public function getIdUtilisateur(): ?User
+    {
+        return $this->idUtilisateur;
+    }
+
+    public function setIdUtilisateur(?User $idUtilisateur): self
+    {
+        $this->idUtilisateur = $idUtilisateur;
 
         return $this;
     }
