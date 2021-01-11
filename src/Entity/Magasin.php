@@ -66,16 +66,6 @@ class Magasin
     private $articles;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $longitude;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $latitude;
-
-    /**
      * @ORM\ManyToOne(targetEntity=TypeMagasin::class, inversedBy="magasins")
      */
     private $type;
@@ -270,7 +260,7 @@ class Magasin
         return $this->type;
     }
 
-    public function setType(?TypeMagasin $type): self
+    public function setType(?TypeMagasin $type)
     {
         $this->type = $type;
     }
