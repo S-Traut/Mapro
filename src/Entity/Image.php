@@ -22,12 +22,6 @@ class Image
      */
     private $image;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Article::class, inversedBy="image")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $article;
-
     public function getId(): ?int
     {
         return $this->id;

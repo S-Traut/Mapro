@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\TypeMagasinRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -40,7 +42,8 @@ class TypeMagasin
         return $this;
     }
 
-    public function __toString() {
+    public function __toString()
+    {
         return $this->type;
     }
 }
