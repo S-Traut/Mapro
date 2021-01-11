@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\TypeMagasinRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -22,6 +24,7 @@ class TypeMagasin
      */
     private $type;
 
+
     public function getId(): ?int
     {
         return $this->id;
@@ -37,5 +40,10 @@ class TypeMagasin
         $this->type = $type;
 
         return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->type;
     }
 }

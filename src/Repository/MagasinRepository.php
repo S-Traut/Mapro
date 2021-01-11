@@ -19,32 +19,22 @@ class MagasinRepository extends ServiceEntityRepository
         parent::__construct($registry, Magasin::class);
     }
 
-    // /**
-    //  * @return Magasin[] Returns an array of Magasin objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /**
+     * Recherche les magasins en fonction du nom et des coordonnées géo
+     */
+    public function search($nom, $latitude, $longitude)
     {
-        return $this->createQueryBuilder('m')
-            ->andWhere('m.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('m.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
+        //test
+        /*$latitude = 48.562370;
+        $longitude = 7.761280;*/
 
-    /*
-    public function findOneBySomeField($value): ?Magasin
-    {
-        return $this->createQueryBuilder('m')
-            ->andWhere('m.exampleField = :val')
-            ->setParameter('val', $value)
+        $sql = 'SQRT((' . $latitude . ' - Magasin.latitude)*(' . $latitude . ' - Magasin.latitude) + (' . $longitude . ' - Magasin.longitude)*(' . $longitude . ' - Magasin.longitude)) < 0.01';
+
+        return $this->createQueryBuilder('Magasin')
+            ->where($sql)
+            ->andWhere('Magasin.nom LIKE :nom')
+            ->setParameter('nom', '%' . $nom . '%')
             ->getQuery()
-            ->getOneOrNullResult()
-        ;
+            ->execute();
     }
-    */
 }

@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\MagasinRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -52,23 +54,56 @@ class Magasin
      */
     private $statistiqueMagasin;
 
-    /**
-     * @ORM\OneToOne(targetEntity=TypeMagasin::class, cascade={"persist", "remove"})
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $typeMagasin;
 
     /**
-     * @ORM\OneToOne(targetEntity=Image::class, cascade={"persist", "remove"})
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\Column(type="string", length=255)
      */
     private $image;
 
     /**
-     * @ORM\OneToOne(targetEntity=Localisation::class, cascade={"persist", "remove"})
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\OneToMany(targetEntity=Article::class, mappedBy="magasin")
      */
-    private $localisation;
+    private $articles;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $longitude;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $latitude;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=TypeMagasin::class, inversedBy="magasins")
+     */
+    private $type;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $adresse;
+
+    /**
+     * @ORM\Column(type="float")
+     */
+    private $latitude;
+
+    /**
+     * @ORM\Column(type="float")
+     */
+    private $longitude;
+
+    public function __construct()
+    {
+        $this->articles = new ArrayCollection();
+    }
+
+    public function __toString()
+    {
+        return $this->name;
+    }
 
     public function getId(): ?int
     {
@@ -176,26 +211,77 @@ class Magasin
         return $this;
     }
 
-    public function getImage(): ?Image
+    public function getImage(): ?string
     {
         return $this->image;
     }
 
-    public function setImage(Image $image): self
+    public function setImage(string $image): self
     {
         $this->image = $image;
 
         return $this;
     }
 
-    public function getLocalisation(): ?Localisation
+    /**
+     * @return Collection|Article[]
+     */
+    public function getArticles(): Collection
     {
-        return $this->localisation;
+        return $this->articles;
     }
 
-    public function setLocalisation(Localisation $localisation): self
+    public function addArticle(Article $article): self
     {
-        $this->localisation = $localisation;
+        if (!$this->articles->contains($article)) {
+            $this->articles[] = $article;
+            $article->setMagasin($this);
+        }
+
+        return $this;
+    }
+
+    public function removeArticle(Article $article): self
+    {
+        if ($this->articles->removeElement($article)) {
+            // set the owning side to null (unless already changed)
+            if ($article->getMagasin() === $this) {
+                $article->setMagasin(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getLatitude(): ?float
+    {
+        return $this->latitude;
+    }
+
+    public function setLatitude(float $latitude): self
+    {
+        $this->latitude = $latitude;
+
+        return $this;
+    }
+
+    public function getType(): ?TypeMagasin
+    {
+        return $this->type;
+    }
+
+    public function setType(?TypeMagasin $type): self
+    {
+        $this->type = $type;
+    }
+    public function getLongitude(): ?float
+    {
+        return $this->longitude;
+    }
+
+    public function setLongitude(float $longitude): self
+    {
+        $this->longitude = $longitude;
 
         return $this;
     }

@@ -1,26 +1,25 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Mapro{% endblock %}</title>
-        <!-- Bootstrap -->
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
-        <link rel="stylesheet" href="css/theme.css">
+	<head>
+		<meta charset="UTF-8">
+		<title>
+			{% block title %}Mapro
+			{% endblock %}
+		</title>
+		<!-- Bootstrap -->
+		<link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+		<link rel="stylesheet" href="/css/bootstrap_custom.css">
+		<link
+		rel="stylesheet" href="css/style.css">
 
-        <!-- Fontawesome -->
-        <script src="https://kit.fontawesome.com/8245776c75.js" crossorigin="anonymous"></script>
-
-        <!-- Viewport mobile -->
-        <meta name="viewport" content="width=device-width, initial-scale=2.5">
-
-        {% block stylesheets %}{% endblock %}
-    </head>
-    <body>
-        <header>HEADER TEMPORAIRE</header>
-        <div class="container">
-            {% block body %}{% endblock %}
-        </div>
-        {% block javascripts %}{% endblock %}
-    </body>
-</html>
+		<!-- Viewport mobile -->
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"> {% block stylesheets %}{% endblock %}
+		</head>
+		<body>
+			<div class="container"> {% block body %}{% endblock %}
+				</div>
+				<!-- Fontawesome -->
+				<script src="https://kit.fontawesome.com/8245776c75.js" crossorigin="anonymous"></script>
+				{% block javascripts %}{% endblock %}
+			</body>
+		</html>
