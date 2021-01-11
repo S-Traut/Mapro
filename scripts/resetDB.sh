@@ -1,4 +1,4 @@
-find . -name "*.bak" -type f -delete
+find migrations/. -name "*.php" -type f -delete
 php bin/console d:d:d --force
 php bin/console d:d:c
 php bin/console make:migration
