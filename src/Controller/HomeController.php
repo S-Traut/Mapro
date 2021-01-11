@@ -79,7 +79,7 @@ class HomeController extends AbstractController
         //pagination
         $magasins = $paginator->paginate($donnees, $request->query->getInt('page', 1), 4);
 
-        return $this->render('test.html.twig', [
+        return $this->render('home/categorieliste.html.twig', [
             'magasins' => $magasins,
         ]);
     }
