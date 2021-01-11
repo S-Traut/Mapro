@@ -10,7 +10,7 @@ use Doctrine\Persistence\ObjectManager;
 class TypeArticleFixtures extends Fixture implements FixtureGroupInterface
 {
     public function load(ObjectManager $manager)
-    {
+    {/*
         $typeArticles = ["Nourriture", "Vêtement", "Jouets"];
         foreach($typeArticles as $typeArticle)
         {
@@ -18,7 +18,7 @@ class TypeArticleFixtures extends Fixture implements FixtureGroupInterface
             $typeArticleFixture->setType($typeArticle);
             $manager->persist($typeArticleFixture);
         }
-        $manager->flush();
+        $manager->flush();*/
     }
 
     public static function getGroups(): array
