@@ -6,16 +6,19 @@
 	<!-- cacher la recherche -->
 	{% block recherche %}{% endblock %}
 
-	<div class="form-group">
+	<div class="recherche-mag">
+		<div class="form-group">
 
-		{{ form_start(searchForm) }}
+			{{ form_start(searchForm) }}
 
-		{{ form_widget(searchForm) }}
+			{{ form_widget(searchForm) }}
 
-		<button class="btn btn-outline-secondary">Rechercher</button>
-		{{ form_end(searchForm) }}
+			<button class="btn btn-outline-secondary">Rechercher</button>
+			{{ form_end(searchForm) }}
+		</div>
 	</div>
 
+	<!-- grille catégories -->
 	<section id="content">
 
 		{% for magasin in magasins %}
@@ -27,7 +30,6 @@
 							<h4>{{ magasin.nom }}</h4>
 							<p>{{magasin.description}}</p>
 						</div>
-
 					</div>
 				</div>
 			</article>

@@ -189,18 +189,6 @@ class Magasin
         return $this;
     }
 
-    public function getTypeMagasin(): ?TypeMagasin
-    {
-        return $this->typeMagasin;
-    }
-
-    public function setTypeMagasin(TypeMagasin $typeMagasin): self
-    {
-        $this->typeMagasin = $typeMagasin;
-
-        return $this;
-    }
-
     public function getImage(): ?string
     {
         return $this->image;
@@ -263,7 +251,10 @@ class Magasin
     public function setType(?TypeMagasin $type)
     {
         $this->type = $type;
+
+        return $this;
     }
+
     public function getLongitude(): ?float
     {
         return $this->longitude;

@@ -176,6 +176,7 @@
 
 .categories .content:hover .overlay {
   opacity: 1;
+  cursor: pointer;
 }
 
 .categories .content .text {

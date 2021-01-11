@@ -22,7 +22,7 @@ class MagasinRepository extends ServiceEntityRepository
     /**
      * Recherche les magasins en fonction du nom et des coordonnées géo
      */
-    public function search($nom, $latitude, $longitude)
+    public function search($nom, $longitude, $latitude)
     {
         //test
         /*$latitude = 48.562370;
@@ -34,6 +34,18 @@ class MagasinRepository extends ServiceEntityRepository
             ->where($sql)
             ->andWhere('Magasin.nom LIKE :nom')
             ->setParameter('nom', '%' . $nom . '%')
+            ->getQuery()
+            ->execute();
+    }
+
+    public function searchCategorie($categorie, $longitude, $latitude)
+    {
+        $sql = 'SQRT((' . $latitude . ' - Magasin.latitude)*(' . $latitude . ' - Magasin.latitude) + (' . $longitude . ' - Magasin.longitude)*(' . $longitude . ' - Magasin.longitude)) < 0.01';
+
+        return $this->createQueryBuilder('Magasin')
+            ->where($sql)
+            ->andWhere('Magasin.type_id = :type')
+            ->setParameter('type', $categorie)
             ->getQuery()
             ->execute();
     }
