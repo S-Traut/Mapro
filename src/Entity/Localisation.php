@@ -33,10 +33,10 @@ class Localisation
     private $latitude;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Utilisateur::class, inversedBy="localisation")
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="localisation")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $utilisateur;
+    private $user;
 
     public function getId(): ?int
     {
@@ -79,12 +79,12 @@ class Localisation
         return $this;
     }
 
-    public function getUtilisateur(): ?Utilisateur
+    public function getUtilisateur(): ?User
     {
         return $this->utilisateur;
     }
 
-    public function setUtilisateur(?Utilisateur $utilisateur): self
+    public function setUtilisateur(?User $utilisateur): self
     {
         $this->utilisateur = $utilisateur;
 

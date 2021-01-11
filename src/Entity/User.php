@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -34,6 +35,21 @@ class User implements UserInterface
      * @ORM\Column(type="string")
      */
     private $password;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $prenom;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $nom;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Localisation::class, mappedBy="utilisateur")
+     */
+    private $localisation;
 
     public function getId(): ?int
     {
@@ -111,5 +127,59 @@ class User implements UserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    public function getPrenom(): ?string
+    {
+        return $this->prenom;
+    }
+
+    public function setPrenom(string $prenom): self
+    {
+        $this->prenom = $prenom;
+
+        return $this;
+    }
+
+    public function getNom(): ?string
+    {
+        return $this->nom;
+    }
+
+    public function setNom(string $nom): self
+    {
+        $this->nom = $nom;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Localisation[]
+     */
+    public function getLocalisation(): Collection
+    {
+        return $this->localisation;
+    }
+
+    public function addLocalisation(Localisation $localisation): self
+    {
+        if (!$this->localisation->contains($localisation)) {
+            $this->localisation[] = $localisation;
+            $localisation->setUtilisateur($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLocalisation(Localisation $localisation): self
+    {
+        if ($this->localisation->removeElement($localisation)) {
+            // set the owning side to null (unless already changed)
+            if ($localisation->getUtilisateur() === $this) {
+                $localisation->setUtilisateur(null);
+            }
+        }
+
+        return $this;
     }
 }
