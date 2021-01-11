@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -50,6 +51,16 @@ class User implements UserInterface
      * @ORM\OneToMany(targetEntity=Localisation::class, mappedBy="utilisateur")
      */
     private $localisation;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Magasin::class, mappedBy="idUtilisateur")
+     */
+    private $magasins;
+
+    public function __construct()
+    {
+        $this->magasins = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -177,6 +188,36 @@ class User implements UserInterface
             // set the owning side to null (unless already changed)
             if ($localisation->getUtilisateur() === $this) {
                 $localisation->setUtilisateur(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Magasin[]
+     */
+    public function getMagasins(): Collection
+    {
+        return $this->magasins;
+    }
+
+    public function addMagasin(Magasin $magasin): self
+    {
+        if (!$this->magasins->contains($magasin)) {
+            $this->magasins[] = $magasin;
+            $magasin->setIdUtilisateur($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMagasin(Magasin $magasin): self
+    {
+        if ($this->magasins->removeElement($magasin)) {
+            // set the owning side to null (unless already changed)
+            if ($magasin->getIdUtilisateur() === $this) {
+                $magasin->setIdUtilisateur(null);
             }
         }
 

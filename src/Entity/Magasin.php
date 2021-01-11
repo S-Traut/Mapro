@@ -85,6 +85,11 @@ class Magasin
      */
     private $adresse;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="magasins")
+     */
+    private $idUtilisateur;
+
     public function __construct()
     {
         $this->articles = new ArrayCollection();
@@ -275,6 +280,18 @@ class Magasin
     public function setAdresse(string $adresse): self
     {
         $this->adresse = $adresse;
+
+        return $this;
+    }
+
+    public function getIdUtilisateur(): ?User
+    {
+        return $this->idUtilisateur;
+    }
+
+    public function setIdUtilisateur(?User $idUtilisateur): self
+    {
+        $this->idUtilisateur = $idUtilisateur;
 
         return $this;
     }
