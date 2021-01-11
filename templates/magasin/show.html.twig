@@ -6,7 +6,6 @@
             <div class="container text-center">
                 <img style="max-width:100%;height:auto;" src='{{ magasin.image }}'>
             </div>
-            <br>
         </section>
         <h2>{{ magasin.nom }}</h2>
         <p class="font-weight-light">{{ magasin.description }}</p>
@@ -21,7 +20,6 @@
                     </div>
                 </div>
             </div>
-            <br>
         </section>
 
         <section>
@@ -34,14 +32,13 @@
                         </form> 
                 </div>
             </div>
-            <br>
         </section>
+
         <section>
             <div class="row">
-                
+            <div class="col-12">
                 <h4>ARTICLES POPULAIRES</h4>
-                
-                
+            </div>
                 {% for articlePop in articlesPop %}
                     <div class="col-5 shadow p-3 mb-2 bg-light rounded">
                         <div class="card-body">
@@ -54,7 +51,6 @@
                     <div class="col-1"></div>
                 {% endfor %}
             </div>
-            <br>
         </section>
         
         <section>
