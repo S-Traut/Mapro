@@ -41,7 +41,7 @@ class MagasinRepository extends ServiceEntityRepository
 
         return $this->createQueryBuilder('Magasin')
             ->where($sql)
-            ->andWhere('Magasin.type = :type')
+            ->andWhere('Magasin.typeMagasin = :type')
             ->setParameter('type', $categorie)
             ->getQuery()
             ->execute();

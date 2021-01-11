@@ -66,9 +66,19 @@ class Magasin
     private $articles;
 
     /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $longitude;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $latitude;
+
+    /**
      * @ORM\ManyToOne(targetEntity=TypeMagasin::class, inversedBy="magasins")
      */
-    private $type;
+    private $typeMagasin;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -76,14 +86,9 @@ class Magasin
     private $adresse;
 
     /**
-     * @ORM\Column(type="float")
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="magasins")
      */
-    private $latitude;
-
-    /**
-     * @ORM\Column(type="float")
-     */
-    private $longitude;
+    private $idUtilisateur;
 
     public function __construct()
     {
@@ -189,6 +194,18 @@ class Magasin
         return $this;
     }
 
+    public function getTypeMagasin(): ?TypeMagasin
+    {
+        return $this->typeMagasin;
+    }
+
+    public function setTypeMagasin(TypeMagasin $typeMagasin): self
+    {
+        $this->typeMagasin = $typeMagasin;
+
+        return $this;
+    }
+
     public function getImage(): ?string
     {
         return $this->image;
@@ -243,18 +260,6 @@ class Magasin
         return $this;
     }
 
-    public function getType(): ?TypeMagasin
-    {
-        return $this->type;
-    }
-
-    public function setType(?TypeMagasin $type)
-    {
-        $this->type = $type;
-
-        return $this;
-    }
-
     public function getLongitude(): ?float
     {
         return $this->longitude;
@@ -263,6 +268,30 @@ class Magasin
     public function setLongitude(float $longitude): self
     {
         $this->longitude = $longitude;
+
+        return $this;
+    }
+
+    public function getAdresse(): ?string
+    {
+        return $this->adresse;
+    }
+
+    public function setAdresse(string $adresse): self
+    {
+        $this->adresse = $adresse;
+
+        return $this;
+    }
+
+    public function getIdUtilisateur(): ?User
+    {
+        return $this->idUtilisateur;
+    }
+
+    public function setIdUtilisateur(?User $idUtilisateur): self
+    {
+        $this->idUtilisateur = $idUtilisateur;
 
         return $this;
     }
