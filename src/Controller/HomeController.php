@@ -32,7 +32,7 @@ class HomeController extends AbstractController
             $searchForm->handleRequest($request);
 
             if ($searchForm->isSubmitted() && $searchForm->isValid()) {
-
+                
                 $nom = $searchForm->getData();
                 $donnees = $magasinRepo->search($nom, $longitude, $latitude);
 
@@ -42,7 +42,6 @@ class HomeController extends AbstractController
 
                 //pagination
                 $magasins = $paginator->paginate($donnees, $request->query->getInt('page', 1), 4);
-
                 return $this->render('home/resultathome.html.twig', [
                     'magasins' => $magasins,
                     'searchForm' => $searchForm->createView()

@@ -11,11 +11,11 @@
         <p class="font-weight-light">{{ magasin.description }}</p>
         <section>
             <div class="row"> 
-                <div class="col-8 shadow p-3 mb-2 bg-light rounded">
-                    <div class="col-6 ">
+                <div class="col-auto shadow p-3 mb-2 bg-light rounded">
+                    <div class="col-auto">
                         <i class="fas fa-phone"></i> {{ magasin.tel }}
                     </div>
-                    <div class="col-6 ">
+                    <div class="col-auto">
                         <i class="fas fa-at"></i> {{ magasin.email }}
                     </div>
                 </div>
@@ -36,9 +36,9 @@
 
         <section>
             <div class="row">
-            <div class="col-12">
-                <h4>ARTICLES POPULAIRES</h4>
-            </div>
+                <div class="col-12">  
+                    <h4>ARTICLES POPULAIRES</h4>
+                </div>
                 {% for articlePop in articlesPop %}
                     <div class="col-5 shadow p-3 mb-2 bg-light rounded">
                         <div class="card-body">
