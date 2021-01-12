@@ -25,7 +25,7 @@ class TypeMagasin
     private $type;
 
     /**
-     * @ORM\OneToMany(targetEntity=Magasin::class, mappedBy="type")
+     * @ORM\OneToMany(targetEntity=Magasin::class, mappedBy="typeMagasin")
      */
     private $magasins;
 
