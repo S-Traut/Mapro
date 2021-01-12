@@ -19,17 +19,12 @@ class HomeController extends AbstractController
      */
     public function show(Request $request, MagasinRepository $magasinRepo, PaginatorInterface $paginator): Response
     {
-
-        if (isset($_COOKIE['userLongitude']) && isset($_COOKIE['userLatitude'])) {
-
-            $longitude = 0.0;
-            $latitude = 0.0;
-            $user = $this->getUser();
-
+        if (isset($_COOKIE['userLongitude']) && isset($_COOKIE['userLatitude'])) 
+        {               
             //récupérer les coordonnées géo de l'utilisateur
             $cookies = $request->cookies;
-            $longitude = $user ? $user->getLongitude() : $cookies->get('userLongitude');
-            $latitude = $user ? $user->getLatitude() : $cookies->get('userLatitude');
+            $longitude = $cookies->get('userLongitude');
+            $latitude = $cookies->get('userLatitude');
             
             //creation de la searchForm
             $searchForm = $this->createForm(SearchType::class);
