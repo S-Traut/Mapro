@@ -22,21 +22,26 @@ class HomeController extends AbstractController
 
         if (isset($_COOKIE['userLongitude']) && isset($_COOKIE['userLatitude'])) {
 
+            $longitude = 0.0;
+            $latitude = 0.0;
+            $user = $this->getUser();
+
             //récupérer les coordonnées géo de l'utilisateur
             $cookies = $request->cookies;
-            $longitude = $cookies->get('userLongitude');
-            $latitude = $cookies->get('userLatitude');
-
+            $longitude = $user ? $user->getLongitude() : $cookies->get('userLongitude');
+            $latitude = $user ? $user->getLatitude() : $cookies->get('userLatitude');
+            
             //creation de la searchForm
             $searchForm = $this->createForm(SearchType::class);
             $searchForm->handleRequest($request);
 
-            if ($searchForm->isSubmitted() && $searchForm->isValid()) {
-
+            if ($searchForm->isSubmitted() && $searchForm->isValid()) 
+            {
                 $nom = $searchForm->getData();
                 $donnees = $magasinRepo->search($nom, $longitude, $latitude);
 
-                if ($donnees == null) {
+                if ($donnees == null) 
+                {
                     $this->addFlash('erreur', 'Aucun magasin trouvé');
                 }
 
