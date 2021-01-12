@@ -142,12 +142,8 @@
   }
 }
 
-#recherche {
+.container .recherche-mag {
   margin-top: 10em;
-  /*text-align: center;*/
-  /*top: 100px;
-  left: 50%;
-  transform: translate(-50%, -50%);*/
 }
 
 #content img {
@@ -180,6 +176,7 @@
 
 .categories .content:hover .overlay {
   opacity: 1;
+  cursor: pointer;
 }
 
 .categories .content .text {
