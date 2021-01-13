@@ -61,7 +61,7 @@ class MagasinController extends AbstractController
             $magasin->setIdUtilisateur($this->getUser());
             $em->persist($magasin);
             $em->flush();
-            return $this->redirectToRoute("landing");
+            return $this->redirect("/shop/".$magasin->getId());
         }
         return $this->render('magasin/new.html.twig' , [
             'magasin' => $magasin,

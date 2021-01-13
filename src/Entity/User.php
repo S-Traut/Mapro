@@ -48,7 +48,7 @@ class User implements UserInterface
     private $nom;
 
     /**
-     * @ORM\OneToMany(targetEntity=Localisation::class, mappedBy="utilisateur")
+     * @ORM\OneToMany(targetEntity=Localisation::class, mappedBy="user")
      */
     private $localisation;
 
