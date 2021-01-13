@@ -10,15 +10,15 @@ use Doctrine\Persistence\ObjectManager;
 class TypeMagasinFixtures extends Fixture implements FixtureGroupInterface
 {
     public function load(ObjectManager $manager) 
-    {
-        $typeArticles = ["Bricolage", "Sport", "Animaux", "Alimentaire", "Fleurs"];
-        foreach($typeArticles as $typeArticle)
+    {/*
+        $typeMagasins = ["Bricolage", "Sport", "Animaux", "Alimentaire", "Fleurs"];
+        foreach($typeMagasins as $typeMagasin)
         {
             $typeMagasinFixture = new TypeMagasin();
-            $typeMagasinFixture->setType($typeArticle);
+            $typeMagasinFixture->setType($typeMagasin);
             $manager->persist($typeMagasinFixture);
         }
-        $manager->flush();
+        $manager->flush();*/
     }
 
     public static function getGroups(): array

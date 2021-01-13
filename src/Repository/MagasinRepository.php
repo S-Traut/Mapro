@@ -25,7 +25,7 @@ class MagasinRepository extends ServiceEntityRepository
     public function search($nom, $longitude, $latitude)
     {
 
-        $sql = 'SQRT((' . $latitude . ' - Magasin.latitude)*(' . $latitude . ' - Magasin.latitude) + (' . $longitude . ' - Magasin.longitude)*(' . $longitude . ' - Magasin.longitude)) < 0.01';
+        $sql = 'SQRT((' . $latitude . ' - Magasin.latitude)*(' . $latitude . ' - Magasin.latitude) + (' . $longitude . ' - Magasin.longitude)*(' . $longitude . ' - Magasin.longitude)) < 0.1';
 
         return $this->createQueryBuilder('Magasin')
             ->where($sql)

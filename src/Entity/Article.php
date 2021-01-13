@@ -46,11 +46,6 @@ class Article
     private $statistiqueArticle;
 
     /**
-     * @ORM\OneToMany(targetEntity=Image::class, mappedBy="article")
-     */
-    private $image;
-
-    /**
      * @ORM\ManyToOne(targetEntity=Magasin::class, inversedBy="articles")
      * @ORM\JoinColumn(nullable=false)
      */
@@ -61,6 +56,11 @@ class Article
      * @ORM\JoinColumn(nullable=false)
      */
     private $type;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Image::class, mappedBy="article")
+     */
+    private $image;
 
     public function __construct()
     {
@@ -137,36 +137,6 @@ class Article
         return $this;
     }
 
-    /**
-     * @return Collection|Image[]
-     */
-    public function getImage(): Collection
-    {
-        return $this->image;
-    }
-
-    public function addImage(Image $image): self
-    {
-        if (!$this->image->contains($image)) {
-            $this->image[] = $image;
-            $image->setArticle($this);
-        }
-
-        return $this;
-    }
-
-    public function removeImage(Image $image): self
-    {
-        if ($this->image->removeElement($image)) {
-            // set the owning side to null (unless already changed)
-            if ($image->getArticle() === $this) {
-                $image->setArticle(null);
-            }
-        }
-
-        return $this;
-    }
-
     public function getMagasin(): ?Magasin
     {
         return $this->magasin;
@@ -187,6 +157,36 @@ class Article
     public function setType(?TypeArticle $type): self
     {
         $this->type = $type;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|image[]
+     */
+    public function getImage(): Collection
+    {
+        return $this->image;
+    }
+
+    public function addImage(image $image): self
+    {
+        if (!$this->image->contains($image)) {
+            $this->image[] = $image;
+            $image->setArticle($this);
+        }
+
+        return $this;
+    }
+
+    public function removeImage(image $image): self
+    {
+        if ($this->image->removeElement($image)) {
+            // set the owning side to null (unless already changed)
+            if ($image->getArticle() === $this) {
+                $image->setArticle(null);
+            }
+        }
 
         return $this;
     }

@@ -1,0 +1,20 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+    <section id="content">
+        <article>
+            <div class="tittle">
+                <h2>{{ article.nom }}</h2>
+            </div>
+            <div class="content">
+                <h3>{{ magasin }}</h3>
+                {% for image in images %}
+                    <img src="{{ image.image }}" alt="">
+                {% endfor %}
+                
+                <b>PRIX DE L'ARTICLE: {{ article.prix }}€</b> 
+                <p>{{ article.description }}</p>
+            </div>
+        </article>
+    </section>
+{% endblock %}
