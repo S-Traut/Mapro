@@ -1,6 +1,7 @@
 {% extends 'base.html.twig' %}
 
-
+{% block stylesheets %}<link
+		rel="stylesheet" href="/css/style_connexion_form.css">{% endblock %}
 {% block title %}Log in!{% endblock %}
 
 {% block body %}
@@ -49,10 +50,12 @@
     #}
 
 
-</form>
-
 <input type="submit" id='submit' value="Me connecter!" >
 <input type="submit" id='submit2' value="Pas de compte ? M'inscrire" >
+
+</form>
+
+
 
 </div>
 {% endblock %}
