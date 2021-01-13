@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Repository\ArticleRepository;
 use App\Repository\MagasinRepository;
 use Doctrine\DBAL\Types\TextType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -17,8 +18,12 @@ class HomeController extends AbstractController
     /**
      * @Route("/", name="landing")
      */
-    public function show(Request $request, MagasinRepository $magasinRepo, PaginatorInterface $paginator): Response
-    {
+    public function show(
+        Request $request,
+        MagasinRepository $magasinRepo,
+        PaginatorInterface $paginator,
+        ArticleRepository $articleRepo
+    ): Response {
         if (isset($_COOKIE['userLongitude']) && isset($_COOKIE['userLatitude'])) {
             //récupérer les coordonnées géo de l'utilisateur
             $cookies = $request->cookies;
@@ -29,6 +34,7 @@ class HomeController extends AbstractController
             $searchForm = $this->createForm(SearchType::class);
             $searchForm->handleRequest($request);
 
+            //si une recherche a été soumise
             if ($searchForm->isSubmitted() && $searchForm->isValid()) {
                 $nom = $searchForm->getData();
                 $donnees = $magasinRepo->search($nom, $longitude, $latitude);
@@ -45,9 +51,11 @@ class HomeController extends AbstractController
                 ]);
             }
 
+            //récup des articles populaire
+            $articles = $articleRepo->findArticlesPopulairesHome($longitude, $latitude);
+
             return $this->render('home/home.html.twig', [
-                'Longitude' => $cookies->get('userLongitude'),
-                'Latitude' => $cookies->get('userLatitude'),
+                'articles' => $articles,
                 'searchForm' => $searchForm->createView()
             ]);
         }
