@@ -1,8 +1,16 @@
 {% extends 'base.html.twig' %}
 
+{% block stylesheets %}<link
+		rel="stylesheet" href="/css/style_connexion_form.css">{% endblock %}
 {% block title %}Log in!{% endblock %}
 
 {% block body %}
+ <div id="container">
+	
+	 <h1>Me connecter</h1>
+
+
+
 <form method="post">
     {% if error %}
         <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
@@ -14,10 +22,16 @@
         </div>
     {% endif %}
 
-    <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
-    <label for="inputEmail">Email</label>
+<div class="p">
+    <b><label for="inputEmail">Email</label></b>
+</div>
+
     <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" required autofocus>
-    <label for="inputPassword">Password</label>
+
+<div class="p">
+    <b><label for="inputPassword">Mot de passe</label></b>
+</div>
+
     <input type="password" name="password" id="inputPassword" class="form-control" required>
 
     <input type="hidden" name="_csrf_token"
@@ -35,8 +49,13 @@
         </div>
     #}
 
-    <button class="btn btn-lg btn-primary" type="submit">
-        Sign in
-    </button>
+
+<input type="submit" id='submit' value="Me connecter!" >
+<input type="submit" id='submit2' value="Pas de compte ? M'inscrire" >
+
 </form>
+
+
+
+</div>
 {% endblock %}

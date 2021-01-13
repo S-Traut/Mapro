@@ -19,24 +19,24 @@ class HomeController extends AbstractController
      */
     public function show(Request $request, MagasinRepository $magasinRepo, PaginatorInterface $paginator): Response
     {
-
-        if (isset($_COOKIE['userLongitude']) && isset($_COOKIE['userLatitude'])) {
-
+        if (isset($_COOKIE['userLongitude']) && isset($_COOKIE['userLatitude'])) 
+        {               
             //récupérer les coordonnées géo de l'utilisateur
             $cookies = $request->cookies;
             $longitude = $cookies->get('userLongitude');
             $latitude = $cookies->get('userLatitude');
-
+            
             //creation de la searchForm
             $searchForm = $this->createForm(SearchType::class);
             $searchForm->handleRequest($request);
 
-            if ($searchForm->isSubmitted() && $searchForm->isValid()) {
-                
+            if ($searchForm->isSubmitted() && $searchForm->isValid()) 
+            {
                 $nom = $searchForm->getData();
                 $donnees = $magasinRepo->search($nom, $longitude, $latitude);
 
-                if ($donnees == null) {
+                if ($donnees == null) 
+                {
                     $this->addFlash('erreur', 'Aucun magasin trouvé');
                 }
 
@@ -56,5 +56,30 @@ class HomeController extends AbstractController
         }
 
         return $this->render("home/prehome.html.twig", []);
+    }
+
+    /**
+     * Liste les magasins par categories
+     * @Route("/categorie/{id<\d+>}")
+     */
+    public function listeMagasin(Request $request, MagasinRepository $magasinRepo, PaginatorInterface $paginator, $id)
+    {
+        //récupérer les coordonnées géo de l'utilisateur
+        $cookies = $request->cookies;
+        $longitude = $cookies->get('userLongitude');
+        $latitude = $cookies->get('userLatitude');
+
+        $donnees = $magasinRepo->searchCategorie($id, $longitude, $latitude);
+
+        if ($donnees == null) {
+            $this->addFlash('erreur', 'Aucun magasin trouvé');
+        }
+
+        //pagination
+        $magasins = $paginator->paginate($donnees, $request->query->getInt('page', 1), 4);
+
+        return $this->render('home/categorieliste.html.twig', [
+            'magasins' => $magasins,
+        ]);
     }
 }
