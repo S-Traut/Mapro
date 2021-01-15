@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Repository\ArticleRepository;
+use App\Repository\ImageRepository;
 use App\Repository\MagasinRepository;
 use Doctrine\DBAL\Types\TextType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -22,7 +23,8 @@ class HomeController extends AbstractController
         Request $request,
         MagasinRepository $magasinRepo,
         PaginatorInterface $paginator,
-        ArticleRepository $articleRepo
+        ArticleRepository $articleRepo,
+        ImageRepository $imageRepo
     ): Response {
         if (isset($_COOKIE['userLongitude']) && isset($_COOKIE['userLatitude'])) {
             //récupérer les coordonnées géo de l'utilisateur
@@ -53,9 +55,15 @@ class HomeController extends AbstractController
 
             //récup des articles populaire
             $articles = $articleRepo->findArticlesPopulairesHome($longitude, $latitude);
+            //$images = $imageRepo->ImagesArticlesPopulaire();
+            $images = $imageRepo->findAll();
+
+
+            //var_dump($articles[0] . image);
 
             return $this->render('home/home.html.twig', [
                 'articles' => $articles,
+                'images' => $images,
                 'searchForm' => $searchForm->createView()
             ]);
         }
