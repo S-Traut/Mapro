@@ -22,11 +22,26 @@ class ImageRepository extends ServiceEntityRepository
     /**
      * Images des Articles populaire à afficher sur la page home
      */
-    public function ImagesArticlesPopulaire()
+    public function ImagesArticlesPopulaire($articles)
     {
-        $tableau = [14, 25, 39];
-        //$tableau = [$articles[0] . 'id', $articles[1] . 'id', $articles[2] . 'id'];
+        //tableau des id d'articles
+        $tableau = [
+            $articles[0]->getId(),
+            $articles[1]->getId(),
+            $articles[2]->getId(),
+            $articles[3]->getId(),
+            $articles[4]->getId(),
+            $articles[5]->getId(),
+            $articles[6]->getId(),
+            $articles[7]->getId(),
+            $articles[8]->getId(),
+            $articles[9]->getId(),
+            $articles[10]->getId(),
+            $articles[11]->getId()
+        ];
+        //join tous les articles concernés
         $ids = join("','", $tableau);
+        //toutes les tables image concernées
         $sql = "image.article in ('$ids')";
 
         return $this->createQueryBuilder('image')

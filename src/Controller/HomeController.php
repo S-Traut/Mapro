@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Repository\ArticleRepository;
 use App\Repository\ImageRepository;
 use App\Repository\MagasinRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\DBAL\Types\TextType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -36,6 +37,12 @@ class HomeController extends AbstractController
             $searchForm = $this->createForm(SearchType::class);
             $searchForm->handleRequest($request);
 
+            //récup des articles populaire
+            $articles = $articleRepo->findArticlesPopulairesHome($longitude, $latitude);
+
+            //récup les images des articles populaire
+            $images = $imageRepo->ImagesArticlesPopulaire($articles);
+
             //si une recherche a été soumise
             if ($searchForm->isSubmitted() && $searchForm->isValid()) {
                 $nom = $searchForm->getData();
@@ -49,17 +56,11 @@ class HomeController extends AbstractController
                 $magasins = $paginator->paginate($donnees, $request->query->getInt('page', 1), 4);
                 return $this->render('home/resultathome.html.twig', [
                     'magasins' => $magasins,
+                    'articles' => $articles,
+                    'images' => $images,
                     'searchForm' => $searchForm->createView()
                 ]);
             }
-
-            //récup des articles populaire
-            $articles = $articleRepo->findArticlesPopulairesHome($longitude, $latitude);
-            //$images = $imageRepo->ImagesArticlesPopulaire();
-            $images = $imageRepo->findAll();
-
-
-            //var_dump($articles[0] . image);
 
             return $this->render('home/home.html.twig', [
                 'articles' => $articles,
