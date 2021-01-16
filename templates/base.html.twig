@@ -6,23 +6,26 @@
 			{% block title %}Mapro
 			{% endblock %}
 		</title>
-		<!-- Bootstrap -->
+	
+		<!-- Bootstrap CSS build -->
 		<link rel="stylesheet" href="{{ asset('build/app.css') }}">
 
 		<link rel="stylesheet" href="{{ asset('css/style.css') }}">
-		<link
-		rel="stylesheet" href="{{ asset('css/header.css') }}">
-
+		<link rel="stylesheet" href="{{ asset('css/header.css') }}">
+	
 		<!-- Viewport mobile -->
 		<meta name="viewport" content="width=device-width, initial-scale=1.0"> {% block stylesheets %}{% endblock %}
-		</head>
-		<body>
-			{% include 'header.html.twig' %}
-			<div class="container"> {% block body %}{% endblock %}
-				</div>
-				<script src="{{ asset('build/app.js') }}"></script>
-				<!-- Fontawesome -->
-				<script src="https://kit.fontawesome.com/8245776c75.js" crossorigin="anonymous"></script>
-				{% block javascripts %}{% endblock %}
-			</body>
-		</html>
+	</head>
+	<body>
+		{% include 'header.html.twig' %}
+		<div class="container"> {% block body %}{% endblock %}</div>
+		
+		<!-- Scripts -->
+		<!-- Bootstrap JS build -->
+		<script src="{{ asset('build/app.js') }}"></script>
+		
+		<!-- Fontawesome -->
+		<script src="https://kit.fontawesome.com/8245776c75.js" crossorigin="anonymous"></script>
+		{% block javascripts %}{% endblock %}
+	</body>
+</html>
