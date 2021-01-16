@@ -40,8 +40,7 @@ class HomeController extends AbstractController
             //récup des articles populaire
             $articles = $articleRepo->findArticlesPopulairesHome($longitude, $latitude);
 
-            //récup les images des articles populaire
-            $images = $imageRepo->ImagesArticlesPopulaire($articles);
+            $images = $articles[0]->getImage()[0];
 
             //si une recherche a été soumise
             if ($searchForm->isSubmitted() && $searchForm->isValid()) {
@@ -57,14 +56,12 @@ class HomeController extends AbstractController
                 return $this->render('home/resultathome.html.twig', [
                     'magasins' => $magasins,
                     'articles' => $articles,
-                    'images' => $images,
                     'searchForm' => $searchForm->createView()
                 ]);
             }
 
             return $this->render('home/home.html.twig', [
                 'articles' => $articles,
-                'images' => $images,
                 'searchForm' => $searchForm->createView()
             ]);
         }
