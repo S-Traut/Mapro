@@ -1,26 +1,21 @@
-body{
-    background: white;
-}
-
 .p{
     color:white;
 }
 
-
-#container{
+#containerX{
     width:350px;
     margin:0 auto;
     margin-top:10%;
 }
 /* Bordered form */
-form {
+.background-box {
     width:90%;
     padding: 30px;
     border: 1px solid #f1f1f1;
     background: #808080;
     box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
 }
-#container h1{
+#containerX h1{
 	text-align:center;
     width: 78%;
     margin: 0 auto;
@@ -41,7 +36,7 @@ input[type=email], input[type=password] {
 }
 
 /* Set a style for all buttons */
-#submit {
+#submitX {
     background-color: #67BE4B;
     color: white;
     padding: 14px 20px;
@@ -55,7 +50,7 @@ input[type=email], input[type=password] {
 	left:20px;
 }
 
-#submit:hover {
+#submitX:hover {
     background-color: white;
     color: #53af57;
     border: 1px solid #53af57;
