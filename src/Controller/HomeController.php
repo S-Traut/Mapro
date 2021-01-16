@@ -2,7 +2,10 @@
 
 namespace App\Controller;
 
+use App\Repository\ArticleRepository;
+use App\Repository\ImageRepository;
 use App\Repository\MagasinRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\DBAL\Types\TextType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -17,8 +20,13 @@ class HomeController extends AbstractController
     /**
      * @Route("/", name="landing")
      */
-    public function show(Request $request, MagasinRepository $magasinRepo, PaginatorInterface $paginator): Response
-    {
+    public function show(
+        Request $request,
+        MagasinRepository $magasinRepo,
+        PaginatorInterface $paginator,
+        ArticleRepository $articleRepo,
+        ImageRepository $imageRepo
+    ): Response {
         if (isset($_COOKIE['userLongitude']) && isset($_COOKIE['userLatitude'])) {
             //récupérer les coordonnées géo de l'utilisateur
             $cookies = $request->cookies;
@@ -29,6 +37,12 @@ class HomeController extends AbstractController
             $searchForm = $this->createForm(SearchType::class);
             $searchForm->handleRequest($request);
 
+            //récup des articles populaire
+            $articles = $articleRepo->findArticlesPopulairesHome($longitude, $latitude);
+
+            $images = $articles[0]->getImage()[0];
+
+            //si une recherche a été soumise
             if ($searchForm->isSubmitted() && $searchForm->isValid()) {
                 $nom = $searchForm->getData();
                 $donnees = $magasinRepo->search($nom, $longitude, $latitude);
@@ -41,13 +55,13 @@ class HomeController extends AbstractController
                 $magasins = $paginator->paginate($donnees, $request->query->getInt('page', 1), 4);
                 return $this->render('home/resultathome.html.twig', [
                     'magasins' => $magasins,
+                    'articles' => $articles,
                     'searchForm' => $searchForm->createView()
                 ]);
             }
 
             return $this->render('home/home.html.twig', [
-                'Longitude' => $cookies->get('userLongitude'),
-                'Latitude' => $cookies->get('userLatitude'),
+                'articles' => $articles,
                 'searchForm' => $searchForm->createView()
             ]);
         }
