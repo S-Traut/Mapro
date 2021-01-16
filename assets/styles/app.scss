@@ -1,8 +1,12 @@
-body {
-    background-color: lightgray;
-}
+// Fonts import
+@import url(https://fonts.googleapis.com/css?family=Comfortaa:200,300,400,700);
+$headings-font-family:Comfortaa;
+$font-family-base:Comfortaa;
+$headings-font-weight:700;
 
+// Colors override
 $primary: rgb(42, 184, 101);
 
-@import '~bootstrap/scss/bootstrap';
 
+//Garder cette ligne à la fin du fichier
+@import '~bootstrap/scss/bootstrap';
