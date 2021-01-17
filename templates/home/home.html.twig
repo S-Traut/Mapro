@@ -1,21 +1,22 @@
 {% extends "base.html.twig" %}
 
 {% block body %}
+	<div
+		class="container">
+		<!-- cacher la recherche -->
+		{% block recherche %}{% endblock %}
 
-	<!-- cacher la recherche -->
-	{% block recherche %}{% endblock %}
+		<div class="recherche-mag">
+			<div class="form-group">
 
-	<div class="recherche-mag">
-		<div class="form-group">
+				{{ form_start(searchForm) }}
 
-			{{ form_start(searchForm) }}
+				{{ form_widget(searchForm) }}
 
-			{{ form_widget(searchForm) }}
-
-			<button class="btn btn-outline-secondary">Rechercher</button>
-			{{ form_end(searchForm) }}
+				<button class="btn btn-outline-secondary">Rechercher</button>
+				{{ form_end(searchForm) }}
+			</div>
 		</div>
-	</div>
 
 	<!-- grille catégories -->
 	<section class="categories-container">
@@ -120,9 +121,31 @@
 		</div>
 	</section>
 
+		<!-- grille des plus consultés -->
+		<section class="populaire-container">
+			<div class="title">
+				<h2>Populaire</h2>
+			</div>
+			<div class="populaire">
+				<div class="content"><img src="http://placehold.it/360x360" alt="image1"></div>
+				<div class="content"><img src="http://placehold.it/360x360" alt="image2"></div>
+				<div class="content"><img src="http://placehold.it/360x360" alt="image3"></div>
+				<div class="content"><img src="http://placehold.it/360x360" alt="image4"></div>
+				<div class="content"><img src="http://placehold.it/360x360" alt="image5"></div>
+				<div class="content"><img src="http://placehold.it/360x360" alt="image6"></div>
+				<div class="content"><img src="http://placehold.it/360x360" alt="image7"></div>
+				<div class="content"><img src="http://placehold.it/360x360" alt="image8"></div>
+				<div class="content"><img src="http://placehold.it/360x360" alt="image9"></div>
+				<div class="content"><img src="http://placehold.it/360x360" alt="image10"></div>
+				<div class="content"><img src="http://placehold.it/360x360" alt="image11"></div>
+				<div class="content"><img src="http://placehold.it/360x360" alt="image12"></div>
+			</div>
+		</section>
+	</div>
 
 {% endblock %}
 
 {% block javascripts %}
 	<script src="{{ asset('js/categories.js') }}"></script>
 {% endblock %}
+
