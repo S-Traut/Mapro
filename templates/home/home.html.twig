@@ -2,24 +2,8 @@
 
 {% block body %}
 
-	<div class="recherche-mag">
-		<div class="form-group">
 
-			{{ form_start(searchForm) }}
-
-			<div class="row">
-				<div class="col"></div>
-				<div class="col">
-					{{ form_widget(searchForm) }}
-					<button class="btn btn-outline-secondary">Rechercher</button>
-				</div>
-				<div class="col"></div>
-			</div>
-
-
-			{{ form_end(searchForm) }}
-		</div>
-	</div>
+	{% include 'module/recherche.html.twig' %}
 
 
 	<!-- grille catégories -->

@@ -53,6 +53,9 @@ class HomeController extends AbstractController
 
                 //pagination
                 $magasins = $paginator->paginate($donnees, $request->query->getInt('page', 1), 4);
+
+                dump($magasins);
+
                 return $this->render('home/resultathome.html.twig', [
                     'magasins' => $magasins,
                     'articles' => $articles,
