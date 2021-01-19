@@ -7,17 +7,26 @@
 
 			{{ form_start(searchForm) }}
 
-			{{ form_widget(searchForm) }}
+			<div class="row">
+				<div class="col"></div>
+				<div class="col">
+					{{ form_widget(searchForm) }}
+					<button class="btn btn-outline-secondary">Rechercher</button>
+				</div>
+				<div class="col"></div>
+			</div>
 
-			<button class="btn btn-outline-secondary">Rechercher</button>
+
 			{{ form_end(searchForm) }}
 		</div>
 	</div>
 
+
 	<!-- grille catégories -->
 	{% include 'module/categories.html.twig' %}
 
+
 	<!-- grille des plus consultés -->
-	{% include 'module/articlespopulaire.html.twig' %}
+	{% include 'module/articlespop.html.twig' %}
 
 {% endblock %}
