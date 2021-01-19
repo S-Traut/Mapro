@@ -9,13 +9,11 @@ use Symfony\Component\Routing\Annotation\Route;
 class UtilisateurController extends AbstractController
 {
     /**
-     * @Route("/utilisateur", name="utilisateur")
+     * @Route("/me", name="menu")
      */
     public function index(): Response
     {
-        
-        return $this->render('utilisateur/login.html.twig', [
-            'controller_name' => 'UtilisateurController',
+        return $this->render('utilisateur/index.html.twig', [
         ]);
     }
 }
