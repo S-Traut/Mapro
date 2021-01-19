@@ -3,11 +3,18 @@ label {
     font-weight: 400;
 }
 
+.form-header {
+    height: 300px;
+    background: linear-gradient(45deg, rgba(143,188,139,1) 0%, rgba(118,172,84,1) 100%);
+    color: white;
+    vertical-align: middle;
+    margin-bottom: 50px;
+    padding-top: 80px;
+}
+
 
 @media only screen and (max-width: 767px) {
     .form-control {
         height: 50px;
     }
-
-
 }
