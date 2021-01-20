@@ -14,6 +14,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\Form\Extension\Core\Type\SearchType;
+use Symfony\Component\Form\FormInterface;
 
 class HomeController extends AbstractController
 {
@@ -24,8 +25,7 @@ class HomeController extends AbstractController
         Request $request,
         MagasinRepository $magasinRepo,
         PaginatorInterface $paginator,
-        ArticleRepository $articleRepo,
-        ImageRepository $imageRepo
+        ArticleRepository $articleRepo
     ): Response {
         if (isset($_COOKIE['userLongitude']) && isset($_COOKIE['userLatitude'])) {
             //récupérer les coordonnées géo de l'utilisateur
@@ -40,27 +40,18 @@ class HomeController extends AbstractController
             //récup des articles populaire
             $articles = $articleRepo->findArticlesPopulairesHome($longitude, $latitude);
 
-            $images = $articles[0]->getImage()[0];
-
             //si une recherche a été soumise
             if ($searchForm->isSubmitted() && $searchForm->isValid()) {
-                $nom = $searchForm->getData();
-                $donnees = $magasinRepo->search($nom, $longitude, $latitude);
 
-                if ($donnees == null) {
-                    $this->addFlash('erreur', 'Aucun magasin trouvé');
-                }
-
-                //pagination
-                $magasins = $paginator->paginate($donnees, $request->query->getInt('page', 1), 4);
-
-                dump($magasins);
-
-                return $this->render('home/resultathome.html.twig', [
-                    'magasins' => $magasins,
-                    'articles' => $articles,
-                    'searchForm' => $searchForm->createView()
-                ]);
+                return $this->search(
+                    $request,
+                    $magasinRepo,
+                    $paginator,
+                    $searchForm,
+                    $articles,
+                    $longitude,
+                    $latitude
+                );
             }
 
             return $this->render('home/home.html.twig', [
@@ -76,14 +67,65 @@ class HomeController extends AbstractController
      * Liste les magasins par categories
      * @Route("/categorie/{id<\d+>}")
      */
-    public function listeMagasin(Request $request, MagasinRepository $magasinRepo, PaginatorInterface $paginator, $id)
-    {
+    public function listeMagasin(
+        Request $request,
+        MagasinRepository $magasinRepo,
+        PaginatorInterface $paginator,
+        $id,
+        ArticleRepository $articleRepo
+    ) {
         //récupérer les coordonnées géo de l'utilisateur
         $cookies = $request->cookies;
         $longitude = $cookies->get('userLongitude');
         $latitude = $cookies->get('userLatitude');
 
+        //creation de la searchForm
+        $searchForm = $this->createForm(SearchType::class);
+        $searchForm->handleRequest($request);
+
+        //résultat de la recherche des magasins
         $donnees = $magasinRepo->searchCategorie($id, $longitude, $latitude);
+
+        //si une recherche a été soumise
+        if ($searchForm->isSubmitted() && $searchForm->isValid()) {
+
+            //récup des articles populaire
+            $articles = $articleRepo->findArticlesPopulairesHome($longitude, $latitude);
+
+            return $this->search(
+                $request,
+                $magasinRepo,
+                $paginator,
+                $searchForm,
+                $articles,
+                $longitude,
+                $latitude
+            );
+        }
+
+        //pagination
+        $magasins = $paginator->paginate($donnees, $request->query->getInt('page', 1), 4);
+
+        return $this->render('home/categorieliste.html.twig', [
+            'magasins' => $magasins,
+            'searchForm' => $searchForm->createView()
+        ]);
+    }
+
+    public function search(
+        Request $request,
+        MagasinRepository $magasinRepo,
+        PaginatorInterface $paginator,
+        FormInterface $searchForm,
+        $articles,
+        $longitude,
+        $latitude
+    ) {
+
+        $nom = $searchForm->getData();
+
+        //résultat de la recherche des magasins
+        $donnees = $magasinRepo->search($nom, $longitude, $latitude);
 
         if ($donnees == null) {
             $this->addFlash('erreur', 'Aucun magasin trouvé');
@@ -92,8 +134,10 @@ class HomeController extends AbstractController
         //pagination
         $magasins = $paginator->paginate($donnees, $request->query->getInt('page', 1), 4);
 
-        return $this->render('home/categorieliste.html.twig', [
+        return $this->render('home/resultathome.html.twig', [
             'magasins' => $magasins,
+            'articles' => $articles,
+            'searchForm' => $searchForm->createView()
         ]);
     }
 }
