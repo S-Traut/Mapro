@@ -1,14 +1,39 @@
 {% extends "base.html.twig" %}
 
 {% block body %}
+	<div
+		class="container">
+		<!-- cacher la recherche -->
+		{% block recherche %}{% endblock %}
 
 
-	{% include 'module/recherche.html.twig' %}
+		{% include 'module/recherche.html.twig' %}
 
 
-	<!-- grille catégories -->
-	{% include 'module/categories.html.twig' %}
+		<!-- grille catégories -->
+		{% include 'module/categories.html.twig' %}
 
+		<!-- grille des plus consultés -->
+		<section class="populaire-container">
+			<div class="title">
+				<h2>Populaire</h2>
+			</div>
+			<div class="populaire">
+				<div class="content"><img src="http://placehold.it/360x360" alt="image1"></div>
+				<div class="content"><img src="http://placehold.it/360x360" alt="image2"></div>
+				<div class="content"><img src="http://placehold.it/360x360" alt="image3"></div>
+				<div class="content"><img src="http://placehold.it/360x360" alt="image4"></div>
+				<div class="content"><img src="http://placehold.it/360x360" alt="image5"></div>
+				<div class="content"><img src="http://placehold.it/360x360" alt="image6"></div>
+				<div class="content"><img src="http://placehold.it/360x360" alt="image7"></div>
+				<div class="content"><img src="http://placehold.it/360x360" alt="image8"></div>
+				<div class="content"><img src="http://placehold.it/360x360" alt="image9"></div>
+				<div class="content"><img src="http://placehold.it/360x360" alt="image10"></div>
+				<div class="content"><img src="http://placehold.it/360x360" alt="image11"></div>
+				<div class="content"><img src="http://placehold.it/360x360" alt="image12"></div>
+			</div>
+		</section>
+	</div>
 
 	<!-- grille des plus consultés -->
 	{% include 'module/articlespop.html.twig' %}
