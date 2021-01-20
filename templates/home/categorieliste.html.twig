@@ -1,21 +1,27 @@
 {% extends "base.html.twig" %}
 
 {% block body %}
+
+	<!-- module recherche -->
+	{% include 'module/recherche.html.twig' %}
+
 	<!-- grille catégories -->
 	<section id="content">
 
 		{% for magasin in magasins %}
-			<article>
-				<div class="card border-light mb-3" id="articlesRecents" style="max-width: 25rem;margin:1.5em;">
-					<a href="/shop/{{magasin.id}}" class="magasin">
-						<img src="{{magasin.image}}" alt="">
-						<div class="info">
-							<h4>{{ magasin.nom }}</h4>
-							<p>{{magasin.description}}</p>
+			<div class="card mb-3">
+				<div class="row g-0">
+					<div class="col-md-4">
+						<img src="{{magasin.image}}" alt="..." style="width: 100%">
+					</div>
+					<div class="col-md-8">
+						<div class="card-body">
+							<h5 class="card-title">{{ magasin.nom }}</h5>
+							<p class="card-text">{{magasin.description}}</p>
 						</div>
-					</a>
+					</div>
 				</div>
-			</article>
+			</div>
 		{% endfor %}
 
 	</section>
