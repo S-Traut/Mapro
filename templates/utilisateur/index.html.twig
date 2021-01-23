@@ -1,5 +1,15 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-<h1>menu</h1>
+	<div class="form-header">
+		<div class="container">
+			<h1>Mon profil</h1>
+			<p>Consultez & modifiez vos informations personnelles</p>
+		</div>
+	</div>
+    <div class="container">
+        {{ include("form.html.twig", {form: form, button: 'Créer'}) }}
+    </div>
+
 {% endblock %}
+
