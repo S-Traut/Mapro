@@ -33,4 +33,12 @@ class SecurityController extends AbstractController
     {
         throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
     }
+
+    /**
+     * @Route("/inscription", name="inscription")
+     */
+    public function inscription()
+    {
+        return $this->render('security/inscription.html.twig');
+    }
 }
