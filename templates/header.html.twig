@@ -1,15 +1,21 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="/">
-      <img src="/docs/5.0/assets/brand/bootstrap-logo.svg" alt="" width="30" height="30" class="d-inline-block align-top">
-      Mapro
-    </a>
-    <div class="d-flex">
-        {% if not app.user %}
-        <a href="/login" class="btn btn-primary me-md-2">Me connecter</a>
-        {% else %}
-        <a href="/shop/new" class="fas fa-bars icon-btn-light"></a>
-        {% endif %}
-    </div>
-  </div>
+<script src="{{ asset('./js/navbar.js') }}"></script>
+<nav class="navbar navbar-expand-lg navbar-light">
+	<div class="container-fluid">
+		<a class="navbar-brand" href="/">
+			<img src="{{ asset('./image/logo.svg') }}" alt="" width="30" height="30" class="d-inline-block align-top">
+			Mapro
+		</a>
+		{% if not app.user %}
+			<a href="/login" class="btn btn-outline-primary me-md-2">Me connecter</a>
+		{% else %}
+			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <a class="nav-link" href="/me">Mon profil</a>
+                {%if is_granted('ROLE_VENDEUR') %}<a class="nav-link" href="/me/shops">Mes magasins</a>{% endif %}
+                {%if is_granted('ROLE_ADMIN') %}<a class="nav-link" href="/admin">Administration</a>{% endif %}
+			</div>
+		{% endif %}
+	</div>
 </nav>

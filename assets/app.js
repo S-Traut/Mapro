@@ -14,8 +14,6 @@ import './styles/pages/forms.scss'
 import './styles/pages/landing.scss'
 import './styles/pages/categories.scss'
 
-//import './styles/pages/connexion.scss';
-//import './styles/pages/landing.scss';
-
+import './styles/components/navbar.scss'
 // start the Stimulus application
 import './bootstrap';
