@@ -12,9 +12,9 @@
 				<span class="navbar-toggler-icon"></span>
 			</button>
 			<div class="collapse navbar-collapse" id="navbarSupportedContent">
-				<a class="nav-link" href="/me">Mon profil</a>
-				<a class="nav-link" href="/me/shops">Mes magasins</a>
-				<a class="nav-link" href="/admin">Administration</a>
+                <a class="nav-link" href="/me">Mon profil</a>
+                {%if is_granted('ROLE_VENDEUR') %}<a class="nav-link" href="/me/shops">Mes magasins</a>{% endif %}
+                {%if is_granted('ROLE_ADMIN') %}<a class="nav-link" href="/admin">Administration</a>{% endif %}
 			</div>
 		{% endif %}
 	</div>
