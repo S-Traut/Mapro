@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+	<div class="form-header">
+		<div class="container">
+			<h1>Mes magasins</h1>
+			<p>Créez, consultez et modifiez vos magasins</p>
+		</div>
+	</div>
+    <div class="container">
+        {% for magasin in magasins %}
+            <a class="btn btn-primary btn-block" type="button" href="/shop/{{ magasin.id }}">{{ magasin.nom }}</a>
+        {% endfor %}
+
+        <a href="/shop/new" class="btn btn-info btn-block" type="button">Ajouter un nouveau magasin</a>
+    </div>
+   {% endblock %}
