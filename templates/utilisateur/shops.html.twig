@@ -7,7 +7,9 @@
 			<p>Créez, consultez et modifiez vos magasins</p>
 		</div>
 	</div>
-    
-    
-
-{% endblock %}
+    <div class="container">
+        {% for magasin in magasins %}
+            <a class="btn btn-primary btn-block" type="button" href="/shop/{{ magasin.id }}">{{ magasin.nom }}</a>
+        {% endfor %}
+    </div>
+   {% endblock %}

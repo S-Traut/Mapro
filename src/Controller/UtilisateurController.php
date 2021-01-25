@@ -33,10 +33,13 @@ class UtilisateurController extends AbstractController
     {
         if($this->isGranted('ROLE_USER') == false)
             return $this->redirectToRoute("landing");
+
+        $utilisateur = $this->getUser();
+        $magasins = $utilisateur->getMagasins();
         
 
         return $this->render('utilisateur/shops.html.twig', [
-            
+            'magasins' => $magasins
         ]);
         
     }
