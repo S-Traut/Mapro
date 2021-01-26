@@ -11,6 +11,8 @@ use App\Entity\Article;
 use App\Entity\StatistiqueArticle;
 use App\Entity\TypeArticle;
 use App\Entity\TypeMagasin;
+use App\Entity\Image;
+
 use DateTime;
 use DateTimeInterface;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
@@ -67,7 +69,15 @@ class MagasinFixtures extends Fixture implements DependentFixtureInterface
                     ->setEtat(1)
                     ->setMagasin($magasin)
                     ->setType($typeArticle);
-                $manager->persist($article);
+                $manager->persist($article);   
+
+                //Création d'une image d'article             
+                $image = new Image();
+                $image
+                    ->setArticle($article)
+                    ->setImage($faker->imageUrl());
+                $manager->persist($image);
+                
 
                 //Création des statistiques articles
                 $statsArticle = new StatistiqueArticle();
