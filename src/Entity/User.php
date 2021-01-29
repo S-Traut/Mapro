@@ -60,7 +60,12 @@ class User implements UserInterface
     private $magasins;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="string", length=15, nullable=true)
+     */
+    private $telephone;
+     
+    /**
+     * @ORM\Column(type="string", length=15, nullable=true)
      */
     private $isVerified = false;
 
@@ -231,6 +236,18 @@ class User implements UserInterface
         return $this;
     }
 
+    public function getTelephone(): ?string
+    {
+        return $this->telephone;
+    }
+
+    public function setTelephone(?string $telephone): self
+    {
+        $this->telephone = $telephone;
+
+        return $this;
+    }
+    
     public function isVerified(): bool
     {
         return $this->isVerified;
