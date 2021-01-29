@@ -57,6 +57,11 @@ class User implements UserInterface
      */
     private $magasins;
 
+    /**
+     * @ORM\Column(type="string", length=15, nullable=true)
+     */
+    private $telephone;
+
     public function __construct()
     {
         $this->magasins = new ArrayCollection();
@@ -220,6 +225,18 @@ class User implements UserInterface
                 $magasin->setIdUtilisateur(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getTelephone(): ?string
+    {
+        return $this->telephone;
+    }
+
+    public function setTelephone(?string $telephone): self
+    {
+        $this->telephone = $telephone;
 
         return $this;
     }
