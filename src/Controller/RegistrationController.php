@@ -31,13 +31,14 @@ class RegistrationController extends AbstractController
     public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder, GuardAuthenticatorHandler $guardHandler, MaproCustomAuthenticator $authenticator): Response
     {
 
-        //dump($request);
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
 
+            //si le checkbox vendeur est selectionné
+            //création du compte vendeur
             if ($form->get('vendeur')->getData()) {
 
                 $user->setPassword(
@@ -46,6 +47,7 @@ class RegistrationController extends AbstractController
                         $form->get('plainPassword')->getData()
                     )
                 );
+                //définition du role vendeur
                 $user->setRoles(['ROLE_VENDEUR']);
 
                 $entityManager = $this->getDoctrine()->getManager();
@@ -53,12 +55,15 @@ class RegistrationController extends AbstractController
                 $entityManager->flush();
             } else {
 
+                //si checkbox n'est pas selectionné
+                //création du compte client
                 $user->setPassword(
                     $passwordEncoder->encodePassword(
                         $user,
                         $form->get('plainPassword')->getData()
                     )
                 );
+                //définition du role client
                 $user->setRoles(['ROLE_CLIENT']);
 
                 $entityManager = $this->getDoctrine()->getManager();
@@ -66,15 +71,16 @@ class RegistrationController extends AbstractController
                 $entityManager->flush();
             }
 
-            /*$this->emailVerifier->sendEmailConfirmation(
+            //envoi d'un mail de vérification
+            $this->emailVerifier->sendEmailConfirmation(
                 'app_verify_email',
                 $user,
                 (new TemplatedEmail())
-                    ->from(new Address('lionelharri@gmail.com', '"Mapro inscription"'))
+                    ->from(new Address('vintage.mapro@gmail.com', '"Mapro inscription"'))
                     ->to($user->getEmail())
-                    ->subject('Please Confirm your Email')
+                    ->subject('confirmation de votre adresse email')
                     ->htmlTemplate('registration/confirmation_email.html.twig')
-            );*/
+            );
 
             return $guardHandler->authenticateUserAndHandleSuccess(
                 $user,
@@ -106,7 +112,7 @@ class RegistrationController extends AbstractController
         }
 
         // @TODO Change the redirect on success and handle or remove the flash message in your templates
-        $this->addFlash('success', 'Your email address has been verified.');
+        $this->addFlash('success', 'Votre adresse a été vérifié avec succès');
 
         return $this->redirectToRoute('app_register');
     }
