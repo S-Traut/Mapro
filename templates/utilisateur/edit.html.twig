@@ -1,0 +1,17 @@
+<h2>Détails</h2>
+{{ form_start(form) }}
+    <div class="my-custom-class-for-errors">
+        {{ form_errors(form) }}
+    </div>
+{{ form_end(form) }}
+
+<h2>Adresses</h2>
+{% for adresse in adresses %}
+    <h1>Adresse</h1>
+{% endfor %}
+{% if adresses[0] is not defined %}<div>Vous n'avez pas d'adresse enregistrée.</div>{% endif %}
+<a href="#" class="btn btn-primary">Ajouter une adresse</a>
+
+<h2>Zone de danger !</h2>
+<h5>Mot de passe</h5>
+{{ include("form.html.twig", {form: password_form, button: 'Créer'}) }}
