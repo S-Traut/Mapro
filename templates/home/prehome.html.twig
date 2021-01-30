@@ -1,5 +1,10 @@
 {% extends "base.html.twig" %}
 
+{% block headScripts %}
+<script src="{{ asset('./js/map.js') }}"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAXUQPahIcvHZNrAMxqHo91JS7z5VOLLbI&callback=initMap&libraries=&v=weekly" defer></script>
+{% endblock %}
+
 {% block body %}
 
 	<!-- cacher la recherche -->
