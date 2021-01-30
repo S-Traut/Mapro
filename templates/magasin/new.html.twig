@@ -1,5 +1,10 @@
 {% extends "base.html.twig" %}
 
+{% block headScripts %}
+	<link rel="stylesheet" href="{{ asset('css/map.css') }}">
+	<script src="https://maps.googleapis.com/maps/api/js?key={{ map_api_key }}&callback=initMap&libraries=&v=weekly" defer></script>
+{% endblock %}
+
 {% block stylesheets %} <link rel="stylesheet" href="{{ asset('/css/Form/magasin.new.css') }}"> {% endblock %}
 
 {% block body %}
@@ -10,6 +15,10 @@
         </div>
     </div>
     <div class="container">
-        {{ include("form.html.twig", {form: form, button: 'Créer'}) }}
+        {{ include("magasin/form.new.html.twig", {form: form, button: 'Créer'}) }}
     </div>
+{% endblock %}
+
+{% block javascripts %}
+	<script src="{{ asset('js/map.js') }}"></script>
 {% endblock %}
