@@ -2,6 +2,7 @@ let map;
 let currentPosition;
 let searchBar = document.getElementById('search');
 let formCreationMagasin = document.forms[0];
+let setLocalisation = document.getElementsByName('set_localisation')[0];
 
 function initMap() {
   map = new google.maps.Map(document.getElementById("map"), {
@@ -20,23 +21,29 @@ function initMap() {
   });
 }
 
-if(searchBar) {
-    searchBar.addEventListener("click", () => {
-        if(currentPosition != null) {
-            document.cookie = (`userLongitude=${currentPosition.lng}`);
-            document.cookie = (`userLatitude=${currentPosition.lat}`);
-            location.href = "/";
-        } else {
-            console.log("test");
-        }
-    });
+if (searchBar) {
+  searchBar.addEventListener("click", () => {
+    if (currentPosition != null) {
+      document.cookie = (`userLongitude=${currentPosition.lng}`);
+      document.cookie = (`userLatitude=${currentPosition.lat}`);
+      location.href = "/";
+    } else {
+      console.log("test");
+    }
+  });
 }
 
-if(formCreationMagasin) {
-    formCreationMagasin.addEventListener("submit", () => {
-        document.getElementById('creation_magasin_latitude').value = currentPosition.lat;
-        document.getElementById('creation_magasin_longitude').value = currentPosition.lng;
-    });
+if (formCreationMagasin) {
+  formCreationMagasin.addEventListener("submit", () => {
+    document.getElementById('creation_magasin_latitude').value = currentPosition.lat;
+    document.getElementById('creation_magasin_longitude').value = currentPosition.lng;
+  });
 }
 
-
+if (setLocalisation) {
+  setLocalisation.addEventListener("submit", () => {
+    console.log("test");
+    document.getElementById('set_localisation_latitude').value = currentPosition.lat;
+    document.getElementById('set_localisation_longitude').value = currentPosition.lng;
+  });
+}

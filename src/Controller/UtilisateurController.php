@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\Localisation;
 use App\Form\ChangePasswordType;
+use App\Form\SetLocalisationType;
 use Symfony\Component\HttpFoundation\Request;
 use App\Form\UserType;
 use Doctrine\ORM\EntityManagerInterface;
@@ -26,6 +28,7 @@ class UtilisateurController extends AbstractController
         $utilisateur = $this->getUser();
         $form = $this->createForm(UserType::class, $utilisateur);
         $form_password = $this->createForm(ChangePasswordType::class);
+        $form_localisation = $this->createForm(SetLocalisationType::class);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) 
@@ -48,11 +51,26 @@ class UtilisateurController extends AbstractController
             }
         }
 
+        $form_localisation->handleRequest($request);
+        if($form_localisation->isSubmitted() && $form_localisation->isValid())
+        {
+            
+            $localisation = new Localisation();
+            $em->persist($localisation);
+            $requestLocalisation = $request->get("set_localisation");
+            $localisation->setAdresse($requestLocalisation['adresse']);
+            $localisation->setLatitude($requestLocalisation['latitude']);
+            $localisation->setLongitude($requestLocalisation['longitude']);
+            $localisation->setUtilisateur($utilisateur);
+            $em->flush();
+        }
+
         return $this->render('utilisateur/index.html.twig', [
             'annonce' => $utilisateur,
             'form' => $form->createView(),
             'adresses' => $utilisateur->getLocalisation(),
-            'password_form' => $form_password->createView()
+            'password_form' => $form_password->createView(),
+            'localisation_form' => $form_localisation->createView(),
         ]);
     }
 

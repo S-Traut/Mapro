@@ -81,12 +81,12 @@ class Localisation
 
     public function getUtilisateur(): ?User
     {
-        return $this->utilisateur;
+        return $this->user;
     }
 
     public function setUtilisateur(?User $utilisateur): self
     {
-        $this->utilisateur = $utilisateur;
+        $this->user = $utilisateur;
 
         return $this;
     }
