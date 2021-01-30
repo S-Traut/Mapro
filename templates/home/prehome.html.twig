@@ -1,8 +1,8 @@
 {% extends "base.html.twig" %}
 
 {% block headScripts %}
-<script src="{{ asset('./js/map.js') }}"></script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAXUQPahIcvHZNrAMxqHo91JS7z5VOLLbI&callback=initMap&libraries=&v=weekly" defer></script>
+	<link rel="stylesheet" href="{{ asset('css/map.css') }}">
+	<script src="https://maps.googleapis.com/maps/api/js?key={{ map_api_key }}&callback=initMap&libraries=&v=weekly" defer></script>
 {% endblock %}
 
 {% block body %}
@@ -13,13 +13,19 @@
 		<div class="row" id="main-content">
 			<div class="col-sm-7">
 				<h2>Le commerce local, en ligne, et à coté de chez vous!</h2>
-				<div class="search">
-					<input class="form-control" type="text" placeholder="Indiquez votre adresse" aria-label="Search">
-					<button type="button" id="locate" class="btn btn-primary">
-						<i class="fas fa-location-arrow"></i>
+				<div id="map"></div>
+				<div
+					class="search">
+					<!-- <input class="form-control" type="text" placeholder="Indiquez votre adresse" aria-label="Search"> -->
+
+					<button type="button" id="search" class="btn btn-primary">
+						Lancer une recherche !
+						<button type="button" id="locate" class="btn btn-primary">
+							<i class="fas fa-location-arrow"></i>
+						</button>
 					</button>
 				</div>
-				<p>Utilisateur courant ?<br><a href="#">conntectez-vous !</a>
+				<p>Utilisateur courant ?<br><a href="/login">connectez-vous !</a>
 				</p>
 			</div>
 			<div class="col-5 d-none d-lg-block" id="popular-articles">
@@ -30,6 +36,8 @@
 {% endblock %}
 
 {% block javascripts %}
+	<script src="{{ asset('js/map.js') }}"></script>
 	<script src="{{ asset('js/localisation.js') }}"></script>
+
 {% endblock %}
 

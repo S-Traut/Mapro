@@ -1,0 +1,8 @@
+#map {
+    height: 300px;
+}
+
+#search {
+    display: flex;
+    margin-right: 10px;
+}
