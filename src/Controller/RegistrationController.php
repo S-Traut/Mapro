@@ -83,7 +83,6 @@ class RegistrationController extends AbstractController
             );
 
             $this->addFlash('confirmation', 'Un mail de confirmation vous a été envoyé');
-            /*return $this->redirectToRoute('app_login');*/
 
             /* return $guardHandler->authenticateUserAndHandleSuccess(
                 $user,
@@ -92,6 +91,7 @@ class RegistrationController extends AbstractController
                 'main'
             );*/
 
+            //page success
             return $this->render('registration/success.html.twig');
         }
 
@@ -100,14 +100,6 @@ class RegistrationController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/successful_verification", name="success")
-     */
-    public function successMail()
-    {
-
-        return $this->redirectToRoute('landing');
-    }
 
     /**
      * @Route("/verify/email", name="app_verify_email")
@@ -126,9 +118,8 @@ class RegistrationController extends AbstractController
             return $this->redirectToRoute('app_register');
         }
 
-        // @TODO Change the redirect on success and handle or remove the flash message in your templates
         $this->addFlash('success', 'Votre adresse a été vérifié avec succès');
 
-        return $this->redirectToRoute('success');
+        return $this->redirectToRoute('landing');
     }
 }
