@@ -21,36 +21,35 @@ use Symfony\Component\Security\Core\User\UserInterface;
 class MagasinController extends AbstractController
 {
     /**
-    * @Route("/shop/{id<\d+>}")
-    */
+     * @Route("/shop/{id<\d+>}")
+     */
     public function show(MagasinRepository $magasinRepository, $id, ArticleRepository $articleRepository)
-    {   
+    {
         $magasin = $magasinRepository->find($id);
         $articles = $articleRepository->findArticlesByMagasinId($id);
         $articlesPop = $articleRepository->findArticlesPopulaires($id);
-        if(!$magasin && !$articles)
-        {
+        if (!$magasin && !$articles) {
             throw $this->createNotFoundException('Magasin Inexistant !');
         }
         return $this->render('magasin/show.html.twig', [
             'magasin' => $magasin,
             'articles' => $articles,
             'articlesPop' => $articlesPop
-        ]); 
+        ]);
     }
     /**
-     * @Route("/shop/new")
+     * @Route("/shop/new", name="new_shop")
      * 
      * @return void
      */
     public function new(Request $request, EntityManagerInterface $em)
     {
-        if($this->isGranted('ROLE_USER') == false)
+        if ($this->isGranted('ROLE_USER') == false)
             return $this->redirectToRoute("app_login");
 
         $magasin = new Magasin();
         $form = $this->createForm(CreationMagasinType::class, $magasin);
-        $form->handleRequest($request);       
+        $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             //PLACEHOLDERS
@@ -59,9 +58,9 @@ class MagasinController extends AbstractController
             $magasin->setIdUtilisateur($this->getUser());
             $em->persist($magasin);
             $em->flush();
-            return $this->redirect("/shop/".$magasin->getId());
+            return $this->redirect("/shop/" . $magasin->getId());
         }
-        return $this->render('magasin/new.html.twig' , [
+        return $this->render('magasin/new.html.twig', [
             'magasin' => $magasin,
             'form' => $form->createView()
         ]);

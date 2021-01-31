@@ -1,0 +1,12 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+
+	<div class="container">
+		<div class="col-sm-8 mx-auto mt-5 p-5 text-center">
+			{% for flashConfirm in app.flashes('confirmation') %}
+				<div class="alert alert-success" role="alert">{{ flashConfirm }}</div>
+			{% endfor %}
+		</div>
+	</div>
+{% endblock %}
