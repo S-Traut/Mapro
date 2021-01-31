@@ -30,11 +30,16 @@ class HomeController extends AbstractController
 
         if ($this->getUser() != null) {
 
-
             //rediriger vers new magasin si le vendeur n'a pas encore de magasin
             if ($this->getUser()->getRoles()[0] == "ROLE_VENDEUR" && $this->getUser()->getMagasins()[0] == null) {
 
                 return $this->redirectToRoute('new_shop');
+            }
+
+            //redirection vendeur vers ses magasins
+            if ($this->getUser()->getRoles()[0] == "ROLE_VENDEUR" && $this->getUser()->getMagasins()[0] != null) {
+
+                return $this->redirectToRoute('shops');
             }
         }
 
