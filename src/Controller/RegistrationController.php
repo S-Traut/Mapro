@@ -82,12 +82,17 @@ class RegistrationController extends AbstractController
                     ->htmlTemplate('registration/confirmation_email.html.twig')
             );
 
-            return $guardHandler->authenticateUserAndHandleSuccess(
+            $this->addFlash('confirmation', 'Un mail de confirmation vous a été envoyé');
+            /*return $this->redirectToRoute('app_login');*/
+
+            /* return $guardHandler->authenticateUserAndHandleSuccess(
                 $user,
                 $request,
                 $authenticator,
                 'main'
-            );
+            );*/
+
+            return $this->render('registration/success.html.twig');
         }
 
         return $this->render('registration/register.html.twig', [
@@ -96,10 +101,20 @@ class RegistrationController extends AbstractController
     }
 
     /**
+     * @Route("/successful_verification", name="success")
+     */
+    public function successMail()
+    {
+
+        return $this->redirectToRoute('landing');
+    }
+
+    /**
      * @Route("/verify/email", name="app_verify_email")
      */
     public function verifyUserEmail(Request $request): Response
     {
+
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
         // validate email confirmation link, sets User::isVerified=true and persists
@@ -114,6 +129,6 @@ class RegistrationController extends AbstractController
         // @TODO Change the redirect on success and handle or remove the flash message in your templates
         $this->addFlash('success', 'Votre adresse a été vérifié avec succès');
 
-        return $this->redirectToRoute('app_register');
+        return $this->redirectToRoute('success');
     }
 }
