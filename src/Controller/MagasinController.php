@@ -55,8 +55,6 @@ class MagasinController extends AbstractController
             //PLACEHOLDERS
             $magasin->setImage("https://www.retaildetail.be/sites/default/files/news/The%20Body%20Shop.jpg");
             $magasin->setEtat(0);
-            $magasin->setLatitude(0);
-            $magasin->setLongitude(0);
             $magasin->setIdUtilisateur($this->getUser());
             $em->persist($magasin);
             $em->flush();
