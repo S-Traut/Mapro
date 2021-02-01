@@ -27,6 +27,22 @@ class HomeController extends AbstractController
         PaginatorInterface $paginator,
         ArticleRepository $articleRepo
     ): Response {
+
+        if ($this->getUser() != null) {
+
+            //rediriger vers new magasin si le vendeur n'a pas encore de magasin
+            if ($this->getUser()->getRoles()[0] == "ROLE_VENDEUR" && $this->getUser()->getMagasins()[0] == null) {
+
+                return $this->redirectToRoute('new_shop');
+            }
+
+            //redirection vendeur vers ses magasins
+            if ($this->getUser()->getRoles()[0] == "ROLE_VENDEUR" && $this->getUser()->getMagasins()[0] != null) {
+
+                return $this->redirectToRoute('shops');
+            }
+        }
+
         if (isset($_COOKIE['userLongitude']) && isset($_COOKIE['userLatitude'])) {
             //récupérer les coordonnées géo de l'utilisateur
             $cookies = $request->cookies;
@@ -112,6 +128,9 @@ class HomeController extends AbstractController
         ]);
     }
 
+    /**
+     * recherche de magasins
+     */
     public function search(
         Request $request,
         MagasinRepository $magasinRepo,
