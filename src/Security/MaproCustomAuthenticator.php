@@ -62,16 +62,19 @@ class MaproCustomAuthenticator extends AbstractFormLoginAuthenticator implements
 
     public function getUser($credentials, UserProviderInterface $userProvider)
     {
+
         $token = new CsrfToken('authenticate', $credentials['csrf_token']);
         if (!$this->csrfTokenManager->isTokenValid($token)) {
             throw new InvalidCsrfTokenException();
         }
 
-        $user = $this->entityManager->getRepository(User::class)->findOneBy(['email' => $credentials['email']]);
+        //vérifie si l'email existe et si elle est confirmée
+        $user = $this->entityManager->getRepository(User::class)->findOneBy(['email' => $credentials['email'], 'isVerified' => 1]);
+
 
         if (!$user) {
             // fail authentication with a custom error
-            throw new CustomUserMessageAuthenticationException('Email could not be found.');
+            throw new CustomUserMessageAuthenticationException("Cette email n'existe pas ou n'a pas encore été confirmée.");
         }
 
         return $user;
@@ -79,7 +82,13 @@ class MaproCustomAuthenticator extends AbstractFormLoginAuthenticator implements
 
     public function checkCredentials($credentials, UserInterface $user)
     {
-        return $this->passwordEncoder->isPasswordValid($user, $credentials['password']);
+        $password = $this->passwordEncoder->isPasswordValid($user, $credentials['password']);
+
+        if (!$password) {
+            throw new CustomUserMessageAuthenticationException("Mot de passe invalide");
+        }
+
+        return $password;
     }
 
     /**
@@ -92,17 +101,19 @@ class MaproCustomAuthenticator extends AbstractFormLoginAuthenticator implements
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $providerKey)
     {
+
         if ($targetPath = $this->getTargetPath($request->getSession(), $providerKey)) {
             return new RedirectResponse($targetPath);
         }
 
         // For example : return new RedirectResponse($this->urlGenerator->generate('some_route'));
         return new RedirectResponse($this->urlGenerator->generate('landing'));
-        throw new \Exception('TODO: provide a valid redirect inside '.__FILE__);
+        throw new \Exception('TODO: provide a valid redirect inside ' . __FILE__);
     }
 
     protected function getLoginUrl()
     {
+
         return $this->urlGenerator->generate(self::LOGIN_ROUTE);
     }
 }
