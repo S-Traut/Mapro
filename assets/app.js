@@ -13,4 +13,4 @@ import './styles/pages/forms.scss'
 import './styles/pages/landing.scss'
 import './styles/pages/categories.scss'
 
-import './styles/components/navbar.scss'
+import './styles/components/menu_item.scss'

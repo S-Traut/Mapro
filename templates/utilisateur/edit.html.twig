@@ -7,12 +7,15 @@
 
 <h2>Adresses</h2>
 {% for adresse in adresses %}
-	<h1>Adresse</h1>
+	<div class="menu-item-nm">
+		<div class="adresse">{{ adresse.adresse }}</div>
+		<a href="{{ path('deleteLocalisation', {'id': adresse.id }) }}" class="btn btn-danger"><i class="fas fa-times"></i></a>
+	</div>
 {% endfor %}
 {% if adresses[0] is not defined %}
 	<div>Vous n'avez pas d'adresse enregistrée.</div>
 {% endif %}
-<a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Ajouter une adresse</a>
+{% if adresses.count < 3 %}<a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Ajouter une adresse</a>{% endif %}
 
 <h2>Zone de danger !</h2>
 <h5>Mot de passe</h5>
@@ -27,9 +30,10 @@
 				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 			</div>
 			<div class="modal-body">
-                <div id="map"></div>
-                {{include("form.html.twig", {form: localisation_form}) }}
-            </div>
+				<div id="map"></div>
+				{{include("form.html.twig", {form: localisation_form}) }}
+			</div>
 		</div>
 	</div>
 </div>
+

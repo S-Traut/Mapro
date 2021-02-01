@@ -7,6 +7,7 @@ use App\Form\ChangePasswordType;
 use App\Form\SetLocalisationType;
 use Symfony\Component\HttpFoundation\Request;
 use App\Form\UserType;
+use App\Repository\LocalisationRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\CurrencyType;
@@ -90,5 +91,21 @@ class UtilisateurController extends AbstractController
             'magasins' => $magasins
         ]);
         
+    }
+
+    /**
+    *
+    * @Route("/{id}/entity-remove", requirements={"id" = "\d+"}, name="deleteLocalisation")
+    * @return RedirectResponse
+    *
+    */
+    public function deleteLocalisation($id, LocalisationRepository $localisationRepository, EntityManagerInterface $em) 
+    {
+        $utilisateur = $this->getUser();
+        $localisation = $localisationRepository->find($id);
+        $utilisateur->removeLocalisation($localisation);
+        $em->remove($localisation);
+        $em->flush();
+        return $this->redirectToRoute("menu");
     }
 }
