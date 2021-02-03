@@ -1,0 +1,23 @@
+/*! `Custom` Bootstrap 4 theme */
+@import url(https://fonts.googleapis.com/css2?family=Exo+2:wght@200;300;400;700&display=swap);
+$font-family-base:'Exo 2';
+$headings-font-family:'Exo 2';
+
+$primary:#6cb55a;
+$secondary:#b68e49;
+$success:#6CB55A;
+$danger:#F34C4C;
+$info:#739CD2;
+$warning:#ffd147;
+$light:#f8f9fa;
+$dark:#5A5A5A;
+$body-color:#707070;
+
+$input-bg:#E8E8E8;
+$input-border-width:0px;
+
+//@include media-breakpoint-up(sm) {html {font-size: .9rem;}}
+//@include media-breakpoint-up(md) {html {font-size: .9rem;}}
+//@include media-breakpoint-up(lg) {html {font-size: 1rem;}}
+//Garder cette ligne à la fin du fichier
+@import '~bootstrap/scss/bootstrap';
