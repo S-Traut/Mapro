@@ -16,7 +16,12 @@ class SetLocalisationType extends AbstractType
         $builder
             ->add('latitude', HiddenType::class)
             ->add('longitude', HiddenType::class)
-            ->add('adresse', TextType::class, ['label' => 'Nom de votre adresse'])
+            ->add('adresse', TextType::class, [
+                'label' => 'Nom de votre adresse',
+                'attr' => [
+                    'placeholder' => 'Mon adresse 1' 
+                ]
+            ])
             ->add('Confirmer', SubmitType::class, [
                 'attr' => [
                     'class' => 'btn btn-primary btn-block',
