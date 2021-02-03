@@ -71,6 +71,7 @@ class UtilisateurController extends AbstractController
             'adresses' => $utilisateur->getLocalisation(),
             'password_form' => $form_password->createView(),
             'localisation_form' => $form_localisation->createView(),
+            'current_menu' => 'menu',
         ]);
     }
 
@@ -87,7 +88,8 @@ class UtilisateurController extends AbstractController
         
 
         return $this->render('utilisateur/shops.html.twig', [
-            'magasins' => $magasins
+            'magasins' => $magasins,
+            'current_menu' => 'shops'
         ]);
         
     }
