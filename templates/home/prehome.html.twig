@@ -2,7 +2,6 @@
 
 {% block headScripts %}
 	<link rel="stylesheet" href="{{ asset('css/map.css') }}">
-	<script src="https://maps.googleapis.com/maps/api/js?key={{ map_api_key }}&callback=initMap&libraries=&v=weekly" defer></script>
 {% endblock %}
 
 {% block body %}
@@ -37,7 +36,6 @@
 {% endblock %}
 
 {% block javascripts %}
-	<script src="{{ asset('js/map.js') }}"></script>
 	<script src="{{ asset('js/localisation.js') }}"></script>
-
+	{{ encore_entry_script_tags('map') }}
 {% endblock %}
