@@ -25,16 +25,11 @@ class HomeController extends AbstractController
         Request $request,
         MagasinRepository $magasinRepo,
         PaginatorInterface $paginator,
-        ArticleRepository $articleRepo
+        ArticleRepository $articleRepo,
+        UtilisateurController $utilisateurController
     ): Response {
 
         if ($this->getUser() != null) {
-
-            //rediriger vers new magasin si le vendeur n'a pas encore de magasin
-            if ($this->getUser()->getRoles()[0] == "ROLE_VENDEUR" && $this->getUser()->getMagasins()[0] == null) {
-
-                return $this->redirectToRoute('new_shop');
-            }
 
             //redirection vendeur vers ses magasins
             if ($this->getUser()->getRoles()[0] == "ROLE_VENDEUR" && $this->getUser()->getMagasins()[0] != null) {
@@ -121,6 +116,8 @@ class HomeController extends AbstractController
 
         //pagination
         $magasins = $paginator->paginate($donnees, $request->query->getInt('page', 1), 4);
+
+        dump($magasins[1]->getArticles()[0]);
 
         return $this->render('home/categorieliste.html.twig', [
             'magasins' => $magasins,
