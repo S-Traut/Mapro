@@ -1,14 +1,24 @@
 {% extends "base.html.twig" %}
 
 {% block body %}
-    <div class="container">
-        <section>
-            <div class="container text-center">
-                <img style="max-width:100%;height:auto;" src='{{ magasin.image }}'>
+    
+    <div class="form-header">
+		<div class="container">
+            <div class="row">
+                <div class="col-6">
+                <h1>Mes magasins</h1>
+			    <p>Créez, consultez et modifiez vos magasins</p>
+                </div>
+                <div class="col-6">
+                    <img src="{{ magasin.image }}" alt="">
+                </div>
             </div>
-        </section>
-        <h2>{{ magasin.nom }}</h2>
-        <p class="font-weight-light">{{ magasin.description }}</p>
+        </div>
+	</div>
+    
+
+
+    <div class="container">
         <section>
             <div class="row"> 
                 <div class="col-auto shadow p-3 mb-2 bg-light rounded">

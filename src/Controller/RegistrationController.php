@@ -84,12 +84,12 @@ class RegistrationController extends AbstractController
 
             $this->addFlash('confirmation', 'Un mail de confirmation vous a été envoyé');
 
-            /* return $guardHandler->authenticateUserAndHandleSuccess(
+            return $guardHandler->authenticateUserAndHandleSuccess(
                 $user,
                 $request,
                 $authenticator,
                 'main'
-            );*/
+            );
 
             //page success
             return $this->render('registration/success.html.twig');
