@@ -65,4 +65,25 @@ class MagasinController extends AbstractController
             'form' => $form->createView()
         ]);
     }
+
+     /**
+     * @Route("/shop/{id<\d+>}/edit")
+     */
+    public function edit(MagasinRepository $magasinRepository, $id, Arty)
+    {
+        $magasin = $magasinRepository->find($id);
+        if (!$magasin) {
+            throw $this->createNotFoundException('Magasin Inexistant !');
+        }
+
+        $form = $this->createForm(EditionMagasinType::class, $editMag); 
+
+        return $this->render('magasin/edit.html.twig', [
+            'magasin' => $magasin,
+            'form' => $form     
+        ]);
+    }
+
+
+
 }
