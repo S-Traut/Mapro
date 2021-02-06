@@ -2,13 +2,10 @@
 
 namespace App\Controller;
 
+use App\Form\RechercheType;
 use App\Repository\ArticleRepository;
-use App\Repository\ImageRepository;
 use App\Repository\MagasinRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\DBAL\Types\TextType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -50,7 +47,7 @@ class HomeController extends AbstractController
             $latitude = $cookies->get('userLatitude');
 
             //creation de la searchForm
-            $searchForm = $this->createForm(SearchType::class);
+            $searchForm = $this->createForm(RechercheType::class);
             $searchForm->handleRequest($request);
 
             //récup des articles populaire
@@ -59,15 +56,31 @@ class HomeController extends AbstractController
             //si une recherche a été soumise
             if ($searchForm->isSubmitted() && $searchForm->isValid()) {
 
-                return $this->search(
-                    $request,
-                    $magasinRepo,
-                    $paginator,
-                    $searchForm,
-                    $articles,
-                    $longitude,
-                    $latitude
-                );
+                if ($searchForm->getData()['choix'] == 1) {
+
+                    //recherche magasins
+                    return $this->rechercheMagasin(
+                        $request,
+                        $magasinRepo,
+                        $paginator,
+                        $searchForm,
+                        $articles,
+                        $longitude,
+                        $latitude
+                    );
+                } else {
+
+                    //recherche articles
+                    return $this->rechercheArticle(
+                        $request,
+                        $articleRepo,
+                        $paginator,
+                        $searchForm,
+                        $articles,
+                        $longitude,
+                        $latitude
+                    );
+                }
             }
 
             return $this->render('home/home.html.twig', [
@@ -108,7 +121,7 @@ class HomeController extends AbstractController
             //récup des articles populaire
             $articles = $articleRepo->findArticlesPopulairesHome($longitude, $latitude);
 
-            return $this->search(
+            /*return $this->search(
                 $request,
                 $magasinRepo,
                 $paginator,
@@ -116,7 +129,7 @@ class HomeController extends AbstractController
                 $articles,
                 $longitude,
                 $latitude
-            );
+            );*/
         }
 
         //pagination
@@ -131,7 +144,7 @@ class HomeController extends AbstractController
     /**
      * recherche de magasins
      */
-    public function search(
+    public function rechercheMagasin(
         Request $request,
         MagasinRepository $magasinRepo,
         PaginatorInterface $paginator,
@@ -141,7 +154,7 @@ class HomeController extends AbstractController
         $latitude
     ) {
 
-        $nom = $searchForm->getData();
+        $nom = $searchForm->getData()['mot_cle'];
 
         //résultat de la recherche des magasins
         $donnees = $magasinRepo->search($nom, $longitude, $latitude);
@@ -151,10 +164,36 @@ class HomeController extends AbstractController
         }
 
         //pagination
-        $magasins = $paginator->paginate($donnees, $request->query->getInt('page', 1), 4);
+        $resultat = $paginator->paginate($donnees, $request->query->getInt('page', 1), 4);
 
         return $this->render('home/resultathome.html.twig', [
-            'magasins' => $magasins,
+            'resultat' => $resultat,
+            'articles' => $articles,
+            'searchForm' => $searchForm->createView()
+        ]);
+    }
+
+    /**
+     * recherche d'articles
+     */
+    public function rechercheArticle(
+        Request $request,
+        ArticleRepository $articleRepo,
+        PaginatorInterface $paginator,
+        FormInterface $searchForm,
+        $articles,
+        $longitude,
+        $latitude
+    ) {
+        $nom = $searchForm->getData()['mot_cle'];
+
+        $donnees = $articleRepo->search($nom, $longitude, $latitude);
+
+        //pagination
+        $resultat = $paginator->paginate($donnees, $request->query->getInt('page', 1), 4);
+
+        return $this->render('home/resultathome.html.twig', [
+            'resultat' => $resultat,
             'articles' => $articles,
             'searchForm' => $searchForm->createView()
         ]);

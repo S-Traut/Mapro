@@ -7,16 +7,20 @@
 
 	<div class="container">
 		<section id="content">
-			{% for magasin in magasins %}
+			{% for objet in resultat %}
 				<div class="card mb-3">
 					<div class="row g-0">
 						<div class="col-md-4">
-							<img src="{{magasin.image}}" alt="..." style="width: 100%">
+							{% if objet.getImage.0 is defined %}
+								<img src="{{objet.getImage.0.image}}" alt="..." style="width: 100%">
+							{% else %}
+								<img src="{{objet.image}}" alt="..." style="width: 100%">
+							{% endif %}
 						</div>
 						<div class="col-md-8">
 							<div class="card-body">
-								<h5 class="card-title">{{ magasin.nom }}</h5>
-								<p class="card-text">{{magasin.description}}</p>
+								<h5 class="card-title">{{ objet.nom }}</h5>
+								<p class="card-text">{{objet.description}}</p>
 							</div>
 						</div>
 					</div>
