@@ -65,4 +65,24 @@ class MagasinController extends AbstractController
             'form' => $form->createView()
         ]);
     }
+
+    /**
+     * @Route("/shop/delete/{id<\d+>}")
+     */
+    public function delete(Magasin $shop, EntityManagerInterface $em, Request $request)
+    {
+        if (!$shop) {
+            throw $this->createNotFoundException('Magasin Inexistant !');
+        }
+
+        $em->remove($shop);
+        $em->flush();
+
+        if ($this->isGranted('ROLE_ADMIN')) {
+            /*return $this->redirectToRoute('app_admin_annonce_index');*/
+        }
+
+        return $this->redirectToRoute('shops');
+
+    }
 }
