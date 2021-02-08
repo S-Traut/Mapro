@@ -17,12 +17,8 @@ class HomeController extends AbstractController
     /**
      * @Route("/", name="landing")
      */
-    public function show(
-        Request $request,
-        MagasinRepository $magasinRepo,
-        PaginatorInterface $paginator,
-        ArticleRepository $articleRepo
-    ): Response {
+    public function show(Request $request, ArticleRepository $articleRepo): Response
+    {
 
         if ($this->getUser() != null) {
 
@@ -63,8 +59,7 @@ class HomeController extends AbstractController
         Request $request,
         MagasinRepository $magasinRepo,
         PaginatorInterface $paginator,
-        $id,
-        ArticleRepository $articleRepo
+        $id
     ) {
         //récupérer les coordonnées géo de l'utilisateur
         $cookies = $request->cookies;
@@ -79,7 +74,7 @@ class HomeController extends AbstractController
         $donnees = $magasinRepo->searchCategorie($id, $longitude, $latitude);
 
         //pagination
-        $magasins = $paginator->paginate($donnees, $request->query->getInt('page', 1), 4);
+        $magasins = $paginator->paginate($donnees, $request->query->getInt('page', 1), 10);
 
         return $this->render('home/categorieliste.html.twig', [
             'magasins' => $magasins,
@@ -97,6 +92,9 @@ class HomeController extends AbstractController
         PaginatorInterface $paginator,
         ArticleRepository $articleRepo
     ) {
+
+        $donnees = null;
+
         if (isset($_COOKIE['userLongitude']) && isset($_COOKIE['userLatitude'])) {
             //récupérer les coordonnées géo de l'utilisateur
             $cookies = $request->cookies;
@@ -112,44 +110,45 @@ class HomeController extends AbstractController
 
             //si une recherche a été soumise
             if ($searchForm->isSubmitted() && $searchForm->isValid()) {
+            }
 
-                if ($searchForm->getData()['choix'] == 1) {
-                    //recherche magasins
-                    return $this->rechercheMagasin(
-                        $request,
-                        $magasinRepo,
-                        $paginator,
-                        $searchForm,
-                        $articles,
-                        $longitude,
-                        $latitude
-                    );
-                } else {
+            if ($searchForm->getData()['choix'] == 1) {
+                //recherche magasins
 
-                    //recherche articles
-                    return $this->rechercheArticle(
-                        $request,
-                        $articleRepo,
-                        $paginator,
-                        $searchForm,
-                        $articles,
-                        $longitude,
-                        $latitude
-                    );
-                }
+                $donnees = $this->rechercheMagasin(
+                    $magasinRepo,
+                    $searchForm,
+                    $longitude,
+                    $latitude
+                );
+            } else {
+
+                //recherche articles
+                $donnees = $this->rechercheArticle(
+                    $articleRepo,
+                    $searchForm,
+                    $longitude,
+                    $latitude
+                );
             }
         }
+
+
+        $resultat = $paginator->paginate($donnees, $request->query->getInt('page', 1), 10);
+
+        return $this->render('home/resultathome.html.twig', [
+            'resultat' => $resultat,
+            'articles' => $articles,
+            'searchForm' => $searchForm->createView()
+        ]);
     }
 
     /**
      * recherche de magasins
      */
     public function rechercheMagasin(
-        Request $request,
         MagasinRepository $magasinRepo,
-        PaginatorInterface $paginator,
         FormInterface $searchForm,
-        $articles,
         $longitude,
         $latitude
     ) {
@@ -159,29 +158,15 @@ class HomeController extends AbstractController
         //résultat de la recherche des magasins
         $donnees = $magasinRepo->search($nom, $longitude, $latitude);
 
-        if ($donnees == null) {
-            $this->addFlash('erreur', 'Aucun magasin trouvé');
-        }
-
-        //pagination
-        $resultat = $paginator->paginate($donnees, $request->query->getInt('page', 1), 4);
-
-        return $this->render('home/resultathome.html.twig', [
-            'resultat' => $resultat,
-            'articles' => $articles,
-            'searchForm' => $searchForm->createView()
-        ]);
+        return $donnees;
     }
 
     /**
      * recherche d'articles
      */
     public function rechercheArticle(
-        Request $request,
         ArticleRepository $articleRepo,
-        PaginatorInterface $paginator,
         FormInterface $searchForm,
-        $articles,
         $longitude,
         $latitude
     ) {
@@ -189,13 +174,6 @@ class HomeController extends AbstractController
 
         $donnees = $articleRepo->search($nom, $longitude, $latitude);
 
-        //pagination
-        $resultat = $paginator->paginate($donnees, $request->query->getInt('page', 1), 4);
-
-        return $this->render('home/resultathome.html.twig', [
-            'resultat' => $resultat,
-            'articles' => $articles,
-            'searchForm' => $searchForm->createView()
-        ]);
+        return $donnees;
     }
 }
