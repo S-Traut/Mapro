@@ -72,7 +72,7 @@ class RegistrationController extends AbstractController
             }
 
             //envoi d'un mail de vérification
-            $this->emailVerifier->sendEmailConfirmation(
+            /*$this->emailVerifier->sendEmailConfirmation(
                 'app_verify_email',
                 $user,
                 (new TemplatedEmail())
@@ -80,9 +80,9 @@ class RegistrationController extends AbstractController
                     ->to($user->getEmail())
                     ->subject('confirmation de votre adresse email')
                     ->htmlTemplate('registration/confirmation_email.html.twig')
-            );
+            );*/
 
-            $this->addFlash('confirmation', 'Un mail de confirmation vous a été envoyé');
+            //$this->addFlash('confirmation', 'Un mail de confirmation vous a été envoyé');
 
             return $guardHandler->authenticateUserAndHandleSuccess(
                 $user,
@@ -104,7 +104,7 @@ class RegistrationController extends AbstractController
     /**
      * @Route("/verify/email", name="app_verify_email")
      */
-    public function verifyUserEmail(Request $request): Response
+    /*public function verifyUserEmail(Request $request): Response
     {
 
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
@@ -120,5 +120,5 @@ class RegistrationController extends AbstractController
         $this->addFlash('success', 'Votre adresse a été vérifié avec succès');
 
         return $this->redirectToRoute('landing');
-    }
+    }*/
 }
