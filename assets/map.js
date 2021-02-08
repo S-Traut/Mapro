@@ -48,9 +48,7 @@ loader.load().then(() => {
     });
 });
 
-function searchShops() {
-    $('#popular-shops').html("");
-    resetMarkers();
+function searchShops() { 
     $.ajax({
         url: "/api/get/searchAround",
         data: {
@@ -59,6 +57,8 @@ function searchShops() {
         },
         dataType: "json"
     }).done((shops) => {
+        resetMarkers();
+        $('#popular-shops').html("");
         if(shops.length == 0) {
             $('#popular-shops').html("Aucun magasin n'a été trouvé autour de chez vous. :(");
         }
