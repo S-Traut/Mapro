@@ -20,7 +20,7 @@ class APIController extends AbstractController
      */
     public function searchAround(MagasinRepository $magasinRepository, UtilisateurController $utilisateurController, Request $request) : Response
     {
-        $localisation = $utilisateurController->getCurrentLocalisation($request);
+        $localisation = new LocalisationVector($request->get('latitude'), $request->get('longitude'));
         $magasins = $magasinRepository->searchAround($localisation->longitude, $localisation->latitude);
 
         return $this->json($magasins, Response::HTTP_OK, [], [

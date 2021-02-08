@@ -1,13 +1,11 @@
 import { Loader } from "@googlemaps/js-api-loader"
 
-let currentPosition;
+let userPosition = false;
 let map;
 let shopMarkers = [];
 let searchBar = document.getElementById('search');
 let formCreationMagasin = document.forms[0];
 let setLocalisation = document.getElementsByName('set_localisation')[0];
-
-let userPosition = false;
 
 const loader = new Loader({
     apiKey: /*"AIzaSyAXUQPahIcvHZNrAMxqHo91JS7z5VOLLbI"*/ "",
@@ -23,9 +21,6 @@ loader.load().then(() => {
             userPosition = { lat: parseFloat(response.latitude), lng: parseFloat(response.longitude) };
         }
 
-        if (userPosition)
-            searchShops();
-
         map = new google.maps.Map(document.getElementById("map"), {
             center: userPosition ? userPosition : { lat: 47.0725, lng: 2.4605 },
             zoom: userPosition ? 13 : 5,
@@ -37,13 +32,18 @@ loader.load().then(() => {
             position: userPosition ? userPosition : null
         });
 
-        if (window.location.pathname == "/") {
-            map.addListener('click', (e) => {
-                currentPosition = e.latLng.toJSON();
-                userMarker.setPosition(e.latLng);
-                locateUser();
+        map.addListener('click', (e) => {
+            userPosition = e.latLng.toJSON();
+            userMarker.setPosition(e.latLng);
+            locateUser();
+
+            if(window.location.pathname == "/")
                 searchShops();
-            });
+        });
+
+        if (window.location.pathname == "/") {
+            if (userPosition)
+                searchShops(); 
         }
     });
 });
@@ -53,6 +53,10 @@ function searchShops() {
     resetMarkers();
     $.ajax({
         url: "/api/get/searchAround",
+        data: {
+            latitude: userPosition.lat,
+            longitude: userPosition.lng
+        },
         dataType: "json"
     }).done((shops) => {
         if(shops.length == 0) {
@@ -81,7 +85,6 @@ function searchShops() {
                 <p style="margin-bottom: 0px;">${shop.adresse}</p>
                 </div>
             `);
-
         });
     });
 }
@@ -93,15 +96,15 @@ function resetMarkers() {
 }
 
 function locateUser() {
-    document.cookie = (`userLongitude=${currentPosition.lng}`);
-    document.cookie = (`userLatitude=${currentPosition.lat}`);
+    document.cookie = (`userLongitude=${userPosition.lng}`);
+    document.cookie = (`userLatitude=${userPosition.lat}`);
 }
 
 if (searchBar) {
     searchBar.addEventListener("click", () => {
-        if (currentPosition != null) {
-            document.cookie = (`userLongitude=${currentPosition.lng}`);
-            document.cookie = (`userLatitude=${currentPosition.lat}`);
+        if (userPosition != null) {
+            document.cookie = (`userLongitude=${userPosition.lng}`);
+            document.cookie = (`userLatitude=${userPosition.lat}`);
             location.href = "/";
         }
     });
@@ -109,14 +112,14 @@ if (searchBar) {
 
 if (formCreationMagasin) {
     formCreationMagasin.addEventListener("submit", () => {
-        document.getElementById('creation_magasin_latitude').value = currentPosition.lat;
-        document.getElementById('creation_magasin_longitude').value = currentPosition.lng;
+        document.getElementById('creation_magasin_latitude').value = userPosition.lat;
+        document.getElementById('creation_magasin_longitude').value = userPosition.lng;
     });
 }
 
 if (setLocalisation) {
     setLocalisation.addEventListener("submit", () => {
-        document.getElementById('set_localisation_latitude').value = currentPosition.lat;
-        document.getElementById('set_localisation_longitude').value = currentPosition.lng;
+        document.getElementById('set_localisation_latitude').value = userPosition.lat;
+        document.getElementById('set_localisation_longitude').value = userPosition.lng;
     });
 }
