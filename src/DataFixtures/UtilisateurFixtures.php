@@ -19,7 +19,7 @@ class UtilisateurFixtures extends Fixture
     public function load(ObjectManager $manager)
     {
         $utilisateurTest = new User();
-        $utilisateurTest->setRoles([0]);
+        $utilisateurTest->setRoles(['ROLE_VENDEUR']);
         $utilisateurTest->setNom("UtilisateurTest");
         $utilisateurTest->setPrenom("UtilisateurTestPrénom");
         $password = $this->encoder->encodePassword($utilisateurTest, 'test');
