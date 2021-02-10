@@ -35,6 +35,18 @@ class ArticleController extends AbstractController
     }
 
     /**
+     * @Route("/shop/articles/{id<\d+>}")
+     */
+    public function list(ArticleRepository $articleRepository, $id)
+    {
+        $articles = $articleRepository->findArticlesByMagasinId($id);
+        return $this->render('article/articles.html.twig', [
+            'articles' => $articles
+        ]);
+    }
+
+
+    /**
      * @Route("/article/new")
      * 
      * @return void
@@ -59,4 +71,47 @@ class ArticleController extends AbstractController
             'form' => $form->createView()
         ]);
     }
+
+
+    /**
+     * @Route("/article/delete/{id<\d+>}")
+     */
+    public function delete(Article $article, EntityManagerInterface $em, Request $request)
+    {
+        if (!$article) {
+            throw $this->createNotFoundException('Article Inexistant !');
+        }
+        $shopid = $article->getMagasin()->getId();
+        $em->remove($article);
+        $em->flush();
+
+        if ($this->isGranted('ROLE_ADMIN')) {
+            /*return $this->redirectToRoute('app_admin_annonce_index');*/
+        }
+
+        return $this->redirectToRoute('app_article_list', [
+            'id' => $shopid
+        ]);
+
+    }
+
+    /**
+     * @Route("/article/{id}/edit")
+     */
+    public function edit(Article $article, EntityManagerInterface $em, Request $request)
+    {
+        $form = $this->createForm(ArticleType::class, $article);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em->flush();
+            return $this->redirectToRoute('app_article_list', ['id' => $article->getMagasin()->getId()]);         
+        }
+        
+        return $this->render('article/edit.html.twig', [
+            'article' => $article,
+            'form' => $form->createView()
+        ]);
+    }
+
 }
