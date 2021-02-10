@@ -69,9 +69,10 @@ class MagasinController extends AbstractController
      /**
      * @Route("/shop/{id<\d+>}/edit")
      */
-    public function edit(MagasinRepository $magasinRepository, $id, Arty)
-    {
+    public function edit(MagasinRepository $magasinRepository, $id){
+
         $magasin = $magasinRepository->find($id);
+
         if (!$magasin) {
             throw $this->createNotFoundException('Magasin Inexistant !');
         }
@@ -82,8 +83,6 @@ class MagasinController extends AbstractController
             'magasin' => $magasin,
             'form' => $form     
         ]);
-    }
-
 
 
 }
