@@ -69,7 +69,7 @@ class MaproCustomAuthenticator extends AbstractFormLoginAuthenticator implements
         }
 
         //vérifie si l'email existe et si elle est confirmée
-        $user = $this->entityManager->getRepository(User::class)->findOneBy(['email' => $credentials['email'], 'isVerified' => 1]);
+        $user = $this->entityManager->getRepository(User::class)->findOneBy(['email' => $credentials['email']]);
 
 
         if (!$user) {

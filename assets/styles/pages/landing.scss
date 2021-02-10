@@ -3,10 +3,35 @@
     height: 500px;
 }
 
-#popular-articles {
-    border: 1px gray solid;
+#popular-shops {
     text-align: center;
     color:gray;
+    padding: 25px;
+    overflow: auto;
+    max-height: 500px;
+    overflow-x: hidden;
+}
+
+@keyframes slideInFromLeft {
+    0% {
+      transform: translateX(50%);
+      opacity: 0;
+    }
+    100% {
+      transform: translateX(0);
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+
+.shop-item {
+    text-align: left;
+    border-bottom: 1px gray solid;
+    margin-bottom: 10px;
+    visibility: hidden;
+    animation: 1s cubic-bezier(0.16, 1, 0.3, 1) 0s 1 slideInFromLeft;
+    animation-fill-mode: forwards;
+    
 }
 
 .search {

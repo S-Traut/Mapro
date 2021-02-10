@@ -72,6 +72,7 @@ class UtilisateurController extends AbstractController
             'adresses' => $utilisateur->getLocalisation(),
             'password_form' => $form_password->createView(),
             'localisation_form' => $form_localisation->createView(),
+            'current_menu' => 'menu',
         ]);
     }
 
@@ -88,7 +89,8 @@ class UtilisateurController extends AbstractController
         
 
         return $this->render('utilisateur/shops.html.twig', [
-            'magasins' => $magasins
+            'magasins' => $magasins,
+            'current_menu' => 'shops'
         ]);
         
     }
@@ -107,5 +109,34 @@ class UtilisateurController extends AbstractController
         $em->remove($localisation);
         $em->flush();
         return $this->redirectToRoute("menu");
+    }
+
+    //Récupère la position de l'utilisateur, si elle n'existe pas tente de récupérer la position via les cookies.
+    public function getCurrentLocalisation(Request $request) : LocalisationVector
+    {
+        if($this->getUser() != null && $this->getUser()->getLocalisation()[0] != null)
+        {
+            $userLocalisation = $this->getUser()->getLocalisation()[0];
+            return new LocalisationVector($userLocalisation->getLatitude(), $userLocalisation->getLongitude());
+        }
+        else 
+        {
+            $cookies = $request->cookies;
+            $longitude = $cookies->get('userLongitude');
+            $latitude = $cookies->get('userLatitude');
+            return new LocalisationVector($latitude, $longitude);
+        }  
+    }
+}
+
+class LocalisationVector
+{
+    public $latitude;
+    public $longitude;
+
+    public function __construct($latitude, $longitude)
+    {
+        $this->latitude = $latitude;
+        $this->longitude = $longitude;
     }
 }
