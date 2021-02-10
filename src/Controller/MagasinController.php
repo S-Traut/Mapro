@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Controller;
-
 use App\Entity\Localisation;
 use App\Entity\Magasin;
 use App\Entity\TypeMagasin;
@@ -17,6 +16,9 @@ use Doctrine\ORM\EntityManagerInterface;
 use phpDocumentor\Reflection\Location;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Form\Forms;
+use App\Form\EditionMagasinType;
+
 
 class MagasinController extends AbstractController
 {
@@ -69,20 +71,32 @@ class MagasinController extends AbstractController
      /**
      * @Route("/shop/{id<\d+>}/edit")
      */
-    public function edit(MagasinRepository $magasinRepository, $id){
+    public function edit(MagasinRepository $magasinRepository, $id, Request $request, EntityManagerInterface $em){
 
         $magasin = $magasinRepository->find($id);
 
         if (!$magasin) {
+            
             throw $this->createNotFoundException('Magasin Inexistant !');
         }
 
-        $form = $this->createForm(EditionMagasinType::class, $editMag); 
+        //$magasin = new Magasin();
+
+
+        $form = $this->createForm(CreationMagasinType::class, $magasin); 
+        $form->handleRequest($request);
+
+        
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em->persist($magasin);
+            $em->flush();
+            return $this->redirect("/shop/" . $magasin->getId());
+        }
 
         return $this->render('magasin/edit.html.twig', [
             'magasin' => $magasin,
-            'form' => $form     
+            'form' => $form->createView()    
         ]);
-
+}
 
 }

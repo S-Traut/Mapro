@@ -1,0 +1,23 @@
+{% extends "base.html.twig" %}
+
+{% block headScripts %}
+	<link rel="stylesheet" href="{{ asset('css/map.css') }}">
+{% endblock %}
+
+{% block stylesheets %} <link rel="stylesheet" href="{{ asset('/css/Form/magasin.new.css') }}"> {% endblock %}
+
+{% block body %}
+    <div class="form-header">
+        <div class="container">
+            <h1>Editer</h1>
+            <p>Editer votre magasin</p>
+        </div>
+    </div>
+    <div class="container">
+        {{ include("magasin/form.new.html.twig", {form: form, button: 'Créer'}) }}
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+	{{ encore_entry_script_tags('map') }}
+{% endblock %}
