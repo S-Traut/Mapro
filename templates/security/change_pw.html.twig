@@ -1,0 +1,28 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+	<div class="container">
+		<div class="m-5 row d-flex">
+			<div class="col-sm-4  mx-auto">
+				<h3>Mot de passe oublié ?</h3>
+
+				{% for flashFail in app.flashes('fail') %}
+					<div class="alert alert-danger" role="alert">{{ flashFail }}</div>
+				{% endfor %}
+
+				{% for flashSuccess in app.flashes('success') %}
+					<div class="alert alert-success" role="success">{{ flashSuccess }}</div>
+				{% endfor %}
+
+				{{ form_start(emailForm) }}
+				<div class="mt-3">
+					{{ form_row(emailForm.email, {label:false, 'attr':{'placeholder':'Email'}}) }}
+				</div>
+
+				<button class="btn btn-success">Envoyer</button>
+				{{ form_end(emailForm)}}
+			</div>
+		</div>
+	</div>
+
+{% endblock %}

@@ -1,0 +1,15 @@
+<h1>Avez-vous oublié votre mot de passe ?</h1>
+
+<p>
+
+	Voici un nouveau mot de passe pour vous :
+	<b>{{ passWord }}</b>
+	<br><br>
+	<a href="{{ signedUrl|raw }}">Cliquez ici pour vous connecter</a>.
+														    Ce lien expire dans :
+	{{ expiresAtMessageKey|trans(expiresAtMessageData, 'VerifyEmailBundle') }}.
+</p>
+
+<p>
+	Cordialement !
+</p>
