@@ -23,29 +23,27 @@ class UtilisateurController extends AbstractController
      */
     public function index(Request $request, EntityManagerInterface $em, UserPasswordEncoderInterface $passwordEncoder): Response
     {
-        if($this->isGranted('ROLE_USER') == false)
+        if ($this->isGranted('ROLE_USER') == false)
             return $this->redirectToRoute("landing");
-        
+
         $utilisateur = $this->getUser();
+        //dump($utilisateur);
         $form = $this->createForm(UserType::class, $utilisateur);
         $form_password = $this->createForm(ChangePasswordType::class);
         $form_localisation = $this->createForm(SetLocalisationType::class);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) 
-        {
+        if ($form->isSubmitted() && $form->isValid()) {
             $em->persist($utilisateur);
             $em->flush();
             return $this->redirectToRoute("menu");
         }
 
         $form_password->handleRequest($request);
-        if($form_password->isSubmitted() && $form_password->isValid())
-        {
+        if ($form_password->isSubmitted() && $form_password->isValid()) {
             $requestPassword = $request->get('change_password');
             $currentPassword = $passwordEncoder->isPasswordValid($utilisateur, $requestPassword['curPassword']);
-            if($currentPassword && $requestPassword['newPassword'] == $requestPassword['newConfirm'])
-            {
+            if ($currentPassword && $requestPassword['newPassword'] == $requestPassword['newConfirm']) {
                 $encodedPassword = $passwordEncoder->encodePassword($utilisateur, $requestPassword['newConfirm']);
                 $utilisateur->setPassword($encodedPassword);
                 $em->flush();
@@ -53,9 +51,8 @@ class UtilisateurController extends AbstractController
         }
 
         $form_localisation->handleRequest($request);
-        if($form_localisation->isSubmitted() && $form_localisation->isValid())
-        {
-            
+        if ($form_localisation->isSubmitted() && $form_localisation->isValid()) {
+
             $localisation = new Localisation();
             $em->persist($localisation);
             $requestLocalisation = $request->get("set_localisation");
@@ -81,27 +78,26 @@ class UtilisateurController extends AbstractController
      */
     public function shops(): Response
     {
-        if($this->isGranted('ROLE_USER') == false)
+        if ($this->isGranted('ROLE_USER') == false)
             return $this->redirectToRoute("landing");
 
         $utilisateur = $this->getUser();
         $magasins = $utilisateur->getMagasins();
-        
+
 
         return $this->render('utilisateur/shops.html.twig', [
             'magasins' => $magasins,
             'current_menu' => 'shops'
         ]);
-        
     }
 
     /**
-    *
-    * @Route("/{id}/entity-remove", requirements={"id" = "\d+"}, name="deleteLocalisation")
-    * @return RedirectResponse
-    *
-    */
-    public function deleteLocalisation($id, LocalisationRepository $localisationRepository, EntityManagerInterface $em) 
+     *
+     * @Route("/{id}/entity-remove", requirements={"id" = "\d+"}, name="deleteLocalisation")
+     * @return RedirectResponse
+     *
+     */
+    public function deleteLocalisation($id, LocalisationRepository $localisationRepository, EntityManagerInterface $em)
     {
         $utilisateur = $this->getUser();
         $localisation = $localisationRepository->find($id);
@@ -112,20 +108,17 @@ class UtilisateurController extends AbstractController
     }
 
     //Récupère la position de l'utilisateur, si elle n'existe pas tente de récupérer la position via les cookies.
-    public function getCurrentLocalisation(Request $request) : LocalisationVector
+    public function getCurrentLocalisation(Request $request): LocalisationVector
     {
-        if($this->getUser() != null && $this->getUser()->getLocalisation()[0] != null)
-        {
+        if ($this->getUser() != null && $this->getUser()->getLocalisation()[0] != null) {
             $userLocalisation = $this->getUser()->getLocalisation()[0];
             return new LocalisationVector($userLocalisation->getLatitude(), $userLocalisation->getLongitude());
-        }
-        else 
-        {
+        } else {
             $cookies = $request->cookies;
             $longitude = $cookies->get('userLongitude');
             $latitude = $cookies->get('userLatitude');
             return new LocalisationVector($latitude, $longitude);
-        }  
+        }
     }
 }
 

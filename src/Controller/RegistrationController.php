@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Form\EmailType;
+use App\Form\getEmailType;
 use App\Form\RegistrationFormType;
 use App\Security\EmailVerifier;
 use App\Security\MaproCustomAuthenticator;
