@@ -107,6 +107,11 @@ class MagasinController extends AbstractController
             throw $this->createNotFoundException('Magasin Inexistant !');
         }
 
+        $articles = $shop->getArticles();
+        foreach($articles as $article){
+            $em->remove($article);
+        }
+
         $em->remove($shop);
         $em->flush();
 
