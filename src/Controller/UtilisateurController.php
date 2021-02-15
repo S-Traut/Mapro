@@ -84,7 +84,6 @@ class UtilisateurController extends AbstractController
         $utilisateur = $this->getUser();
         $magasins = $utilisateur->getMagasins();
 
-
         return $this->render('utilisateur/shops.html.twig', [
             'magasins' => $magasins,
             'current_menu' => 'shops'

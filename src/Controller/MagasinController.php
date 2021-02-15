@@ -116,7 +116,7 @@ class MagasinController extends AbstractController
         $em->flush();
 
         if ($this->isGranted('ROLE_ADMIN')) {
-            /*return $this->redirectToRoute('app_admin_annonce_index');*/
+            /*return $this->redirectToRoute('app_administration_index');*/
         }
 
         return $this->redirectToRoute('shops');

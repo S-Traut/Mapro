@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <table class="table col-10 mx-auto mt-5">
+        <thead class="thead-light">
+            <tr>
+                <th scope="col">Nom</th>
+                <th scope="col">Téléphone</th>
+                <th scope="col">Email</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% if magasins %}
+            {% for magasin in magasins %}
+                <tr>
+                    <th>{{ magasin.nom }}</th>
+                    <td>{{ magasin.tel }}</td>
+                    <td>{{ magasin.email }}</td>
+                    <td>
+                        <div class="btn-group">
+                            <a class="btn btn-sm btn-outline-info" href="{{ path('app_magasin_show', { id: magasin.id })  }}" type="button"><i class="far fa-eye"></i> Voir</a>
+                            <a class="btn btn-sm btn-outline-secondary" href="{{ path('app_administration_valider', { id: magasin.id }) }}" type="button"><i class="far fa-check-square"></i> Valider</a>
+                            <a class="btn btn-sm btn-outline-danger" type="button" href="{{ path('app_magasin_delete', { id: magasin.id })  }}"><i class="fal fa-times-square"></i> Refuser</a>
+                        </div>
+                    </td>
+                </tr>
+            {% endfor %}
+        {% endif %}
+
+    
+        </tbody>
+    </table>
+
+
+{% endblock %}
