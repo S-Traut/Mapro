@@ -2,11 +2,13 @@
 
 namespace App\Controller;
 
+use App\Entity\Magasin;
 use App\Repository\ArticleRepository;
 use App\Repository\MagasinRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
 * @Route("/administration")
@@ -64,9 +66,20 @@ class AdministrationController extends AbstractController
     public function listeStatistiques()
     {
         return $this->render('administration/statistiques.html.twig', [
-            
+
         ]);
     }
+
+    /**
+     * @Route("/valider/{id<\d+>}")
+     */
+    public function validerMagasin(Magasin $shop, EntityManagerInterface $em)
+    {
+        $shop->setEtat(1);
+        $em->flush();
+        return $this->redirectToRoute('app_administration_magasinsenattentes');
+    }
+
 
 }
 
