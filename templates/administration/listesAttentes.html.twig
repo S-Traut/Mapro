@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-
+    {% if magasins %}
     <table class="table col-10 mx-auto mt-5">
         <thead class="thead-light">
             <tr>
@@ -12,7 +12,6 @@
             </tr>
         </thead>
         <tbody>
-        {% if magasins %}
             {% for magasin in magasins %}
                 <tr>
                     <th>{{ magasin.nom }}</th>
@@ -27,11 +26,11 @@
                     </td>
                 </tr>
             {% endfor %}
-        {% endif %}
-
-    
         </tbody>
     </table>
+    {% else %}
+        <h4 class="col-12 text-center text-warning p-5">Pas de nouveaux magasins en attentes</h4> 
+    {% endif %}
 
 
 {% endblock %}
