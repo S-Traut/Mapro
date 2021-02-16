@@ -2,15 +2,18 @@
 
 namespace App\Controller;
 
-use Amp\Http\Client\Request;
+
 use App\Entity\Magasin;
 use Symfony\Component\Mime\Address;
 use App\Repository\ArticleRepository;
 use App\Repository\MagasinRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
@@ -88,14 +91,28 @@ class AdministrationController extends AbstractController
      */
     public function refuserMagasin(Magasin $shop, EntityManagerInterface $em, Request $request)
     {
-        
-        $form->get('motifRefus')->getData();
-        $email = $shop->getEmail();
-        $template = (new TemplatedEmail())
+        $form = $this->createFormBuilder()
+            ->add('Message_de_refus', TextareaType::class)
+            ->add('Envoyer', SubmitType::class)
+            ->getForm();
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            // data is an array with "name", "email", and "message" keys
+            $data = $form->getData();
+            $email = $shop->getEmail();
+            $template = (new TemplatedEmail())
                     ->from(new Address('vintage.mapro@gmail.com', '"Mapro compte"'))
                     ->to($email)
-                    ->subject('Mot de passe oublié')
+                    ->subject($data)
                     ->htmlTemplate('administration/refus.html.twig');
+            return $this->redirectToRoute('app_administration_magasinsenattentes');
+        }
+
+        return $this->render('administration/motif.html.twig', [
+            'form' => $form->createView()
+        ]);
     }
 
 }
