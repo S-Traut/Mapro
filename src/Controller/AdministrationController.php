@@ -2,10 +2,13 @@
 
 namespace App\Controller;
 
+use Amp\Http\Client\Request;
 use App\Entity\Magasin;
+use Symfony\Component\Mime\Address;
 use App\Repository\ArticleRepository;
 use App\Repository\MagasinRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -80,6 +83,20 @@ class AdministrationController extends AbstractController
         return $this->redirectToRoute('app_administration_magasinsenattentes');
     }
 
+    /**
+     * @Route("/refuser/{id<\d+>}")
+     */
+    public function refuserMagasin(Magasin $shop, EntityManagerInterface $em, Request $request)
+    {
+        
+        $form->get('motifRefus')->getData();
+        $email = $shop->getEmail();
+        $template = (new TemplatedEmail())
+                    ->from(new Address('vintage.mapro@gmail.com', '"Mapro compte"'))
+                    ->to($email)
+                    ->subject('Mot de passe oublié')
+                    ->htmlTemplate('administration/refus.html.twig');
+    }
 
 }
 
