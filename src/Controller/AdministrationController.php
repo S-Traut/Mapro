@@ -16,6 +16,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Mailer\MailerInterface;
 
 /**
 * @Route("/administration")
@@ -91,7 +92,7 @@ class AdministrationController extends AbstractController
     /**
      * @Route("/refuser/{id<\d+>}")
      */
-    public function refuserMagasin(Magasin $shop, EntityManagerInterface $em, Request $request)
+    public function refuserMagasin(Magasin $shop, EntityManagerInterface $em, Request $request, MailerInterface $mailer)
     {
         $form = $this->createFormBuilder()
             ->add('Message_de_refus', TextareaType::class)
@@ -107,8 +108,26 @@ class AdministrationController extends AbstractController
             $template = (new TemplatedEmail())
                     ->from(new Address('vintage.mapro@gmail.com', '"Mapro compte"'))
                     ->to($email)
-                    ->subject($data)
+                    ->subject('Refus de votre magasin sur Mapro')
                     ->htmlTemplate('administration/refus.html.twig');
+            
+            
+            $context = $template->getContext();
+            $context['message'] = $data['Message_de_refus'];
+            $template->context($context);
+            $mailer->send($template);
+
+            $articles = $shop->getArticles();
+            foreach($articles as $article){
+                $images = $article->getImage();
+                foreach($images as $image){
+                    $em->remove($image);
+            }
+            $em->remove($article);
+            }
+            $em->remove($shop);
+            $em->flush();
+
             return $this->redirectToRoute('app_administration_magasinsenattentes');
         }
 
