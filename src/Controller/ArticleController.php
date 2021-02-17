@@ -82,11 +82,15 @@ class ArticleController extends AbstractController
             throw $this->createNotFoundException('Article Inexistant !');
         }
         $shopid = $article->getMagasin()->getId();
+        $images = $article->getImage();
+        foreach($images as $image){
+            $em->remove($image);
+        }
         $em->remove($article);
         $em->flush();
 
         if ($this->isGranted('ROLE_ADMIN')) {
-            /*return $this->redirectToRoute('app_admin_annonce_index');*/
+            return $this->redirectToRoute('app_administration_listearticles');
         }
 
         return $this->redirectToRoute('app_article_list', [

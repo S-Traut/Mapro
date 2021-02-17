@@ -62,7 +62,7 @@ class AdministrationController extends AbstractController
     public function listeMagasins(MagasinRepository $magasinRepository)
     {
         return $this->render('administration/listesMagasins.html.twig', [
-            'magasins' => $magasinRepository->findAll()
+            'magasins' => $magasinRepository->findBy(['etat' => 1])
         ]);
     }
 
