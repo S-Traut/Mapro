@@ -69,7 +69,7 @@ class MagasinController extends AbstractController
     }
 
      /**
-     * @Route("/shop/{id<\d+>}/edit")
+     * @Route("/shop/{id<\d+>}/edit", name="app_magasin_edit")
      */
     public function edit(MagasinRepository $magasinRepository, $id, Request $request, EntityManagerInterface $em){
 
