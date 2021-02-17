@@ -109,6 +109,10 @@ class MagasinController extends AbstractController
 
         $articles = $shop->getArticles();
         foreach($articles as $article){
+            $images = $article->getImage();
+            foreach($images as $image){
+                $em->remove($image);
+            }
             $em->remove($article);
         }
 
@@ -116,7 +120,7 @@ class MagasinController extends AbstractController
         $em->flush();
 
         if ($this->isGranted('ROLE_ADMIN')) {
-            /*return $this->redirectToRoute('app_administration_index');*/
+            return $this->redirectToRoute('app_administration_listemagasins');
         }
 
         return $this->redirectToRoute('shops');
