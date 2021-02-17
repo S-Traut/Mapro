@@ -1,0 +1,41 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+    {% if articles %}
+    <table class="table col-10 mx-auto mt-5">
+        <thead class="thead-light">
+            <tr>
+                <th scope="col">Nom</th>
+                <th scope="col">Déscription</th>
+                <th scope="col">Prix</th>
+                <th scope="col">Magasin</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for article in articles %}
+                <tr>
+                    <th>{{ article.nom }}</th>
+                    <td>{{ article.description }}</td>
+                    <td>{{ article.prix }}€</td>
+                    <td>{{ article.getMagasin.nom }}</td>
+                    <td>
+                        <div class="btn-group">
+                            <a class="btn btn-sm btn-outline-info" href="{{ path('app_article_show', { id: article.id })  }}" type="button"><i class="far fa-eye"></i> Voir</a>
+                            <a class="btn btn-sm btn-outline-success" href="{{ path('app_article_edit', { id: article.id }) }}" type="button"><i class="far fa-check-square"></i> Editer</a>
+                            <a class="btn btn-sm btn-outline-danger" type="button" href="{{ path('app_article_delete', { id: article.id })  }}"><i class="far fa-times-circle"></i> Supprimer</a>
+                        </div>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <div class="pagination justify-content-center">
+		{{ knp_pagination_render(articles) }}
+	</div>
+    {% else %}
+        <h4 class="col-12 text-center text-warning p-5">Pas d'articles !</h4> 
+    {% endif %}
+
+
+{% endblock %}

@@ -107,11 +107,20 @@ class MagasinController extends AbstractController
             throw $this->createNotFoundException('Magasin Inexistant !');
         }
 
+        $articles = $shop->getArticles();
+        foreach($articles as $article){
+            $images = $article->getImage();
+            foreach($images as $image){
+                $em->remove($image);
+            }
+            $em->remove($article);
+        }
+
         $em->remove($shop);
         $em->flush();
 
         if ($this->isGranted('ROLE_ADMIN')) {
-            /*return $this->redirectToRoute('app_admin_annonce_index');*/
+            return $this->redirectToRoute('app_administration_listemagasins');
         }
 
         return $this->redirectToRoute('shops');
