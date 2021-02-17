@@ -8,6 +8,7 @@ use Symfony\Component\Mime\Address;
 use App\Repository\ArticleRepository;
 use App\Repository\MagasinRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -37,10 +38,9 @@ class AdministrationController extends AbstractController
     /**
      * @Route("/waitlist")
      */
-    public function magasinsEnAttentes(MagasinRepository $magasinRepository)
+    public function magasinsEnAttentes(MagasinRepository $magasinRepository, Request $request, PaginatorInterface $paginator)
     {
-        $value = $magasinRepository->findBy(['etat' => 0]);
-        
+        $value = $paginator->paginate($magasinRepository->findBy(['etat' => 0]), $request->query->getInt('page', 1), 10);
         return $this->render('administration/listesAttentes.html.twig', [
             'magasins' => $value
         ]);
@@ -49,20 +49,22 @@ class AdministrationController extends AbstractController
     /**
      * @Route("/articles/liste")
      */
-    public function listeArticles(ArticleRepository $articleRepository)
+    public function listeArticles(ArticleRepository $articleRepository, PaginatorInterface $paginator, Request $request)
     {
+        $articles = $paginator->paginate($articleRepository->findAll(), $request->query->getInt('page', 1), 10);
         return $this->render('administration/listesArticles.html.twig', [
-            'articles' => $articleRepository->findAll()
+            'articles' => $articles
         ]);
     }
 
     /**
      * @Route("/magasins/liste")
      */
-    public function listeMagasins(MagasinRepository $magasinRepository)
+    public function listeMagasins(MagasinRepository $magasinRepository, Request $request, PaginatorInterface $paginator)
     {
+        $magasins = $paginator->paginate($magasinRepository->findBy(['etat' => 1]), $request->query->getInt('page', 1), 10);
         return $this->render('administration/listesMagasins.html.twig', [
-            'magasins' => $magasinRepository->findBy(['etat' => 1])
+            'magasins' => $magasins
         ]);
     }
 

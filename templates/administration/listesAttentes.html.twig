@@ -28,6 +28,9 @@
             {% endfor %}
         </tbody>
     </table>
+    <div class="pagination justify-content-center">
+		{{ knp_pagination_render(magasins) }}
+	</div>
     {% else %}
         <h4 class="col-12 text-center text-warning p-5">Pas de nouveaux magasins en attentes</h4> 
     {% endif %}

@@ -30,6 +30,9 @@
             {% endfor %}
         </tbody>
     </table>
+    <div class="pagination justify-content-center">
+		{{ knp_pagination_render(articles) }}
+	</div>
     {% else %}
         <h4 class="col-12 text-center text-warning p-5">Pas d'articles !</h4> 
     {% endif %}
