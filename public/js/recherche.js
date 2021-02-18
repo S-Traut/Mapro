@@ -74,17 +74,28 @@ $(document).ready(function(){
     listData.forEach((data) => {
       listRes.forEach((res) => {
         if(res == data.nom){
-          if(data.siren !== "undefined"){
+          if(data.hasOwnProperty('siren')){
             $('#search-result').append(`
-                <div class="shop-item">
+                <div class="shop-item m-3">
                 <a style="margin-bottom: 0px; font-size: 23px;" href="/shop/${data.id}">${data.nom}</a>
                 <p style="margin-bottom: 0px;">${data.adresse}</p>
                 </div>
             `);
           }else{
             $('#search-result').append(`
-                <div class="article-item">
-                <a style="margin-bottom: 0px; font-size: 23px;" href="/article/${data.id}">${data.nom}</a>
+                <div class="article-item m-3">
+                <div class="row">
+                  <div class="col-3">
+                    <img src="https://placehold.it/350x350" style="width: 100%"></img>
+                  </div>
+                  <div class="col-9">
+                    <a style="margin-bottom: 0px; font-size: 23px;" href="/article/${data.id}">${data.nom}</a>
+                    <p style="margin-bottom: 0px;">${data.description}</p>
+                    <p style="margin-bottom: 0px;">${data.prix} €</p>
+                  </div>
+                </div>
+                
+                
                 </div>
             `);
           }
