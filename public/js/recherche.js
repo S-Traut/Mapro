@@ -3,7 +3,6 @@
 $(document).ready(function(){
   var listNom = [];
   var listData = [];
-  var listRes = [];
 
   //récup coordonnées de l'utilisateur
     $.ajax({
@@ -42,15 +41,12 @@ $(document).ready(function(){
       var resultDropdown = $(this).siblings(".result");
 
       if(inputVal.length){
-        listRes = [];
-        
         //vide la dropdown
         resultDropdown.empty();
         //affine la recherche
         const noms = listNom.filter(mot => mot.indexOf(inputVal) > -1);
         //affiche les options
         noms.forEach((nom) => {
-          listRes.push(nom);
           resultDropdown.append(`<option>${nom}</option>`)
         });
     } else{
@@ -62,11 +58,40 @@ $(document).ready(function(){
   $(document).on("click", ".result option", function(){
     $(this).parents(".search-box").find('input[type="text"]').val($(this).text());
     $(this).parent(".result").empty();
-    
+    $('#search-result').empty();
+
+    const mot = $('.search-box input[type="text"]').val()
+
+    listData.forEach(res => {
+      if(res.nom === mot){
+        if(res.hasOwnProperty('siren')){
+          $('#search-result').append(`
+                <div class="shop-item m-3">
+                <a style="margin-bottom: 0px; font-size: 23px;" href="/shop/${res.id}">${res.nom}</a>
+                <p style="margin-bottom: 0px;">${res.adresse}</p>
+                </div>
+            `)
+        }else{
+          $('#search-result').append(`
+          <div class="post-container p-3">
+          <div class="post-thumb" style="float: left">
+            <img src="http://dummyimage.com/200x200/f0f/fff" style="max-width: 100px; display: block"/>
+          </div>
+          <div class="post-content">
+            <a style="margin-bottom: 0px; font-size: 23px;" href="/article/${res.id}">${res.nom}</a>
+            <p style="margin-bottom: 0px;">${res.description}</p>
+            <p style="margin-bottom: 0px;">${res.prix} €</p>
+          </div>
+        </div> 
+            `)
+        }
+        
+      }
+    })
 
   });
 
-  $('.valider').on('click', function() {
+  /*$('.valider').on('click', function() {
     //vider dans le DOM
     $('.result').empty();
     $('#search-result').empty();
@@ -104,37 +129,5 @@ $(document).ready(function(){
     });
 
 
-  });
+  });*/
 });
-
-/*function search() {
-    $.ajax({
-      url: "/api/get/userPosition",
-      dataType: "json"
-  }).done((response) => {
-    var userPosition;
-      if (response.latitude != null && response.longitude != null) {
-          userPosition = { lat: parseFloat(response.latitude), lng: parseFloat(response.longitude) };
-      }
-
-    $.ajax({
-        url: "/api/get/searchData",
-        data: {
-            latitude: userPosition.lat,
-            longitude: userPosition.lng
-        },
-        dataType: "json"
-    }).done((shops) => {
-
-    });
-  });
-
-}*/
-
-
-
-
-
-
-
-  

@@ -2,10 +2,13 @@
 
 {% block body %}
 
-	<div class="search-box col-7 mx-auto">
-		<input id="recherche" type="text" placeholder="recherche">
-		<button class="valider btn">Valider</button>
-		<div class="result"></div>
+	<div class="container">
+		<div class="col-md-7 mx-auto mt-5">
+			<div class="search-box input-group mb-3">
+				<input id="recherche" type="text" class="form-control" placeholder="Recherche" style="width: 100%" autocomplete="off">
+				<div class="result"></div>
+			</div>
+		</div>
 	</div>
 
 	<!-- Résultat de recherche -->
@@ -24,9 +27,7 @@
 
 	<!-- grille des plus consultés -->
 	{% include 'module/articlespop.html.twig' %}
-
 {% endblock %}
-
 {% block javascripts %}
 	<script src="js/recherche.js"></script>
 	{{ encore_entry_script_tags('map') }}
