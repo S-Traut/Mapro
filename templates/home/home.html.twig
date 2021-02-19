@@ -1,6 +1,13 @@
 {% extends "base.html.twig" %}
 
+{% block headScripts %}
+	<link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css"/>
+{% endblock %}
+
 {% block body %}
+
+	<!-- grille catégories -->
+	{% include 'module/categories.html.twig' %}
 
 	<!-- barre de recherche -->
 	{% include 'module/recherche.html.twig' %}
@@ -8,11 +15,11 @@
 	<!-- Magasins autour -->
 	<div class="container">
 		<h3>Magasins autour de chez vous !</h3>
-		<div id="popular-shops"></div>
+		<div class="swiper-container">
+			<div class="swiper-wrapper"></div>
+		</div>
 	</div>
 
-	<!-- grille catégories -->
-	{% include 'module/categories.html.twig' %}
 
 	<!-- grille des plus consultés -->
 	{% include 'module/articlespop.html.twig' %}
@@ -20,5 +27,7 @@
 {% endblock %}
 
 {% block javascripts %}
+	<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
 	{{ encore_entry_script_tags('map') }}
 {% endblock %}
+

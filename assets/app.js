@@ -14,3 +14,4 @@ import './styles/pages/landing.scss'
 import './styles/pages/categories.scss'
 
 import './styles/components/menu_item.scss'
+import './styles/components/homeCategory.scss'
