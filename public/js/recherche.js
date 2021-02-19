@@ -24,18 +24,26 @@ $(document).ready(function(){
         dataType: "json"
     }).done((shops) => {
       
-      //récup noms des magasins et articles à proximité
+      //listing des magasins à proximité
       shops.forEach((shop) => {
         listData.push(shop)
-        listNom.push(shop.nom);
+        var name = shop.nom.toLowerCase()
+        listNom.push(name);
+      });
+
+      //listing des articles à proximité
+      shops.forEach((shop) => {
         shop.articles.forEach((article) => {
           listData.push(article);
-          listNom.push(article.nom);
+          var name = article.nom.toLowerCase()
+          listNom.push(name);
         });
       });
+
     });
   });
 
+  //lors de la saisie 
   $('.search-box input[type="text"]').on("input", function(){
       var inputVal = $(this).val();
       var resultDropdown = $(this).siblings(".result");
@@ -44,18 +52,50 @@ $(document).ready(function(){
         //vide la dropdown
         resultDropdown.empty();
         //affine la recherche
-        const noms = listNom.filter(mot => mot.indexOf(inputVal) > -1);
-        //affiche les options
-        noms.forEach((nom) => {
-          resultDropdown.append(`<option>${nom}</option>`)
-        });
+        const noms = listNom.filter(mot => mot.indexOf(inputVal.toLowerCase()) > -1);
+        listData.forEach(data =>{
+          noms.forEach((nom) => {
+            if(data.nom.toLowerCase() === nom && data.hasOwnProperty('siren')){
+              //affiche les magasins
+              resultDropdown.append(`
+              <div class="result-option p-3">
+              <a  href="/shop/${data.id}">
+                <div class="post-thumb" style="float: left">
+                  <img src="http://dummyimage.com/200x200/f0f/fff" style="max-width: 60px; display: block"/>
+                </div>
+                <div class="post-content">
+                  <p style="margin-bottom: 0px; font-size: 23px;">${data.nom}</p>
+                  <p style="margin-bottom: 0px;">${data.description}</p>
+                </div>
+              </a>
+              </div> 
+              `)
+            }else if(data.nom.toLowerCase() === nom && !data.hasOwnProperty('siren')){
+              //affiche les articles
+              resultDropdown.append(`
+              <div class="result-option p-3">
+              <a  href="/article/${data.id}">
+                <div class="post-thumb" style="float: left">
+                  <img src="http://dummyimage.com/200x200/f0f/fff" style="max-width: 60px; display: block"/>
+                </div>
+                <div class="post-content">
+                  <p style="margin-bottom: 0px; font-size: 23px;">${data.nom}</p>
+                  <p style="margin-bottom: 0px;">${data.description}</p>
+                </div>
+              </a>
+              </div> 
+              `)
+            }
+          })
+        })
+        
     } else{
         resultDropdown.empty();
     }
   });
 
   //selection d'une option
-  $(document).on("click", ".result option", function(){
+  /*$(document).on("click", ".result .result-option", function(){
     $(this).parents(".search-box").find('input[type="text"]').val($(this).text());
     $(this).parent(".result").empty();
     $('#search-result').empty();
@@ -88,46 +128,6 @@ $(document).ready(function(){
         
       }
     })
-
-  });
-
-  /*$('.valider').on('click', function() {
-    //vider dans le DOM
-    $('.result').empty();
-    $('#search-result').empty();
-
-    listData.forEach((data) => {
-      listRes.forEach((res) => {
-        if(res == data.nom){
-          if(data.hasOwnProperty('siren')){
-            $('#search-result').append(`
-                <div class="shop-item m-3">
-                <a style="margin-bottom: 0px; font-size: 23px;" href="/shop/${data.id}">${data.nom}</a>
-                <p style="margin-bottom: 0px;">${data.adresse}</p>
-                </div>
-            `);
-          }else{
-            $('#search-result').append(`
-                <div class="article-item m-3">
-                <div class="row">
-                  <div class="col-3">
-                    <img src="https://placehold.it/350x350" style="width: 100%"></img>
-                  </div>
-                  <div class="col-9">
-                    <a style="margin-bottom: 0px; font-size: 23px;" href="/article/${data.id}">${data.nom}</a>
-                    <p style="margin-bottom: 0px;">${data.description}</p>
-                    <p style="margin-bottom: 0px;">${data.prix} €</p>
-                  </div>
-                </div>
-                
-                
-                </div>
-            `);
-          }
-        }
-      });
-    });
-
 
   });*/
 });
