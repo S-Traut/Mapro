@@ -4,8 +4,10 @@
 
 	<div class="container">
 		<div class="m-5 row d-flex">
-			<div class="col-sm-4  mx-auto">
-				<h1>Me connecter</h1>
+			<div class="col-sm-5 mx-auto" style="margin-top: 100px">
+				<h1 style="text-align: center;">Me connecter</h1>
+
+				
 				<form method="post">
 					{% if error %}
 						<div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
@@ -18,34 +20,22 @@
 							<a href="{{ path('app_logout') }}">Logout</a>
 						</div>
 					{% endif %}
-
-					<input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" placeholder="email" required autofocus>
-
-					<input type="password" name="password" id="inputPassword" class="form-control" placeholder="mot de passe" required>
-
-					<input
-					type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
-
-					{#
-																																																																																																																									        Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
-																																																																																																																									        See https://symfony.com/doc/current/security/remember_me.html
-																																																																																																																									
-																																																																																																																									        <div class="checkbox mb-3">
-																																																																																																																									            <label>
-																																																																																																																									                <input type="checkbox" name="_remember_me"> Remember me
-																																																																																																																									            </label>
-																																																																																																																									        </div>
-																																																																																																																									    #}
-					<div>
-						<a href="/mdp-oublie">Mot de passe oublié ?</a>
+					<div style="background-color: #5A5A5A; padding: 20px">
+						<input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" placeholder="email" required autofocus>
+						<input type="password" name="password" id="inputPassword" class="form-control" placeholder="mot de passe" required>
+						<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+						<a style="color: white;" href="/mdp-oublie">Mot de passe oublié ?</a>
 					</div>
+					
+					
 
-					<button class="btn btn-success mt-3 mb-2" type="submit" id="submit">Connexion</button>
+					<button class="btn btn-success mt-3 mb-2 btn-block" type="submit" id="submit">Me connecter !</button>
 
 				</form>
-				<a href="/register">Pas de compte ? M'inscrire</a>
+				<button class="btn btn-info mt-3 mb-2 btn-block" href="/register">Pas de compte ? M'inscrire</a>
 			</div>
 		</div>
 	</div>
+	<img style="position: absolute; top: 300px; z-index:-100" src="{{ asset('./image/line.png')}}" alt="line_image">
 
 {% endblock %}
