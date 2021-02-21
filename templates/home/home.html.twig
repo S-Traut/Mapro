@@ -13,7 +13,7 @@
 
 	<!-- Résultat de recherche -->
 	<div class="container">
-		<div id="search-result"></div>
+		<div id="search-result" class="mb-5"></div>
 	</div>
 
 	<!-- Magasins autour -->
@@ -29,6 +29,6 @@
 	{% include 'module/articlespop.html.twig' %}
 {% endblock %}
 {% block javascripts %}
-	<script src="js/recherche.js"></script>
+	{{ encore_entry_script_tags('search') }}
 	{{ encore_entry_script_tags('map') }}
 {% endblock %}
