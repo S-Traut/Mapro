@@ -6,11 +6,19 @@
 
 {% block body %}
 
-	<!-- grille catégories -->
-	{% include 'module/categories.html.twig' %}
+	<div class="container">
+		<div class="col-md-7 mx-auto mt-5">
+			<div class="search-box input-group mb-3">
+				<input id="recherche" type="text" class="form-control" placeholder="Recherche" style="width: 100%" autocomplete="off">
+				<div class="result"></div>
+			</div>
+		</div>
+	</div>
 
-	<!-- barre de recherche -->
-	{% include 'module/recherche.html.twig' %}
+	<!-- Résultat de recherche -->
+	<div class="container">
+		<div id="search-result" class="mb-5"></div>
+	</div>
 
 	<!-- Magasins autour -->
 	<div class="container">
@@ -23,11 +31,8 @@
 
 	<!-- grille des plus consultés -->
 	{% include 'module/articlespop.html.twig' %}
-
 {% endblock %}
-
 {% block javascripts %}
-	<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+	{{ encore_entry_script_tags('search') }}
 	{{ encore_entry_script_tags('map') }}
 {% endblock %}
-
