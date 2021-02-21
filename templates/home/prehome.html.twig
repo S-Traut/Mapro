@@ -20,7 +20,7 @@
 					class="search">
 					<!-- <input class="form-control" type="text" placeholder="Indiquez votre adresse" aria-label="Search"> -->
 
-					<button type="button" id="search" class="btn btn-primary">
+					<button type="button" id="search" class="btn btn-primary" href="#">
 						Lancer une recherche !
 						<button type="button" id="locate" class="btn btn-primary">
 							<i class="fas fa-location-arrow"></i>
@@ -36,6 +36,7 @@
 {% endblock %}
 
 {% block javascripts %}
+	<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
 	<script src="{{ asset('js/localisation.js') }}"></script>
 	{{ encore_entry_script_tags('map') }}
 {% endblock %}

@@ -1,0 +1,35 @@
+#home-category {
+    display: flex;
+    justify-content: space-between;
+    height: 100%;
+    display: flex;
+    align-items:center;
+    overflow-x: scroll;
+    overflow-y: hidden;
+}
+
+#home-category::-webkit-scrollbar {
+    display: none;
+}
+
+
+.category-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: rgb(150, 150, 150);
+    min-width: 150px;
+    transition-duration: 0.5s;   
+}
+
+.category-item:hover {
+    color: #67BE4B;
+    transition: cubic-bezier(0.19, 1, 0.22, 1);
+    transition-duration: 0.5s;
+    text-decoration: none;
+}
+
+.category-item i {
+    margin-bottom: 10px;
+    font-size: 30px;
+}

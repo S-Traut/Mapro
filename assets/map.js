@@ -6,6 +6,30 @@ let shopMarkers = [];
 let searchBar = document.getElementById('search');
 let formCreationMagasin = document.forms[0];
 let setLocalisation = document.getElementsByName('set_localisation')[0];
+let isShopEdit = false;
+let shopLocationVariable;
+let homeShops;
+
+if(window.location.pathname == "/") {
+    homeShops = new Swiper('.swiper-container', {
+        direction: 'horizontal',
+        slidesPerView: "auto",
+        spaceBetween: 20,
+        freeMode: true,
+    });    
+}
+
+if (window.location.pathname.match("(\/shop\/0*[1-9][0-9]*\/edit)")) {
+    document.addEventListener('DOMContentLoaded', function () {
+        let shopDOM = document.querySelector('.shopLocation');
+        let locationValue = JSON.parse(shopDOM.dataset.location);
+        shopLocationVariable = { lat: locationValue[0], lng: locationValue[1] };
+    });
+    isShopEdit = true;
+} else if (window.location.pathname.match("(\/shop\/new)")) {
+    isShopEdit = true;
+}
+
 
 const loader = new Loader({
     apiKey: /*"AIzaSyAXUQPahIcvHZNrAMxqHo91JS7z5VOLLbI"*/ "",
@@ -13,6 +37,14 @@ const loader = new Loader({
 });
 
 loader.load().then(() => {
+    if (isShopEdit) {
+        shopLocation();
+    } else {
+        userLocation();
+    }
+});
+
+function userLocation() {
     $.ajax({
         url: "/api/get/userPosition",
         dataType: "json"
@@ -37,18 +69,47 @@ loader.load().then(() => {
             userMarker.setPosition(e.latLng);
             locateUser();
 
-            if(window.location.pathname == "/")
+            if (window.location.pathname == "/")
                 searchShops();
         });
 
         if (window.location.pathname == "/") {
             if (userPosition)
-                searchShops(); 
+                searchShops();
         }
     });
-});
+}
 
-function searchShops() { 
+function shopLocation() {
+    $.ajax({
+        url: "/api/get/userPosition",
+        dataType: "json"
+    }).done((response) => {
+        if (response.latitude != null && response.longitude != null) {
+            userPosition = { lat: parseFloat(response.latitude), lng: parseFloat(response.longitude) };
+        }
+
+        map = new google.maps.Map(document.getElementById("map"), {
+            center: shopLocationVariable ? shopLocationVariable : userPosition,
+            zoom: 13,
+            disableDefaultUI: true,
+        });
+
+        let shopMarker = new google.maps.Marker({
+            map,
+            position: shopLocationVariable,
+            icon: "../../image/maps/marker_shop.png"
+        });
+
+        map.addListener('click', (e) => {
+            shopMarker.setPosition(e.latLng);
+            userPosition = e.latLng.toJSON();
+        });
+    });
+}
+
+function searchShops() {
+    
     $.ajax({
         url: "/api/get/searchAround",
         data: {
@@ -57,12 +118,12 @@ function searchShops() {
         },
         dataType: "json"
     }).done((shops) => {
+        homeShops.removeAllSlides();
         resetMarkers();
-        $('#popular-shops').html("");
-        if(shops.length == 0) {
-            $('#popular-shops').html("Aucun magasin n'a été trouvé autour de chez vous. :(");
+        if (shops.length == 0) {
+            
         }
-        
+
         shops.forEach((shop, index) => {
             let shopMarker = new google.maps.Marker({
                 map,
@@ -79,15 +140,18 @@ function searchShops() {
             });
             shopMarkers.push(shopMarker);
 
-            $('#popular-shops').append(`
-                <div class="shop-item" style="animation-delay: ${index/10}s";>
-                <a style="margin-bottom: 0px; font-size: 23px;" href="/shop/${shop.id}">${shop.nom}</a>
-                <p style="margin-bottom: 0px;">${shop.adresse}</p>
-                </div>
+            homeShops.appendSlide(`
+                <div class="swiper-slide shop-item" style="height: 250px; max-width: 300px">
+                <div class="shop-img"><img src="https://picsum.photos/400"></div>
+                <a style="padding: 0px 10px 0px 10px; font-size: 23px;" href="/shop/${shop.id}">${shop.nom}</a>
+                <p style="padding: 0px 10px 0px 10px;">${shop.adresse}</p>
+                </div> 
             `);
         });
     });
 }
+
+
 
 function resetMarkers() {
     shopMarkers.forEach((marker) => {
@@ -102,7 +166,7 @@ function locateUser() {
 
 if (searchBar) {
     searchBar.addEventListener("click", () => {
-        if (userPosition != null) {
+        if (userPosition) {
             document.cookie = (`userLongitude=${userPosition.lng}`);
             document.cookie = (`userLatitude=${userPosition.lat}`);
             location.href = "/";
@@ -123,3 +187,4 @@ if (setLocalisation) {
         document.getElementById('set_localisation_longitude').value = userPosition.lng;
     });
 }
+
