@@ -4,34 +4,59 @@ namespace App\Controller;
 
 use App\Entity\Article;
 use App\Entity\Magasin;
+use App\Entity\StatistiqueArticle;
 use App\Form\ArticleType;
 use App\Repository\ArticleRepository;
+use App\Repository\StatistiqueArticleRepository;
+use DateTime;
+use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Validator\Constraints\Date;
 
 class ArticleController extends AbstractController
 {
     /**
      * @Route("/article/{id<\d+>}")
      */
-    public function show(ArticleRepository $articleRepository, $id)
+    public function show(ArticleRepository $articleRepository, $id, StatistiqueArticleRepository $statistiqueArticleRepository, EntityManagerInterface $em)
     {
-        
         $article = $articleRepository->find($id);
-        $magasin = $article->getMagasin()->getNom();
-        $images = $article->getImage();
         if(!$article)
         {
             throw $this->createNotFoundException('Article Inexistant !');
-        }
-        return $this->render('article/show.html.twig', [
-            'article' => $article,
-            'magasin' => $magasin,
-            'images' => $images
-        ]);
+        }else{
+            $magasin = $article->getMagasin()->getNom();
+            $images = $article->getImage();
+            // On vérifie que les stats de la page existe
+            $statArticle = $statistiqueArticleRepository->find($id);
+            // si la page n'existe pas on la créer et on ajoute +1
+            $date = new DateTime();
+            if(!$statArticle){
+                $statArticle = new StatistiqueArticle();
+                $statArticle
+                    ->setArticle($article)
+                    ->setNbvue(1)
+                    ->setDate($date);
+                $em->persist($statArticle);
+            } else{
+                // si la page existe on modifie
+                $nbVue = $statArticle->getNbvue();
+                $statArticle
+                    ->setNbvue($nbVue + 1)
+                    ->setDate($date);
+                $em->persist($statArticle);
+            }
+            $em->flush();
+            return $this->render('article/show.html.twig', [
+                'article' => $article,
+                'magasin' => $magasin,
+                'images' => $images
+            ]);
+        }    
     }
 
     /**
