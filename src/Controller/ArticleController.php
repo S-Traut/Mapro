@@ -31,7 +31,7 @@ class ArticleController extends AbstractController
             $magasin = $article->getMagasin()->getNom();
             $images = $article->getImage();
             // On vérifie que les stats de la page existe
-            $statArticle = $statistiqueArticleRepository->find($id);
+            $statArticle = $statistiqueArticleRepository->findBy(['article' => $id]);
             // si la page n'existe pas on la créer et on ajoute +1
             $date = new DateTime();
             if(!$statArticle){
@@ -43,11 +43,10 @@ class ArticleController extends AbstractController
                 $em->persist($statArticle);
             } else{
                 // si la page existe on modifie
-                $nbVue = $statArticle->getNbvue();
-                $statArticle
-                    ->setNbvue($nbVue + 1)
+                $statArticle[0]
+                    ->setNbvue($statArticle[0]->getNbvue() + 1)
                     ->setDate($date);
-                $em->persist($statArticle);
+                $em->persist($statArticle[0]);
             }
             $em->flush();
             return $this->render('article/show.html.twig', [
