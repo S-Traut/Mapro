@@ -40,9 +40,8 @@
                                 <p>{{ article.description }}</p>
                             </div>
                             <div class="p-2 mt-2">
-                                <b>PRIX DE L'ARTICLE: {{ article.prix }}€</b> 
+                                <b>PRIX DE L'ARTICLE: {{ article.prix }}€ {% if is_granted('ROLE_VENDEUR') or is_granted('ROLE_ADMIN') %} <p><i class="fas fa-eye"></i> {{ article.statistiqueArticle.nbVue }}</p>{% endif %}</b> 
                             </div>
-                            
                         </div>
                     </article>
                 </section>

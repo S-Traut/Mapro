@@ -16,12 +16,13 @@
         </div>
     </div>
     <table class="table col-10 mx-auto">
-        <thead class="thead-dark">
+        <thead class="thead-light">
             <tr>
                 <th scope="col">Nom</th>
                 <th scope="col">Description</th>
                 <th scope="col">Prix</th>
                 <th scope="col">Type</th>
+                <th scope="col">Vues</th>
                 <th scope="col">Actions</th>
             </tr>
     </thead>
@@ -33,6 +34,7 @@
                     <td class="col-md-auto">{{ article.description }}</td>
                     <td>{{ article.prix }}</td>
                     <td>{{ article.type }}</td>
+                    <td>{{ article.statistiqueArticle.nbVue }}</td>
                     <td>
                         <div class="btn-group">
                             <a class="btn btn-sm btn-outline-info" href="{{ path('app_article_show', { id: article.id })  }}" type="button"><i class="far fa-eye"></i> Voir</a>
