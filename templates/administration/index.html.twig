@@ -12,7 +12,7 @@
         
     
     
-    <a href="{{ path('app_administration_magasinsenattentes') }}" class="btn {% if nbMagasinsAttentes|length >= 1 %}btn-warning{% else %}btn-info{% endif %} btn-block col-6 mx-auto m-3" type="button">Magasins en attentes {{ nbMagasinsAttentes|length }}<i class="fas fa-hourglass-half"></i></a>
+    <a href="{{ path('app_administration_magasinsenattentes') }}" class="btn {% if nbMagasinsAttentes|length >= 1 %}btn-warning{% else %}btn-dark{% endif %} btn-block col-6 mx-auto m-3" {% if nbMagasinsAttentes|length < 1 %}style=" pointer-events: none"{% endif %} type="button">Magasins en attentes {{ nbMagasinsAttentes|length }}<i class="fas fa-hourglass-half"></i></a>
     <a href="{{ path('app_administration_listemagasins') }}" class="btn btn-info btn-block col-6 mx-auto m-3" type="button">Liste des magasins</a>
     <a href="{{ path('app_administration_listearticles') }}" class="btn btn-info btn-block col-6 mx-auto m-3" type="button">Liste des articles</a>
     <a href="{{ path('app_administration_listestatistiques') }}" class="btn btn-info btn-block col-6 mx-auto m-3" type="button">Statistiques</a>
