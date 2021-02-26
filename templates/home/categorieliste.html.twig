@@ -2,28 +2,46 @@
 
 {% block body %}
 
-	<!-- module recherche -->
-	{% include 'module/recherche.html.twig' %}
+
+	<div class="container">
+		<div class="col-md-7 mx-auto">
+			<div class="search-box input-group mb-3">
+				<input id="recherche" type="text" class="form-control" placeholder="Recherche" autocomplete="off">
+				<div class="result"></div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Résultat de recherche -->
+	<div class="container">
+		<div id="search-result" class="mb-5"></div>
+	</div>
 
 	<!-- grille catégories -->
 	<div class="container">
 		<section id="content">
 
-			{% for magasin in magasins %}
-				<div class="card mb-3">
-					<div class="row g-0">
-						<div class="col-md-4">
-							<img src="{{magasin.image}}" alt="..." style="width: 100%">
-						</div>
-						<div class="col-md-8">
-							<div class="card-body">
-								<h5 class="card-title">{{ magasin.nom }}</h5>
-								<p class="card-text">{{magasin.description}}</p>
+			{% if magasins is empty %}
+				<div class="card m-5">
+					<h2>Aucun résultat trouvé</h2>
+				</div>
+			{% else %}
+				{% for magasin in magasins %}
+					<div class="card mb-3">
+						<div class="row g-0">
+							<div class="col-md-4">
+								<img src="{{magasin.image}}" alt="..." style="width: 100%">
+							</div>
+							<div class="col-md-8">
+								<div class="card-body">
+									<h5 class="card-title">{{ magasin.nom }}</h5>
+									<p class="card-text">{{magasin.description}}</p>
+								</div>
 							</div>
 						</div>
 					</div>
-				</div>
-			{% endfor %}
+				{% endfor %}
+			{% endif %}
 
 			<div class="pagination">
 				{{ knp_pagination_render(magasins) }}
@@ -32,5 +50,7 @@
 
 		</section>
 	</div>
-
+{% endblock %}
+{% block javascripts %}
+	{{ encore_entry_script_tags('search') }}
 {% endblock %}

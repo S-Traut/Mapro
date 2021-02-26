@@ -68,9 +68,6 @@ class HomeController extends AbstractController
         //résultat de la recherche des magasins
         $donnees = $magasinRepo->searchCategorie($id, $longitude, $latitude);
 
-        dump($longitude);
-        dump($latitude);
-
         //pagination
         $magasins = $paginator->paginate($donnees, $request->query->getInt('page', 1), 10);
 
