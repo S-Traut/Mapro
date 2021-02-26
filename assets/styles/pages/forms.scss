@@ -32,3 +32,8 @@ label {
   position: relative;
   margin-left: 0;
 }
+
+label.required::after {
+  content: " *";
+  color: red;
+}
