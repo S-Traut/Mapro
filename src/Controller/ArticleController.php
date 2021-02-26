@@ -2,10 +2,12 @@
 
 namespace App\Controller;
 
+use DateTime;
 use App\Entity\Article;
 use App\Entity\Magasin;
 use App\Entity\StatistiqueArticle;
 use App\Form\ArticleType;
+use App\Entity\StatistiqueArticle;
 use App\Repository\ArticleRepository;
 use App\Repository\StatistiqueArticleRepository;
 use DateTime;
@@ -14,6 +16,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Repository\StatistiqueArticleRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Validator\Constraints\Date;
 
@@ -32,7 +35,7 @@ class ArticleController extends AbstractController
             $magasin = $article->getMagasin()->getNom();
             $images = $article->getImage();
             // On vérifie que les stats de la page existe
-            $statArticle = $statistiqueArticleRepository->find($id);
+            $statArticle = $statistiqueArticleRepository->findBy(['article' => $id]);
             // si la page n'existe pas on la créer et on ajoute +1
             $date = new DateTime();
             if(!$statArticle){
@@ -44,11 +47,10 @@ class ArticleController extends AbstractController
                 $em->persist($statArticle);
             } else{
                 // si la page existe on modifie
-                $nbVue = $statArticle->getNbvue();
-                $statArticle
-                    ->setNbvue($nbVue + 1)
+                $statArticle[0]
+                    ->setNbvue($statArticle[0]->getNbvue() + 1)
                     ->setDate($date);
-                $em->persist($statArticle);
+                $em->persist($statArticle[0]);
             }
             $em->flush();
             return $this->render('article/show.html.twig', [
