@@ -2,14 +2,11 @@
 
 namespace App\Controller;
 
-use DateTime;
 use App\Entity\Article;
 use App\Entity\Magasin;
-use App\Entity\StatistiqueArticle;
 use App\Form\ArticleType;
 use App\Entity\StatistiqueArticle;
 use App\Repository\ArticleRepository;
-use App\Repository\StatistiqueArticleRepository;
 use DateTime;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
