@@ -1,0 +1,18 @@
+.x {
+  position: relative;
+  display: inline-block;
+}
+#recherche {
+  width: 90px;
+}
+.search-box {
+  position: absolute;
+  background-color: #ffff;
+  overflow: auto;
+  border: 1px solid #ddd;
+  z-index: 1;
+}
+.result {
+  max-height: 80vh;
+  overflow: auto;
+}
