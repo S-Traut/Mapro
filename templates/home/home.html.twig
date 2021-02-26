@@ -1,10 +1,12 @@
 {% extends "base.html.twig" %}
 
 {% block headScripts %}
-	<link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css"/>
 {% endblock %}
 
 {% block body %}
+
+	<!-- grille catégories -->
+	{% include 'module/categories.html.twig' %}
 
 	<div class="container">
 		<div class="col-md-7 mx-auto">
@@ -15,13 +17,18 @@
 		</div>
 	</div>
 
+	
+
 	<!-- Résultat de recherche -->
 	<div class="container">
 		<div id="search-result" class="mb-5"></div>
 	</div>
 
+	
+
 	<!-- Magasins autour -->
 	<div class="container">
+		<div id="map" style="height: 400px"></div>
 		<h3>Magasins autour de chez vous !</h3>
 		<div class="swiper-container">
 			<div class="swiper-wrapper"></div>

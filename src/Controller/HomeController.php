@@ -24,16 +24,6 @@ class HomeController extends AbstractController
         ArticleRepository $articleRepo,
         UtilisateurController $utilisateurController
     ): Response {
-
-        if ($this->getUser() != null) {
-
-            //redirection vendeur vers ses magasins
-            if ($this->getUser()->getRoles()[0] == "ROLE_VENDEUR" && $this->getUser()->getMagasins()[0] != null) {
-
-                return $this->redirectToRoute('shops');
-            }
-        }
-
         if (isset($_COOKIE['userLongitude']) && isset($_COOKIE['userLatitude'])) {
             //récupérer les coordonnées géo de l'utilisateur
             $cookies = $request->cookies;
