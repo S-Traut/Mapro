@@ -1,0 +1,38 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+    {% if magasins %}
+    <table class="table col-10 mx-auto mt-5">
+        <thead class="thead-light">
+            <tr>
+                <th scope="col">Nom</th>
+                <th scope="col">Téléphone</th>
+                <th scope="col">Email</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for magasin in magasins %}
+                <tr>
+                    <th>{{ magasin.nom }}</th>
+                    <td>{{ magasin.tel }}</td>
+                    <td>{{ magasin.email }}</td>
+                    <td>
+                        <div class="btn-group">
+                            <a class="btn btn-sm btn-outline-info" href="{{ path('app_magasin_show', { id: magasin.id })  }}" type="button"><i class="far fa-eye"></i> Voir</a>
+                            <a class="btn btn-sm btn-outline-success" href="{{ path('app_magasin_edit', { id: magasin.id }) }}" type="button"><i class="far fa-check-square"></i> Editer</a>
+                            <a class="btn btn-sm btn-outline-danger" type="button" href="{{ path('app_magasin_delete', { id: magasin.id })  }}"><i class="far fa-times-circle"></i> Supprimer</a>
+                        </div>
+                    </td>   
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <div class="pagination justify-content-center">
+		{{ knp_pagination_render(magasins) }}
+	</div>
+    {% else %}
+        <h4 class="col-12 text-center text-warning p-5">Pas de nouveaux magasins en attentes</h4> 
+    {% endif %}
+
+{% endblock %}

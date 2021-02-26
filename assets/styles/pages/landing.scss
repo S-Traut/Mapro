@@ -3,14 +3,35 @@
     height: 500px;
 }
 
-#popular-articles {
-    border: 1px gray solid;
-    text-align: center;
-    color:gray;
+@keyframes slideInFromLeft {
+  0% {
+    transform: translateX(50%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+.shop-item {
+  overflow: hidden;
+  min-width: 300px;
+  width: 50%;
+  text-align: left;
+  border: 1px rgb(211, 211, 211) solid;
+  border-radius: 5px;
+}
+
+.shop-item .shop-img {
+  overflow: hidden;
+  max-height: 150px;
+  width: 100%;
 }
 
 .search {
-    display:flex;
-    margin-top: 10px;
-    margin-bottom: 10px;
+  display:flex;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }

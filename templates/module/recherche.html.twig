@@ -1,12 +1,21 @@
-<div class="row d-flex justify-content-center" style="padding-top: 10em; padding-bottom: 10em">
+<div class="d-flex justify-content-center" style="margin: 50px 0px 50px 0px">
 	<div class="col-sm-7 ">
 		<div class="form-group text-center ">
 			{{ form_start(searchForm) }}
+			<div class="row">
+				<div class="col-9">
+					{{ form_row(searchForm.mot_cle, {label:false, 'attr':{'placeholder': 'Recherche'}})}}
+				</div>
+				<div class="col-3">
+					{{ form_row(searchForm.choix, {label:false})}}
+				</div>
+			</div>
 
-			{{ form_widget(searchForm) }}
 			<button class="btn btn-outline-secondary" style="margin-top: 10px">Rechercher</button>
 
 			{{ form_end(searchForm) }}
+
+			<div id="map" style="height: 400px; margin-top: 30px;"></div>
 		</div>
 	</div>
 </div>

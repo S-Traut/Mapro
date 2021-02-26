@@ -1,9 +1,9 @@
 <?php
 
 namespace App\Controller;
-
 use App\Entity\Localisation;
 use App\Entity\Magasin;
+use App\Entity\StatistiqueMagasin;
 use App\Entity\TypeMagasin;
 use App\Entity\Utilisateur;
 use App\Form\CreationMagasinType;
@@ -17,25 +17,49 @@ use Doctrine\ORM\EntityManagerInterface;
 use phpDocumentor\Reflection\Location;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Form\Forms;
+use App\Form\EditionMagasinType;
+use App\Repository\StatistiqueMagasinRepository;
+use DateTime;
 
 class MagasinController extends AbstractController
 {
     /**
      * @Route("/shop/{id<\d+>}")
      */
-    public function show(MagasinRepository $magasinRepository, $id, ArticleRepository $articleRepository)
+    public function show(MagasinRepository $magasinRepository, $id, ArticleRepository $articleRepository, StatistiqueMagasinRepository $statistiqueMagasinRepository, EntityManagerInterface $em)
     {
         $magasin = $magasinRepository->find($id);
-        $articles = $articleRepository->findArticlesByMagasinId($id);
-        $articlesPop = $articleRepository->findArticlesPopulaires($id);
-        if (!$magasin && !$articles) {
+
+        if (!$magasin) {
             throw $this->createNotFoundException('Magasin Inexistant !');
+        } else{
+            $articles = $articleRepository->findArticlesByMagasinId($id);
+            $articlesPop = $articleRepository->findArticlesPopulaires($id);
+            $statMag = $statistiqueMagasinRepository->findBy(['magasin' => $id]);
+            dump($statMag);
+            $date = new DateTime();
+            if(!$statMag){
+                $statMag = new StatistiqueMagasin();
+                $statMag
+                    ->setDate($date)
+                    ->setNbvue(1)
+                    ->setMagasin($magasin);
+                $em->persist($statMag);
+            } else {
+                $statMag[0]
+                    ->setNbvue($statMag[0]->getNbvue()+1)
+                    ->setDate($date);
+                $em->persist($statMag[0]);
+            }
+            $em->flush();
+            return $this->render('magasin/show.html.twig', [
+                'magasin' => $magasin,
+                'articles' => $articles,
+                'articlesPop' => $articlesPop
+            ]);
         }
-        return $this->render('magasin/show.html.twig', [
-            'magasin' => $magasin,
-            'articles' => $articles,
-            'articlesPop' => $articlesPop
-        ]);
+        
     }
     /**
      * @Route("/shop/new", name="new_shop")
@@ -65,4 +89,64 @@ class MagasinController extends AbstractController
             'form' => $form->createView()
         ]);
     }
+
+     /**
+     * @Route("/shop/{id<\d+>}/edit", name="app_magasin_edit")
+     */
+    public function edit(MagasinRepository $magasinRepository, $id, Request $request, EntityManagerInterface $em){
+
+        $magasin = $magasinRepository->find($id);
+
+        if (!$magasin) {
+            
+            throw $this->createNotFoundException('Magasin Inexistant !');
+        }
+
+        //$magasin = new Magasin();
+
+
+        $form = $this->createForm(CreationMagasinType::class, $magasin); 
+        $form->handleRequest($request);
+
+        
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em->persist($magasin);
+            $em->flush();
+            return $this->redirect("/shop/" . $magasin->getId());
+        }
+
+        return $this->render('magasin/edit.html.twig', [
+            'magasin' => $magasin,
+            'form' => $form->createView()    
+        ]);
+    }
+    /**
+     * @Route("/shop/delete/{id<\d+>}")
+     */
+    public function delete(Magasin $shop, EntityManagerInterface $em, Request $request)
+    {
+        if (!$shop) {
+            throw $this->createNotFoundException('Magasin Inexistant !');
+        }
+
+        $articles = $shop->getArticles();
+        foreach($articles as $article){
+            $images = $article->getImage();
+            foreach($images as $image){
+                $em->remove($image);
+            }
+            $em->remove($article);
+        }
+
+        $em->remove($shop);
+        $em->flush();
+
+        if ($this->isGranted('ROLE_ADMIN')) {
+            return $this->redirectToRoute('app_administration_listemagasins');
+        }
+
+        return $this->redirectToRoute('shops');
+
+    }
 }
+

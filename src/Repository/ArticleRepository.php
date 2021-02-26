@@ -69,6 +69,23 @@ class ArticleRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    /**
+     * Recherche des articles en fonction des coordonnées géo
+     */
+    public function search($nom, $longitude, $latitude)
+    {
+
+        $sql = 'SQRT((' . $latitude . ' - m.latitude)*(' . $latitude . ' - m.latitude) + (' . $longitude . ' - m.longitude)*(' . $longitude . ' - m.longitude)) < 10.0';
+
+        return $this->createQueryBuilder('a')
+            ->join('a.magasin', 'm')
+            ->where($sql)
+            ->andWhere('a.nom LIKE :nom')
+            ->setParameter('nom', '%' . $nom . '%')
+            ->getQuery()
+            ->execute();
+    }
+
     // /**
     //  * @return Article[] Returns an array of Article objects
     //  */

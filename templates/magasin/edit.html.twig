@@ -9,10 +9,16 @@
 {% block body %}
     <div class="form-header">
         <div class="container">
-            <h1>Ajouter un article</h1>
+            <h1>Editer</h1>
+            <p>Modifiez les informations de votre magasin !</p>
         </div>
     </div>
     <div class="container">
-        {{ include("form.html.twig", {form: form, button: 'Créer'}) }}
+        {{ include("magasin/form.new.html.twig", {form: form, button: 'Créer'}) }}
     </div>
+    <div class="shopLocation" data-location="[{{ magasin.latitude }},{{ magasin.longitude }}]"></div>
+{% endblock %}
+
+{% block javascripts %}
+	{{ encore_entry_script_tags('map') }}
 {% endblock %}

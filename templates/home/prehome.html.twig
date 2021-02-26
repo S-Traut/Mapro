@@ -12,13 +12,15 @@
 
 		<div class="row" id="main-content">
 			<div class="col-sm-7">
-				<h2>Le commerce local, en ligne, et à coté de chez vous!</h2>
+				<h2>Le commerce local, en ligne, et à coté de chez vous !</h2>
+
+				<p>Cliquez sur la carte pour vous positionner !</p>
 				<div id="map"></div>
 				<div
 					class="search">
 					<!-- <input class="form-control" type="text" placeholder="Indiquez votre adresse" aria-label="Search"> -->
 
-					<button type="button" id="search" class="btn btn-primary">
+					<button type="button" id="search" class="btn btn-primary" href="#">
 						Lancer une recherche !
 						<button type="button" id="locate" class="btn btn-primary">
 							<i class="fas fa-location-arrow"></i>
@@ -28,14 +30,13 @@
 				<p>Utilisateur courant ?<br><a href="/login">connectez-vous !</a>
 				</p>
 			</div>
-			<div class="col-5 d-none d-lg-block" id="popular-articles">
-				<p>Articles populaires</p>
-			</div>
+			<div class="col-5 d-none d-lg-block" id="popular-shops"></div>
 		</div>
 	</div>
 {% endblock %}
 
 {% block javascripts %}
+	<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
 	<script src="{{ asset('js/localisation.js') }}"></script>
 	{{ encore_entry_script_tags('map') }}
 {% endblock %}
