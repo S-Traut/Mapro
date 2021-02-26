@@ -13,6 +13,10 @@
         </div>
     </div>
     <div class="container">
-        {{ include("form.html.twig", {form: form, button: 'Créer'}) }}
+        <div class="row">
+            <div class="col-sm-12 col-md-8 col-lg-4">
+                {{ include("form.html.twig", {form: form, button: 'Créer'}) }}
+            </div>
+        </div>
     </div>
 {% endblock %}
