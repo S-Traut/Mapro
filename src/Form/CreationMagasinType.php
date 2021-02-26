@@ -51,7 +51,7 @@ class CreationMagasinType extends AbstractType
             ->add('tel', TextType::class, [
                 'label' => 'Numéro de téléphone',
                 'constraints' => [
-                    new Regex('/0[1-9][0-9]{8}/'),
+                    new Regex('/0[1-9][0-9]{8}/', 'Veuillez indiquer un numéro de téléphone valide (e.g 0688776655)'),
                     new NotBlank([
                         'message' => 'Veuillez indiquer un numéro de téléphone.'
                     ])
@@ -60,7 +60,7 @@ class CreationMagasinType extends AbstractType
             ->add('email', TextType::class, [
                 'label' => 'Adresse email',
                 'constraints' => [
-                    new Regex('/[a-z0-9]*@[a-z0-9]*\.[a-z]*/'),
+                    new Regex('/[a-z0-9]*@[a-z0-9]*\.[a-z]*/', 'Veuillez indiquer une adresse email valide (e.g utilisateur@domaine.com)'),
                     new NotBlank([
                         'message' => 'Veuillez indiquer une adresse email.'
                     ])
@@ -69,7 +69,7 @@ class CreationMagasinType extends AbstractType
             ->add('siren', TextType::class, [
                 'label' => 'Numéro SIREN',
                 'constraints' => [
-                    new Regex('/[0-9]{9}/'),
+                    new Regex('/[0-9]{9}/', 'Veuillez indiquer un numéro SIREN valide (e.g 123456789)'),
                     new NotBlank([
                         'message' => 'Veuillez indiquer un numéro SIREN valide.'
                     ])
