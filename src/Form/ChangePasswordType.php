@@ -30,7 +30,7 @@ class ChangePasswordType extends AbstractType
                     ]),
                 ],
             ])
-            ->add('newConfirm', PasswordType::class, ['label' => 'Confirmer'])
+            ->add('newConfirm', PasswordType::class, ['label' => 'Confirmer le mot de passe'])
             ->add('Enregistrer', SubmitType::class, [
                 'attr' => [
                     'class' => 'btn btn-primary',
