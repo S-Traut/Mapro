@@ -49,7 +49,7 @@
 
     {% else %}
         <h4 class="col-12 text-center p-3">Aucun article n'est présent dans votre magasin..</h4>
-        <a href="{{ path('app_article_new') }}" class="btn btn-info btn-block col-8 mx-auto m-2" type="button">Ajouter un nouvel article</a>
+        <a href="{{ path('app_article_new', { id: shopId })}}" class="btn btn-info btn-block col-8 mx-auto m-2" type="button">Ajouter un nouvel article</a>
     {% endif %}
     
 {% endblock %}

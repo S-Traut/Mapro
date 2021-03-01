@@ -46,7 +46,7 @@ class ArticleType extends AbstractType
                 ]
             ])
             ->add('prix', NumberType::class, [
-                'label' => 'Prix de l\'article',
+                'label' => 'Prix de l\'article (€)',
                 'constraints' => [
                     new Positive([
                         'message' => 'Le prix de l\'article ne peut pas être négatif.'

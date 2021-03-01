@@ -68,7 +68,7 @@ class MagasinController extends AbstractController
      */
     public function new(Request $request, EntityManagerInterface $em)
     {
-        if ($this->isGranted('ROLE_USER') == false)
+        if ($this->isGranted('ROLE_VENDEUR') == false)
             return $this->redirectToRoute("app_login");
 
         $magasin = new Magasin();
@@ -97,7 +97,7 @@ class MagasinController extends AbstractController
     {
 
         $magasin = $magasinRepository->find($id);
-        if ($this->getUser() != $magasin->getIdUtilisateur()) {
+        if ($this->getUser() != $magasin->getIdUtilisateur() || $this->getUser() == null) {
             return $this->redirectToRoute('landing');;
         }
 
@@ -128,10 +128,12 @@ class MagasinController extends AbstractController
      */
     public function delete(Magasin $shop, EntityManagerInterface $em, Request $request)
     {
-        if ($this->getUser() != $shop->getIdUtilisateur()) {
-            return $this->redirectToRoute('landing');;
+        if (!$this->isGranted('ROLE_ADMIN')) {
+            if ($this->getUser() != $shop->getIdUtilisateur() && $shop->getUser == null) {
+                return $this->redirectToRoute('landing');;
+            }
         }
-        
+
         if (!$shop) {
             throw $this->createNotFoundException('Magasin Inexistant !');
         }
