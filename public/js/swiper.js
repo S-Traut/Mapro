@@ -1,10 +1,6 @@
-const homeShops = new Swiper('.swiper-container', {
-    // Optional parameters
-    direction: 'horizontal',
-  
-    // Navigation arrows
-    navigation: {
-      nextEl: '.swiper-button-next',
-      prevEl: '.swiper-button-prev',
-    }
-  });
+const articles = new Swiper('.swiper-container', {
+  direction: 'horizontal',
+  slidesPerView: "auto",
+  spaceBetween: 20,
+  freeMode: true,
+});

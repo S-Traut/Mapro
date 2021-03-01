@@ -20,6 +20,10 @@ body {
     overflow-x: hidden;
 }
 
+* {
+    list-style: none;
+}
+
 //@include media-breakpoint-up(sm) {html {font-size: .9rem;}}
 //@include media-breakpoint-up(md) {html {font-size: .9rem;}}
 //@include media-breakpoint-up(lg) {html {font-size: 1rem;}}
