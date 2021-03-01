@@ -1,0 +1,21 @@
+footer {
+  background-color: rgb(29, 29, 29);
+
+  h3 {
+    font-size: 24px !important;
+    line-height: 1.4em;
+    text-transform: uppercase;
+    margin-bottom: 20px !important;
+    position: relative;
+    padding-bottom: 15px;
+  }
+  h3:after {
+    content: "";
+    width: 30%;
+    height: 2px;
+    background-color: #51b64e;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+  }
+}

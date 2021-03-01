@@ -13,6 +13,7 @@ import './styles/pages/forms.scss'
 import './styles/pages/landing.scss'
 import './styles/pages/categories.scss'
 import './styles/pages/recherche.scss'
+import './styles/pages/footer.scss'
 
 import './styles/components/menu_item.scss'
 import './styles/components/homeCategory.scss'
