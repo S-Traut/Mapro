@@ -69,9 +69,15 @@ class User implements UserInterface
      */
     private $isVerified = false;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=FavoriMagasin::class, mappedBy="idUtilisateur")
+     */
+    private $favoriMagasins;
+
     public function __construct()
     {
         $this->magasins = new ArrayCollection();
+        $this->favoriMagasins = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -256,6 +262,33 @@ class User implements UserInterface
     public function setIsVerified(bool $isVerified): self
     {
         $this->isVerified = $isVerified;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|FavoriMagasin[]
+     */
+    public function getFavoriMagasins(): Collection
+    {
+        return $this->favoriMagasins;
+    }
+
+    public function addFavoriMagasin(FavoriMagasin $favoriMagasin): self
+    {
+        if (!$this->favoriMagasins->contains($favoriMagasin)) {
+            $this->favoriMagasins[] = $favoriMagasin;
+            $favoriMagasin->addIdUtilisateur($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFavoriMagasin(FavoriMagasin $favoriMagasin): self
+    {
+        if ($this->favoriMagasins->removeElement($favoriMagasin)) {
+            $favoriMagasin->removeIdUtilisateur($this);
+        }
 
         return $this;
     }
