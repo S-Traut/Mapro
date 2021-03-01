@@ -68,14 +68,11 @@ class ArticleController extends AbstractController
     {
         $articles = $articleRepository->findArticlesByMagasinId($id);
         $magasin = $magasinRepository->find($id);
-        dump($this->getUser());
-        dump($magasin->getIdUtilisateur());
-
+        dump($articles);
         if ($magasin) {
             if ($magasin->getIdUtilisateur() != $this->getUser() || $this->getUser() == null) {
                 return $this->redirectToRoute('landing');
             }
-            dump("test");
             return $this->render('article/articles.html.twig', [
                 'shopId' => $id,
                 'articles' => $articles
@@ -103,11 +100,21 @@ class ArticleController extends AbstractController
         $form = $this->createForm(ArticleType::class, $article);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            $date = new DateTime();
+
             $article->setEtat(1);
             $article->setMagasin($magasin);
+
+            $statArticle = new StatistiqueArticle();
+            $statArticle
+                ->setArticle($article)
+                ->setNbvue(0)
+                ->setDate($date);
+
+            $em->persist($statArticle);
             $em->persist($article);
             $em->flush();
-            return $this->redirectToRoute("app_article_list");
+            return $this->redirectToRoute("app_article_list", ['id' => $article->getMagasin()->getId()]);
         }
         return $this->render('article/new.html.twig', [
             'article' => $article,
@@ -117,17 +124,16 @@ class ArticleController extends AbstractController
 
 
     /**
-     * @Route("/article/delete/{id<\d+>}")
+     * @Route("/article/delete")
      */
-    public function delete(Article $article, EntityManagerInterface $em, MagasinRepository $magasinRepository, Request $request, $id)
+    public function delete(EntityManagerInterface $em, ArticleRepository $articleRepository, Request $request)
     {
-        $magasin = $magasinRepository->find($id);
-        if(!$this->isGranted('ROLE_ADMIN')) {
-            if ($magasin->getIdUtilisateur() != $this->getUser() || $this->getUser() == null) {
+        $article = $articleRepository->find($request->get('id'));
+        if (!$this->isGranted('ROLE_ADMIN')) {
+            if ($article->getMagasin()->getIdUtilisateur() != $this->getUser() || $this->getUser() == null) {
                 return $this->redirectToRoute('landing');
             }
         }
-
 
         if (!$article) {
             throw $this->createNotFoundException('Article Inexistant !');

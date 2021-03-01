@@ -12,7 +12,7 @@
     {% if articles %}
     <div class="row">
         <div class="col-10 mx-auto">
-            <a href="{{ path('app_article_new') }}" class="btn btn-info btn-block col-11 col-sm-4 col-md-4 col-lg-4 col-xl-4 float-right m-2" type="button">Ajouter un nouvel article</a>
+            <a href="{{ path('app_article_new', { id: shopId }) }}" class="btn btn-info btn-block col-11 col-sm-4 col-md-4 col-lg-4 col-xl-4 float-right m-2" type="button">Ajouter un nouvel article</a>
         </div>
     </div>
     <table class="table col-10 mx-auto">
@@ -34,7 +34,11 @@
                     <td class="col-md-auto">{{ article.description }}</td>
                     <td>{{ article.prix }}</td>
                     <td>{{ article.type }}</td>
-                    <td>{{ article.statistiqueArticle.nbVue }}</td>
+                    {% if article.statistiqueArticle %}
+                        <td>{{ article.statistiqueArticle.nbVue }}</td>
+                    {% else %}
+                        <td>indisponible</td>
+                    {% endif %}
                     <td>
                         <div class="btn-group">
                             <a class="btn btn-sm btn-outline-info" href="{{ path('app_article_show', { id: article.id })  }}" type="button"><i class="far fa-eye"></i> Voir</a>
