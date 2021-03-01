@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Controller;
+
 use App\Entity\Localisation;
 use App\Entity\Magasin;
 use App\Entity\StatistiqueMagasin;
@@ -33,13 +34,13 @@ class MagasinController extends AbstractController
 
         if (!$magasin) {
             throw $this->createNotFoundException('Magasin Inexistant !');
-        } else{
+        } else {
             $articles = $articleRepository->findArticlesByMagasinId($id);
             $articlesPop = $articleRepository->findArticlesPopulaires($id);
             $statMag = $statistiqueMagasinRepository->findBy(['magasin' => $id]);
             dump($statMag);
             $date = new DateTime();
-            if(!$statMag){
+            if (!$statMag) {
                 $statMag = new StatistiqueMagasin();
                 $statMag
                     ->setDate($date)
@@ -48,7 +49,7 @@ class MagasinController extends AbstractController
                 $em->persist($statMag);
             } else {
                 $statMag[0]
-                    ->setNbvue($statMag[0]->getNbvue()+1)
+                    ->setNbvue($statMag[0]->getNbvue() + 1)
                     ->setDate($date);
                 $em->persist($statMag[0]);
             }
@@ -59,7 +60,6 @@ class MagasinController extends AbstractController
                 'articlesPop' => $articlesPop
             ]);
         }
-        
     }
     /**
      * @Route("/shop/new", name="new_shop")
@@ -68,7 +68,7 @@ class MagasinController extends AbstractController
      */
     public function new(Request $request, EntityManagerInterface $em)
     {
-        if ($this->isGranted('ROLE_USER') == false)
+        if ($this->isGranted('ROLE_VENDEUR') == false)
             return $this->redirectToRoute("app_login");
 
         $magasin = new Magasin();
@@ -90,25 +90,28 @@ class MagasinController extends AbstractController
         ]);
     }
 
-     /**
+    /**
      * @Route("/shop/{id<\d+>}/edit", name="app_magasin_edit")
      */
-    public function edit(MagasinRepository $magasinRepository, $id, Request $request, EntityManagerInterface $em){
+    public function edit(MagasinRepository $magasinRepository, $id, Request $request, EntityManagerInterface $em)
+    {
 
         $magasin = $magasinRepository->find($id);
+        if ($this->getUser() != $magasin->getIdUtilisateur() || $this->getUser() == null) {
+            return $this->redirectToRoute('landing');;
+        }
 
         if (!$magasin) {
-            
             throw $this->createNotFoundException('Magasin Inexistant !');
         }
 
         //$magasin = new Magasin();
 
 
-        $form = $this->createForm(CreationMagasinType::class, $magasin); 
+        $form = $this->createForm(CreationMagasinType::class, $magasin);
         $form->handleRequest($request);
 
-        
+
         if ($form->isSubmitted() && $form->isValid()) {
             $em->persist($magasin);
             $em->flush();
@@ -117,7 +120,7 @@ class MagasinController extends AbstractController
 
         return $this->render('magasin/edit.html.twig', [
             'magasin' => $magasin,
-            'form' => $form->createView()    
+            'form' => $form->createView()
         ]);
     }
     /**
@@ -125,14 +128,20 @@ class MagasinController extends AbstractController
      */
     public function delete(Magasin $shop, EntityManagerInterface $em, Request $request)
     {
+        if (!$this->isGranted('ROLE_ADMIN')) {
+            if ($this->getUser() != $shop->getIdUtilisateur() && $shop->getUser == null) {
+                return $this->redirectToRoute('landing');;
+            }
+        }
+
         if (!$shop) {
             throw $this->createNotFoundException('Magasin Inexistant !');
         }
 
         $articles = $shop->getArticles();
-        foreach($articles as $article){
+        foreach ($articles as $article) {
             $images = $article->getImage();
-            foreach($images as $image){
+            foreach ($images as $image) {
                 $em->remove($image);
             }
             $em->remove($article);
@@ -146,7 +155,5 @@ class MagasinController extends AbstractController
         }
 
         return $this->redirectToRoute('shops');
-
     }
 }
-

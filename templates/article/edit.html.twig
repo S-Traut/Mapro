@@ -1,14 +1,18 @@
 {% extends "base.html.twig" %}
 
 
-
 {% block body %}
-    <div class="form-header">
-        <div class="container">
-            <h1>Modifier mon article</h1>
-        </div>
-    </div>
-    <div class="container">
-        {{ include("form.html.twig", {form: form, button: 'Créer'}) }}
-    </div>
+	<div class="form-header">
+		<div class="container">
+			<h1>Modifier un article</h1>
+		</div>
+	</div>
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-12 col-md-8 col-lg-5">
+				{{ include("form.html.twig", {form: form, button: 'Créer'}) }}
+			</div>
+		</div>
+	</div>
 {% endblock %}
+

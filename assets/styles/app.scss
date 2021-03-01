@@ -16,6 +16,10 @@ $body-color:#707070;
 $input-bg:#E8E8E8;
 $input-border-width:0px;
 
+body {
+    overflow-x: hidden;
+}
+
 //@include media-breakpoint-up(sm) {html {font-size: .9rem;}}
 //@include media-breakpoint-up(md) {html {font-size: .9rem;}}
 //@include media-breakpoint-up(lg) {html {font-size: 1rem;}}
