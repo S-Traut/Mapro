@@ -58,15 +58,10 @@ $(document).ready(function(){
             if(data.nom.toLowerCase() === nom && data.hasOwnProperty('siren')){
               //affiche les magasins
               resultDropdown.append(`
-              <div class="result-option p-3">
-              <a  href="/shop/${data.id}" style="text-decoration: none">
-                <div class="post-thumb" style="float: left">
-                  <img src="${data.image}" style="max-width: 60px; display: block"/>
-                </div>
-                <div class="post-content">
-                  <p style="margin-bottom: 0px; font-size: 23px;">${data.nom}</p>
-                  <p style="margin-bottom: 0px;">${data.description}</p>
-                </div>
+              <div class="result-option">
+              <a href="/shop/${data.id}" style="text-decoration: none; display:flex; margin: 5px 15px 5px 15px">
+                <i class="fas fa-store-alt" style="margin-right: 5px; line-height: 30px"></i>
+                <p style="margin-bottom: 0px; font-size: 16px; line-height: 30px">${data.nom}</p>
               </a>
               </div> 
               `)
@@ -74,19 +69,13 @@ $(document).ready(function(){
               //affiche les articles
               if(data.image[0]){
                 resultDropdown.append(`
-                <div class="result-option p-3">
-                <a  href="/article/${data.id}" style="text-decoration: none">
-                  <div class="post-thumb" style="float: left">
-                    <img src="${data.image[0].image}" style="max-width: 60px; display: block"/>
-                  </div>
-                  <div class="post-content">
-                    <p style="margin-bottom: 0px; font-size: 23px;">${data.nom}</p>
-                    <p style="margin-bottom: 0px;">${data.description}</p>
-                    <p style="margin-bottom: 0px;">${data.prix}</p>
-                  </div>
-                </a>
-                </div> 
-                `)
+                <div class="result-option">
+              <a href="/shop/${data.id}" style="text-decoration: none; display:flex; margin: 5px 15px 5px 15px">
+                <i class="fas fa-shopping-cart" style="margin-right: 5px; line-height: 30px"></i>
+                <p style="margin-bottom: 0px; font-size: 16px; line-height: 30px">${data.nom}</p>
+              </a>
+              </div>
+              `)
 
               }else{
                 resultDropdown.append(`

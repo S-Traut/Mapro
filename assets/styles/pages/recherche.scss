@@ -1,18 +1,38 @@
+@import "../app.scss";
+
 .x {
   position: relative;
   display: inline-block;
 }
-#recherche {
-  width: 90px;
-}
 .search-box {
-  position: absolute;
-  background-color: #ffff;
-  overflow: auto;
-  border: 1px solid #ddd;
-  z-index: 1;
+  width: 500px;  
+  margin-left: 30px;
+  border-bottom: rgb(219, 219, 219) 3px solid;
 }
+
+.search-box:focus {
+}
+
+.search-box input {
+  background-color: transparent;
+  border-radius: 0px;
+}
+
+.search-box input:focus {
+  background-color: transparent;
+  box-shadow: none;
+}
+
 .result {
+  position: absolute;
+  top: 40px;
   max-height: 80vh;
+  width: 100%;
   overflow: auto;
+  background-color: white;
+  z-index: 100;
+}
+
+.result-option {
+  border-bottom: rgb(226, 226, 226) 1px solid;
 }
