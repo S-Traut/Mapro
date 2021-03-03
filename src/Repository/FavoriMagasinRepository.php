@@ -19,6 +19,15 @@ class FavoriMagasinRepository extends ServiceEntityRepository
         parent::__construct($registry, FavoriMagasin::class);
     }
 
+    public function findByUserId($id)
+    {
+        return $this->createQueryBuilder('f')
+            ->where('f.idUtilisateur = :val')
+            ->setParameter('val', $id)
+            ->getQuery()
+            ->getResult();
+    }
+
     // /**
     //  * @return FavoriMagasin[] Returns an array of FavoriMagasin objects
     //  */

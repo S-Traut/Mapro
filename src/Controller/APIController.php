@@ -2,8 +2,12 @@
 
 namespace App\Controller;
 
+use Amp\Http\Client\Request as ClientRequest;
 use Amp\Http\Status;
+use App\Entity\FavoriMagasin;
+use App\Repository\FavoriMagasinRepository;
 use App\Repository\MagasinRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -54,5 +58,26 @@ class APIController extends AbstractController
                 return $object->getId();
             }
         ]);
+    }
+
+    /**
+     * @Route("/api/get/favorimag", name="APÏ_GET_FavoriMag")
+     */
+    public function favoriMag(FavoriMagasinRepository $favoriMagRepo)
+    {
+
+        $utilisateur = $this->getUser();
+        $favori = $favoriMagRepo->findByUserId($utilisateur->getId());
+
+        return $this->json($favori, Response::HTTP_OK);
+    }
+
+    /**
+     * @Route("/api/set/favorimag/{id<\d+>}", name="API_SET_FavoriMag")
+     */
+    public function deleteFavoriMag(FavoriMagasin $favori, $id, Request $request, EntityManagerInterface $em)
+    {
+        $utilisateur = $this->getUser();
+        return $this->redirectToRoute("landing");
     }
 }
