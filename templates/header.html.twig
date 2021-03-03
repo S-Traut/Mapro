@@ -6,6 +6,11 @@
 			Mapro
 		</a>
 		{% if not app.user %}
+			{% if app.request.cookies.get('userLongitude') %}
+				<ul class="navbar-nav mr-auto">
+					<li> {% include "module/recherche.html.twig" %} </li>
+				</ul>
+			{% endif %}
 			<a href="/login" class="btn btn-outline-primary me-md-2">Me connecter</a>
 		{% else %}
 			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -27,11 +32,9 @@
 						{% endif %}
 					</li>
 					<li>
-						
 						{% include "module/recherche.html.twig" %}
 					</li>
 				</ul>
-				
 				<a href="{{ path('app_logout') }}" class="btn btn-outline-primary me-md-2">Me déconnecter</a>
 			</div>
 		{% endif %}

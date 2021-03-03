@@ -4,21 +4,12 @@
 
 {% block body %}
 
-	<!-- grille catégories -->
 	{% include 'module/categories.html.twig' %}
 
-	
 
+	<div id="map" style="height: 400px"></div>
 
-	<!-- Résultat de recherche -->
 	<div class="container">
-		<div id="search-result" class="mb-5"></div>
-	</div>
-
-
-	<!-- Magasins autour -->
-	<div class="container">
-		<div id="map" style="height: 400px"></div>
 		<h3>Magasins autour de chez vous !</h3>
 		<div class="swiper-container">
 			<div class="swiper-wrapper"></div>
@@ -26,10 +17,10 @@
 	</div>
 
 
-	<!-- grille des plus consultés -->
 	{% include 'module/articlespop.html.twig' %}
 {% endblock %}
 {% block javascripts %}
 	{{ encore_entry_script_tags('search') }}
 	{{ encore_entry_script_tags('map') }}
 {% endblock %}
+
