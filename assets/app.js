@@ -17,3 +17,4 @@ import './styles/pages/footer.scss'
 
 import './styles/components/menu_item.scss'
 import './styles/components/homeCategory.scss'
+import './styles/components/article.scss'
