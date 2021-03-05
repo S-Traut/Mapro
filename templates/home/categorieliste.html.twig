@@ -34,7 +34,9 @@
 											<h5 class="card-title">{{ favori.nom }}</h5>
 										</div>
 										<div class="col-1">
-											<i class="far fa-star fas" value="{{ favori.id }}" name="favori" style="cursor: pointer"></i>
+											{% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+												<i class="far fa-star fas" value="{{ favori.id }}" name="favori" style="cursor: pointer"></i>
+											{% endif %}
 										</div>
 									</div>
 									<p class="card-text">{{favori.description}}</p>
@@ -56,7 +58,9 @@
 											<h5 class="card-title">{{ donnee.nom }}</h5>
 										</div>
 										<div class="col-1">
-											<i class="far fa-star" value="{{ donnee.id }}" name="favori" style="cursor: pointer"></i>
+											{% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+												<i class="far fa-star" value="{{ donnee.id }}" name="favori" style="cursor: pointer"></i>
+											{% endif %}
 										</div>
 									</div>
 									<p class="card-text">{{donnee.description}}</p>

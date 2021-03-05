@@ -65,14 +65,12 @@ class APIController extends AbstractController
     /**
      * @Route("/api/get/favorimag", name="APÏ_GET_FavoriMag")
      */
-    public function favoriMag(FavoriMagasinRepository $favoriMagRepo)
+    /*public function favoriMag(FavoriMagasinRepository $favoriMagRepo)
     {
 
         $utilisateur = $this->getUser();
 
         $favori = $favoriMagRepo->findByUserId($utilisateur->getId());
-
-        dump($favori);
 
         return $this->json($favori, Response::HTTP_OK, [], [
             ObjectNormalizer::IGNORED_ATTRIBUTES => ['localisation', 'magasins', 'typeMagasin', 'statistiqueMagasin', 'etat'],
@@ -80,7 +78,7 @@ class APIController extends AbstractController
                 return $object->getId();
             }
         ]);
-    }
+    }*/
 
     /**
      * @Route("/api/set/favorimag", name="API_SET_FavoriMag")
@@ -111,6 +109,7 @@ class APIController extends AbstractController
      */
     public function deleteFavoriMag(Request $request, FavoriMagasinRepository $favMagRepo)
     {
+
         $favori = $favMagRepo->findOneBySomeField($request->request->get('mag_id'));
 
         $em = $this->getDoctrine()->getManager();
