@@ -7,7 +7,7 @@
 
 {% block body %}
 
-	<div class="form-header" style="background-image: url('{{ magasin.image }}'); background-size: cover; background-position: center; background-attachment: fixed;"></div>
+	<div class="form-header" style="background-image: url({{ vich_uploader_asset(magasin) }}); background-size: cover; background-position: center; background-attachment: fixed;"></div>
 
 	<div class="container">
 		<section>
@@ -81,7 +81,7 @@
 						</div>
 					</div>
 				{% else %}
-					<h4 class="col-12 text-center text-warning">Pas d'articles disponibles !</h4>
+					<p class="col-12 text-center">Ce magasin ne possède pas d'articles.</p>
 				{% endif %}
 
 			</div>
