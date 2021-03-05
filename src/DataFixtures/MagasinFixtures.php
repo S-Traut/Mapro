@@ -43,14 +43,14 @@ class MagasinFixtures extends Fixture implements DependentFixtureInterface
                 ->setTypeMagasin($typesMagasin[random_int(0, 5)])
                 ->setEmail($faker->email)
                 ->setEtat(1)
-                ->setImage($faker->imageUrl())
                 ->setLatitude($latitude)
                 ->setLongitude($longitude)
                 ->setNom($faker->company)
                 ->setSiren($faker->siren)
                 ->setTel($faker->phoneNumber)
                 ->setAdresse($faker->address)
-                ->setDescription($faker->text(200));
+                ->setDescription($faker->text(200))
+                ->setImageName($faker->url());
             $manager->persist($magasin);
 
             //Création des types articles
