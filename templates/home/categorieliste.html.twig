@@ -15,11 +15,34 @@
 	<div class="container">
 		<section id="content">
 
-			{% if magasins is empty %}
+
+			{% if magasins is empty and favoris is empty %}
 				<div class="card m-5">
 					<h2>Aucun résultat trouvé</h2>
 				</div>
 			{% else %}
+				{% for favori in favoris %}
+					<div class="card mb-3">
+						<div class="row g-0">
+							<div class="col-md-4">
+								<img src="{{favori.image}}" alt="..." style="width: 100%">
+							</div>
+							<div class="col-md-8">
+								<div class="card-body">
+									<div class="row">
+										<div class="col-11">
+											<h5 class="card-title">{{ favori.nom }}</h5>
+										</div>
+										<div class="col-1">
+											<i class="far fa-star fas" value="{{ favori.id }}" name="favori" style="cursor: pointer"></i>
+										</div>
+									</div>
+									<p class="card-text">{{favori.description}}</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				{% endfor %}
 				{% for magasin in magasins %}
 					<div class="card mb-3">
 						<div class="row g-0">

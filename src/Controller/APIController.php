@@ -16,6 +16,8 @@ use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class APIController extends AbstractController
 {
@@ -67,17 +69,40 @@ class APIController extends AbstractController
     {
 
         $utilisateur = $this->getUser();
+
         $favori = $favoriMagRepo->findByUserId($utilisateur->getId());
 
-        return $this->json($favori, Response::HTTP_OK);
+        dump($favori);
+
+        return $this->json($favori, Response::HTTP_OK, [], [
+            ObjectNormalizer::IGNORED_ATTRIBUTES => ['localisation', 'magasins', 'typeMagasin', 'statistiqueMagasin', 'etat'],
+            ObjectNormalizer::CIRCULAR_REFERENCE_HANDLER => function ($object) {
+                return $object->getId();
+            }
+        ]);
     }
 
     /**
-     * @Route("/api/set/favorimag/{id<\d+>}", name="API_SET_FavoriMag")
+     * @Route("/api/set/favorimag", name="API_SET_FavoriMag")
      */
-    public function deleteFavoriMag(FavoriMagasin $favori, $id, Request $request, EntityManagerInterface $em)
+    public function deleteFavoriMag(Request $request)
     {
+        $favori = new FavoriMagasin();
         $utilisateur = $this->getUser();
-        return $this->redirectToRoute("landing");
+
+        $favori->setIdUtilisateur($utilisateur);
+        $favori->setIdMagasin(intval($request->request->get('mag_id')));
+
+        $em = $this->getDoctrine()->getManager();
+
+        $em->persist($favori);
+        $em->flush();
+
+        return new JsonResponse(
+            array(
+                'status' => 'OK'
+            ),
+            200
+        );
     }
 }

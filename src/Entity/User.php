@@ -63,20 +63,19 @@ class User implements UserInterface
      * @ORM\Column(type="string", length=15, nullable=true)
      */
     private $telephone;
-     
+
     /**
      * @ORM\Column(type="string", length=15, nullable=true)
      */
     private $isVerified = false;
 
     /**
-     * @ORM\ManyToMany(targetEntity=FavoriMagasin::class, mappedBy="idUtilisateur")
+     * @ORM\OneToMany(targetEntity=FavoriMagasin::class, mappedBy="idUtilisateur", orphanRemoval=true)
      */
     private $favoriMagasins;
 
     public function __construct()
     {
-        $this->magasins = new ArrayCollection();
         $this->favoriMagasins = new ArrayCollection();
     }
 
@@ -253,7 +252,7 @@ class User implements UserInterface
 
         return $this;
     }
-    
+
     public function isVerified(): bool
     {
         return $this->isVerified;
@@ -278,7 +277,7 @@ class User implements UserInterface
     {
         if (!$this->favoriMagasins->contains($favoriMagasin)) {
             $this->favoriMagasins[] = $favoriMagasin;
-            $favoriMagasin->addIdUtilisateur($this);
+            $favoriMagasin->setIdUtilisateur($this);
         }
 
         return $this;
@@ -287,7 +286,10 @@ class User implements UserInterface
     public function removeFavoriMagasin(FavoriMagasin $favoriMagasin): self
     {
         if ($this->favoriMagasins->removeElement($favoriMagasin)) {
-            $favoriMagasin->removeIdUtilisateur($this);
+            // set the owning side to null (unless already changed)
+            if ($favoriMagasin->getIdUtilisateur() === $this) {
+                $favoriMagasin->setIdUtilisateur(null);
+            }
         }
 
         return $this;

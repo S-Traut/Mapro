@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Form\RechercheType;
 use App\Repository\ArticleRepository;
+use App\Repository\FavoriMagasinRepository;
 use App\Repository\MagasinRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -54,6 +55,7 @@ class HomeController extends AbstractController
         Request $request,
         MagasinRepository $magasinRepo,
         PaginatorInterface $paginator,
+        FavoriMagasinRepository $favoriRepo,
         $id
     ) {
         //récupérer les coordonnées géo de l'utilisateur
@@ -68,10 +70,36 @@ class HomeController extends AbstractController
         //résultat de la recherche des magasins
         $donnees = $magasinRepo->searchCategorie($id, $longitude, $latitude);
 
+        //Récup les favoris de l'utilisateur
+        $utilisateur = $this->getUser();
+        $favoris = $favoriRepo->findByUserId($utilisateur->getId());
+
         //pagination
         $magasins = $paginator->paginate($donnees, $request->query->getInt('page', 1), 10);
 
+        $listFav = array();
+        $listAutres = array();
+        $list = array();
+
+        foreach ($magasins as $magasin) {
+            foreach ($favoris as $favori) {
+                if ($favori->getIdMagasin() == $magasin->getId()) {
+                    array_push($listFav, $magasin);
+                    unset($favoris[array_search($favori, $favoris)]);
+                    unset($magasins[array_search($magasin, $donnees)]);
+                    break 1;
+                }
+            }
+        }
+
+
+        dump($magasins);
+        dump($listFav);
+        //dump($listAutres);
+
         return $this->render('home/categorieliste.html.twig', [
+            'donnees' => $donnees,
+            'favoris' => $listFav,
             'magasins' => $magasins,
             'searchForm' => $searchForm->createView()
         ]);
