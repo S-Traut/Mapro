@@ -109,8 +109,9 @@ class APIController extends AbstractController
      */
     public function deleteFavoriMag(Request $request, FavoriMagasinRepository $favMagRepo)
     {
+        $utilisateur = $this->getUser();
 
-        $favori = $favMagRepo->findOneBySomeField($request->request->get('mag_id'));
+        $favori = $favMagRepo->findOneBySomeField($utilisateur->getId(), $request->request->get('mag_id'));
 
         $em = $this->getDoctrine()->getManager();
         $em->remove($favori);

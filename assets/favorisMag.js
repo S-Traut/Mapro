@@ -1,19 +1,4 @@
 $(document).ready(function(){
-
-    var listFavori = []
-    
-    //fait appel à l'api des favoris
-    /*
-    $.ajax({
-        url: "/api/get/favorimag",
-        dataType: "json"
-    }).done((data) =>{
-
-        data.favoriMagasins.forEach((favori)=>{
-            listFavori.push(favori.idMagasin)
-        })
-    })*/
-
     
     $('.far').on('click', function() {
         var id = $(this).attr('value')
