@@ -1,6 +1,8 @@
 $(document).ready(function(){
     
-    $('.far').on('click', function() {
+    $('.far').on('click', function(e) {
+        e.preventDefault();
+        
         var id = $(this).attr('value')
 
         if($(this).attr('class') == "far fa-star"){
