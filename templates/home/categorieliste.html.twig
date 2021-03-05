@@ -22,7 +22,7 @@
 				</div>
 			{% else %}
 				{% for favori in favoris %}
-					<div class="card mb-3">
+					<a href="/shop/{{favori.id}}" class="card mb-3" style="text-decoration: none">
 						<div class="row g-0">
 							<div class="col-md-4">
 								<img src="{{favori.image}}" alt="..." style="width: 100%">
@@ -43,10 +43,10 @@
 								</div>
 							</div>
 						</div>
-					</div>
+					</a>
 				{% endfor %}
 				{% for donnee in donnees %}
-					<div class="card mb-3">
+					<a href="/shop/{{donnee.id}}" class="card mb-3" style="text-decoration: none">
 						<div class="row g-0">
 							<div class="col-md-4">
 								<img src="{{donnee.image}}" alt="..." style="width: 100%">
@@ -67,15 +67,13 @@
 								</div>
 							</div>
 						</div>
-					</div>
+					</a>
 				{% endfor %}
 			{% endif %}
 
 			<div class="pagination">
 				{{ knp_pagination_render(magasins) }}
 			</div>
-
-
 		</section>
 	</div>
 {% endblock %}
