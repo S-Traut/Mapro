@@ -20,6 +20,7 @@ use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Form\Forms;
 use App\Form\EditionMagasinType;
+use App\Repository\FavoriMagasinRepository;
 use App\Repository\StatistiqueMagasinRepository;
 use DateTime;
 
@@ -28,9 +29,21 @@ class MagasinController extends AbstractController
     /**
      * @Route("/shop/{id<\d+>}")
      */
-    public function show(MagasinRepository $magasinRepository, $id, ArticleRepository $articleRepository, StatistiqueMagasinRepository $statistiqueMagasinRepository, EntityManagerInterface $em)
+    public function show(FavoriMagasinRepository $favMagRepo, MagasinRepository $magasinRepository, $id, ArticleRepository $articleRepository, StatistiqueMagasinRepository $statistiqueMagasinRepository, EntityManagerInterface $em)
     {
+
         $magasin = $magasinRepository->find($id);
+
+        $utilisateur = $this->getUser();
+
+        $favori = $favMagRepo->findOneBySomeField($utilisateur->getId(), $id);
+        /*if ($utilisateur) {
+            $favori = $favMagRepo->findOneBySomeField($utilisateur->getId(), $id);
+            if($favori){
+
+            }
+            dump($favori);
+        }*/
 
         if (!$magasin) {
             throw $this->createNotFoundException('Magasin Inexistant !');
@@ -38,7 +51,7 @@ class MagasinController extends AbstractController
             $articles = $articleRepository->findArticlesByMagasinId($id);
             $articlesPop = $articleRepository->findArticlesPopulaires($id);
             $statMag = $statistiqueMagasinRepository->findBy(['magasin' => $id]);
-            dump($statMag);
+
             $date = new DateTime();
             if (!$statMag) {
                 $statMag = new StatistiqueMagasin();
@@ -55,6 +68,7 @@ class MagasinController extends AbstractController
             }
             $em->flush();
             return $this->render('magasin/show.html.twig', [
+                'favori' => $favori,
                 'magasin' => $magasin,
                 'articles' => $articles,
                 'articlesPop' => $articlesPop

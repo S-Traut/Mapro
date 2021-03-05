@@ -3,6 +3,7 @@
 {% block javascripts %}
 	<script src="{{asset('./js/swiper.js')}}"></script>
 	{{ encore_entry_script_tags('magasin') }}
+	{{ encore_entry_script_tags('favmag') }}
 {% endblock %}
 
 {% block body %}
@@ -16,11 +17,32 @@
 					<h1 class="text-success">{{ magasin.nom }}</h1>
 					<p style="min-height: 50px">{{ magasin.description }}</p>
 
+					<div class="favori mt-3 mb-3">
+						{% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+
+							{% if favori is empty %}
+								<h5 style="display: inline">Ajouter aux favoris :
+								</h5>
+								<i class="far fa-star" value="{{ magasin.id }}" name="favori" style="cursor: pointer"></i>
+							{% else %}
+								<h5 style="display: inline">Favori :
+								</h5>
+								<i class="far fa-star fas" value="{{ magasin.id }}" name="favori" style="cursor: pointer"></i>
+							{% endif %}
+						{% endif %}
+					</div>
+
 					<h4>Informations de contact</h4>
 					<ul>
-						<li><i class="fas fa-phone"></i>{{ magasin.tel }}</li>
-						<li><i class="fas fa-at"></i>{{ magasin.email }}</li>
-						<li><i class="fas fa-home"></i>{{ magasin.adresse }}</li>
+						<li>
+							<i class="fas fa-phone"></i>
+							{{ magasin.tel }}</li>
+						<li>
+							<i class="fas fa-at"></i>
+							{{ magasin.email }}</li>
+						<li>
+							<i class="fas fa-home"></i>
+							{{ magasin.adresse }}</li>
 					</ul>
 				</div>
 				<div class="col-12 col-lg-6">
@@ -96,4 +118,3 @@
 		}
 	</style>
 {% endblock %}
-
