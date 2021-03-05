@@ -74,28 +74,27 @@ class HomeController extends AbstractController
         $utilisateur = $this->getUser();
         $favoris = $favoriRepo->findByUserId($utilisateur->getId());
 
+
         //pagination
         $magasins = $paginator->paginate($donnees, $request->query->getInt('page', 1), 10);
 
-        $listFav = array();
-        $listAutres = array();
-        $list = array();
+        dump($donnees);
 
-        foreach ($magasins as $magasin) {
+        $listFav = array();
+
+        foreach ($donnees as $donnee) {
             foreach ($favoris as $favori) {
-                if ($favori->getIdMagasin() == $magasin->getId()) {
-                    array_push($listFav, $magasin);
+                if ($favori->getIdMagasin() == $donnee->getId()) {
+                    array_push($listFav, $donnee);
                     unset($favoris[array_search($favori, $favoris)]);
-                    unset($magasins[array_search($magasin, $donnees)]);
+                    unset($donnees[array_search($donnee, $donnees)]);
                     break 1;
                 }
             }
         }
-
-
-        dump($magasins);
+        dump($donnees);
+        //dump($magasins);
         dump($listFav);
-        //dump($listAutres);
 
         return $this->render('home/categorieliste.html.twig', [
             'donnees' => $donnees,

@@ -16,7 +16,7 @@
 		<section id="content">
 
 
-			{% if magasins is empty and favoris is empty %}
+			{% if donnees is empty and favoris is empty %}
 				<div class="card m-5">
 					<h2>Aucun résultat trouvé</h2>
 				</div>
@@ -43,23 +43,23 @@
 						</div>
 					</div>
 				{% endfor %}
-				{% for magasin in magasins %}
+				{% for donnee in donnees %}
 					<div class="card mb-3">
 						<div class="row g-0">
 							<div class="col-md-4">
-								<img src="{{magasin.image}}" alt="..." style="width: 100%">
+								<img src="{{donnee.image}}" alt="..." style="width: 100%">
 							</div>
 							<div class="col-md-8">
 								<div class="card-body">
 									<div class="row">
 										<div class="col-11">
-											<h5 class="card-title">{{ magasin.nom }}</h5>
+											<h5 class="card-title">{{ donnee.nom }}</h5>
 										</div>
 										<div class="col-1">
-											<i class="far fa-star" value="{{ magasin.id }}" name="favori" style="cursor: pointer"></i>
+											<i class="far fa-star" value="{{ donnee.id }}" name="favori" style="cursor: pointer"></i>
 										</div>
 									</div>
-									<p class="card-text">{{magasin.description}}</p>
+									<p class="card-text">{{donnee.description}}</p>
 								</div>
 							</div>
 						</div>

@@ -85,7 +85,7 @@ class APIController extends AbstractController
     /**
      * @Route("/api/set/favorimag", name="API_SET_FavoriMag")
      */
-    public function deleteFavoriMag(Request $request)
+    public function setFavoriMag(Request $request)
     {
         $favori = new FavoriMagasin();
         $utilisateur = $this->getUser();
@@ -96,6 +96,25 @@ class APIController extends AbstractController
         $em = $this->getDoctrine()->getManager();
 
         $em->persist($favori);
+        $em->flush();
+
+        return new JsonResponse(
+            array(
+                'status' => 'OK'
+            ),
+            200
+        );
+    }
+
+    /**
+     * @Route("/api/delete/favorimag", name="API_DELETE_FavoriMag")
+     */
+    public function deleteFavoriMag(Request $request, FavoriMagasinRepository $favMagRepo)
+    {
+        $favori = $favMagRepo->findOneBySomeField($request->request->get('mag_id'));
+
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($favori);
         $em->flush();
 
         return new JsonResponse(

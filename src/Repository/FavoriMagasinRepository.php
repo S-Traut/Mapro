@@ -28,6 +28,15 @@ class FavoriMagasinRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    public function findByMagId($idMag)
+    {
+        return $this->createQueryBuilder('f')
+            ->where('f.idMagasin = :val')
+            ->setParameter('val', $idMag)
+            ->getQuery()
+            ->getResult();
+    }
+
     // /**
     //  * @return FavoriMagasin[] Returns an array of FavoriMagasin objects
     //  */
@@ -45,15 +54,13 @@ class FavoriMagasinRepository extends ServiceEntityRepository
     }
     */
 
-    /*
+
     public function findOneBySomeField($value): ?FavoriMagasin
     {
         return $this->createQueryBuilder('f')
-            ->andWhere('f.exampleField = :val')
+            ->andWhere('f.idMagasin = :val')
             ->setParameter('val', $value)
             ->getQuery()
-            ->getOneOrNullResult()
-        ;
+            ->getOneOrNullResult();
     }
-    */
 }

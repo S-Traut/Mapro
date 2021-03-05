@@ -1,7 +1,6 @@
 $(document).ready(function(){
 
     var listFavori = []
-    var url = '/api/set/favorimag'
     
     //fait appel à l'api des favoris
     $.ajax({
@@ -14,22 +13,31 @@ $(document).ready(function(){
         })
     })
 
-    //ajout d'un favori
+    
     $('.far').on('click', function() {
         var id = $(this).attr('value')
 
         if($(this).attr('class') == "far fa-star"){
+            //ajout favori
             $.ajax({  
                 type: "POST",
-                url: url,
+                url: '/api/set/favorimag',
                 data: {mag_id: id},  
              })
-             $(this).toggleClass('fas')
+
         }else if($(this).attr('class') == "far fa-star fas"){
-    
+            //sup favori
+            $.ajax({  
+                type: "POST",
+                url: '/api/delete/favorimag',
+                data: {mag_id: id},  
+             })
         }
+
+        $(this).toggleClass('fas') 
     
     })
+
 })
 
 
