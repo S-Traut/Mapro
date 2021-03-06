@@ -26,15 +26,19 @@
 							<a class="nav-link {% if current_menu is defined and current_menu == 'admin' %}text-info active{% else %}text-success{% endif %}" href="{{ path('app_administration_index') }}">Administration</a>
 						{% endif %}
 					</li>
+					<li class="nav-item">
+						{% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+							<a class="nav-link {% if current_menu is defined and current_menu == 'favoris' %}text-info active{% else %}text-success{% endif %}" href="/me/favoris">Mes favoris</a>
+						{% endif %}
+					</li>
 					<li>
-						
+
 						{% include "module/recherche.html.twig" %}
 					</li>
 				</ul>
-				
+
 				<a href="{{ path('app_logout') }}" class="btn btn-outline-primary me-md-2">Me déconnecter</a>
 			</div>
 		{% endif %}
 	</div>
 </nav>
-

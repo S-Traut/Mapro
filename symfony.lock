@@ -144,6 +144,9 @@
     "fzaninotto/faker": {
         "version": "v1.9.2"
     },
+    "jms/metadata": {
+        "version": "2.4.0"
+    },
     "kelunik/certificate": {
         "version": "v1.1.2"
     },

@@ -7,7 +7,9 @@ use App\Form\ChangePasswordType;
 use App\Form\SetLocalisationType;
 use Symfony\Component\HttpFoundation\Request;
 use App\Form\UserType;
+use App\Repository\FavoriMagasinRepository;
 use App\Repository\LocalisationRepository;
+use App\Repository\MagasinRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\CurrencyType;
@@ -87,6 +89,50 @@ class UtilisateurController extends AbstractController
         return $this->render('utilisateur/shops.html.twig', [
             'magasins' => $magasins,
             'current_menu' => 'shops'
+        ]);
+    }
+
+    /**
+     * @Route("me/favoris", name="favoris")
+     */
+    public function favoris(FavoriMagasinRepository $favMagRepo, MagasinRepository $magasinRepo, Request $request)
+    {
+        if ($this->isGranted('ROLE_USER') == false)
+            return $this->redirectToRoute("landing");
+
+        //récupérer les coordonnées géo de l'utilisateur
+        $cookies = $request->cookies;
+        $longitude = $cookies->get('userLongitude');
+        $latitude = $cookies->get('userLatitude');
+
+        $utilisateur = $this->getUser();
+
+
+
+        $magasins = $magasinRepo->searchAround($longitude, $latitude);
+
+        $listFav = array();
+
+        if ($utilisateur) {
+            $favoris = $favMagRepo->findByUserId($utilisateur->getId());
+
+            foreach ($magasins as $magasin) {
+                foreach ($favoris as $favori) {
+                    if ($favori->getIdMagasin() == $magasin->getId()) {
+                        array_push($listFav, $magasin);
+                        unset($favoris[array_search($favori, $favoris)]);
+                        break 1;
+                    }
+                }
+            }
+        }
+
+        dump($listFav);
+
+
+        return $this->render("utilisateur/favoris.html.twig", [
+            'favoris' => $listFav,
+            'current_menu' => 'favoris'
         ]);
     }
 

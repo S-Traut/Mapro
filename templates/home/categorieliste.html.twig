@@ -2,6 +2,9 @@
 
 {% block body %}
 
+	<!-- grille catégories -->
+	{% include 'module/categories.html.twig' %}
+
 	<!-- Résultat de recherche -->
 	<div class="container">
 		<div id="search-result" class="mb-5"></div>
@@ -10,8 +13,6 @@
 	<!-- grille catégories -->
 	<div class="container">
 		<section id="content">
-
-
 			{% if donnees is empty and favoris is empty %}
 				<div class="card m-5">
 					<h2>Aucun résultat trouvé</h2>
@@ -20,10 +21,10 @@
 				{% for favori in favoris %}
 					<a href="/shop/{{favori.id}}" class="card mb-3" style="text-decoration: none">
 						<div class="row g-0">
-							<div class="col-md-4">
-								<img src="{{favori.image}}" alt="..." style="width: 100%">
+							<div class="col-md-2">
+								<img src="http://placehold.it/300x300" alt="..." style="width: 100%">
 							</div>
-							<div class="col-md-8">
+							<div class="col-md-10">
 								<div class="card-body">
 									<div class="row">
 										<div class="col-11">
@@ -44,10 +45,10 @@
 				{% for donnee in donnees %}
 					<a href="/shop/{{donnee.id}}" class="card mb-3" style="text-decoration: none">
 						<div class="row g-0">
-							<div class="col-md-4">
-								<img src="{{donnee.image}}" alt="..." style="width: 100%">
+							<div class="col-md-2">
+								<img src="http://placehold.it/300x300" alt="..." style="width: 100%">
 							</div>
-							<div class="col-md-8">
+							<div class="col-md-10">
 								<div class="card-body">
 									<div class="row">
 										<div class="col-11">
