@@ -1,6 +1,16 @@
 {% extends "base.html.twig" %}
 
 {% block body %}
+
+<style>
+  .star {
+  font-size: 25px;
+  color:gold;
+  
+  }
+
+</style>
+
     
     <div class="form-header text-center" style="background-image: url('{{ magasin.image }}'); background-position:center;">
         <h1 class="text-success">{{ magasin.nom }}</h1>
@@ -43,14 +53,21 @@
                 </div>
                 {% if articlesPop %}
                     {% for articlePop in articlesPop %}
-                        <a href="/article/{{ articlePop.id }}" class="col-5 shadow mx-auto p-3 mb-2 bg-light rounded">
+                        <div class="col-5 shadow mx-auto p-3 mb-2 bg-light rounded">
                             <div class="card-body">
+                            <a href="/article/{{ articlePop.id }}">
                                 <h8 class="card-title">{{ articlePop.nom }}</h8>
+                                </a>
                                 <div class="d-flex justify-content-between align-items-center">
                                     <small class="text-muted">{{ articlePop.prix }}€</small>
+                                <div class="star">
+  <i class="far fa-star"></i>
+  </div>
                                 </div>
+                                 
+
                             </div>
-                        </a>
+                        </div>
                     {% endfor %}
                 {% else %}
                     <h4 class="col-12 text-center text-warning">Pas d'articles populaires !</h4>
@@ -66,14 +83,21 @@
                 </div>
                     {% if articles %}
                         {% for article in articles %}
-                            <a href="/article/{{ article.id }}" class="col-10 mx-auto shadow p-3 mb-2 bg-light rounded">
+                            <div class="col-10 mx-auto shadow p-3 mb-2 bg-light rounded">
                                 <div class="card-body">
+                                <a href="/article/{{ article.id }}">
                                 <h8 class="card-title">{{ article.nom }}</h8>
+                                </a>
                                     <div class="d-flex justify-content-between align-items-center">
                                         <small class="text-muted">{{ article.prix }}€</small>
+<div class="star">
+  <i class="far fa-star"></i>
+  </div>
+
+
                                     </div>
                                 </div>
-                            </a>
+                            </div>
                         {% endfor %}
                     {% else %}
                         <h4 class="col-12 text-center text-warning">Pas d'articles disponibles !</h4>
@@ -82,4 +106,9 @@
             </div>
         </section>
     </div>
+
+
+
+
+
 {% endblock %}

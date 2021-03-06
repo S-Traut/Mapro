@@ -1,6 +1,22 @@
 {% extends "base.html.twig" %}
 
 {% block body %}
+
+
+<style>
+  .star {
+  font-size: 25px;
+  color:gold;
+  position: absolute;
+  right: 0;
+  
+  }
+
+</style>
+
+
+
+
     <div class="container">
         <div class="row mt-5">
             <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
@@ -30,9 +46,30 @@
                     <div class="col-sm-10">
                     
                     </div>
+ 
+
+  
+        
+           
+
                     <article>
+
+                 <div class="star">
+  <i class="far fa-star"></i>
+  </div>
+ 
+ 
                         <div class="pb-3">
-                            <h2 class="text-success">{{ article.nom }}</h2>
+
+
+                            <h2 class="text-success">{{ article.nom }}
+                            
+
+ 
+
+                            </h2>
+           
+                            
                             <h2 class="text-muted">/ {{ magasin }}</h2>
                         </div>
                         <div class="content">
@@ -65,5 +102,6 @@
     $('.carousel-control-next').click(function() {
         $('#carouselIndicators').carousel('next');
     });
+
     </script>
 {% endblock %}

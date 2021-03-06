@@ -1,3 +1,16 @@
+<style>
+  .star {
+  font-size: 25px;
+  color:gold;
+  
+  }
+
+</style>
+
+
+
+
+
 <div class="container">
 	<div class="articles-pop" style="margin-top: 4em">
 		<div class="titre">
@@ -7,7 +20,7 @@
 		<div class="row row-cols-2 row-cols-md-6 g-4">
 			{% for article in articles %}
 				<div class="col">
-					<a href="/article/{{ article.id }}" class="card h-100">
+					<div class="card h-100">
 						{% if article.getImage.0 is defined %}
 							<img src="{{article.getImage.0.image}}" class="img-thumbnail" alt="..." style="height: 140px;">
 						{% else %}
@@ -15,14 +28,32 @@
 						{% endif %}
 
 						<div class="card-body">
+
+
+
+						<a href="/article/{{ article.id }}">
 							<h5 class="card-title">{{article.nom}}</h5>
-							<p>{{article.prix}}
-								€</p>
+							</a>
+							<p>{{article.prix}}€
+							</p>
+								 <div class="star">
+  <i class="far fa-star"></i>
+  </div>
+
+
+
+								
+
+
+
+
 						</div>
-					</a>
+					</div>
+					
 				</div>
 			{% endfor %}
 		</div>
 	</div>
 
 </div>
+
