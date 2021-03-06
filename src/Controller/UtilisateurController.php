@@ -131,7 +131,8 @@ class UtilisateurController extends AbstractController
 
 
         return $this->render("utilisateur/favoris.html.twig", [
-            'favoris' => $listFav
+            'favoris' => $listFav,
+            'current_menu' => 'favoris'
         ]);
     }
 
