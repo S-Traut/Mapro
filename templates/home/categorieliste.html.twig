@@ -2,35 +2,79 @@
 
 {% block body %}
 
-	<!-- module recherche -->
-	{% include 'module/recherche.html.twig' %}
+	<!-- grille catégories -->
+	{% include 'module/categories.html.twig' %}
+
+	<!-- Résultat de recherche -->
+	<div class="container">
+		<div id="search-result" class="mb-5"></div>
+	</div>
 
 	<!-- grille catégories -->
 	<div class="container">
 		<section id="content">
-
-			{% for magasin in magasins %}
-				<div class="card mb-3">
-					<div class="row g-0">
-						<div class="col-md-4">
-							<img src="{{magasin.image}}" alt="..." style="width: 100%">
-						</div>
-						<div class="col-md-8">
-							<div class="card-body">
-								<h5 class="card-title">{{ magasin.nom }}</h5>
-								<p class="card-text">{{magasin.description}}</p>
+			{% if donnees is empty and favoris is empty %}
+				<div class="card m-5">
+					<h2>Aucun résultat trouvé</h2>
+				</div>
+			{% else %}
+				{% for favori in favoris %}
+					<a href="/shop/{{favori.id}}" class="card mb-3" style="text-decoration: none">
+						<div class="row g-0">
+							<div class="col-md-2">
+								<img src="http://placehold.it/300x300" alt="..." style="width: 100%">
+							</div>
+							<div class="col-md-10">
+								<div class="card-body">
+									<div class="row">
+										<div class="col-11">
+											<h5 class="card-title">{{ favori.nom }}</h5>
+										</div>
+										<div class="col-1">
+											{% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+												<i class="far fa-star fas" value="{{ favori.id }}" name="favori" style="cursor: pointer"></i>
+											{% endif %}
+										</div>
+									</div>
+									<p class="card-text">{{favori.description}}</p>
+								</div>
 							</div>
 						</div>
-					</div>
-				</div>
-			{% endfor %}
+					</a>
+				{% endfor %}
+				{% for donnee in donnees %}
+					<a href="/shop/{{donnee.id}}" class="card mb-3" style="text-decoration: none">
+						<div class="row g-0">
+							<div class="col-md-2">
+								<img src="http://placehold.it/300x300" alt="..." style="width: 100%">
+							</div>
+							<div class="col-md-10">
+								<div class="card-body">
+									<div class="row">
+										<div class="col-11">
+											<h5 class="card-title">{{ donnee.nom }}</h5>
+										</div>
+										<div class="col-1">
+											{% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+												<i class="far fa-star" value="{{ donnee.id }}" name="favori" style="cursor: pointer"></i>
+											{% endif %}
+										</div>
+									</div>
+									<p class="card-text">{{donnee.description}}</p>
+								</div>
+							</div>
+						</div>
+					</a>
+				{% endfor %}
+			{% endif %}
 
 			<div class="pagination">
 				{{ knp_pagination_render(magasins) }}
 			</div>
-
-
 		</section>
 	</div>
-
+{% endblock %}
+{% block javascripts %}
+	{{ encore_entry_script_tags('search') }}
+	{{ encore_entry_script_tags('favmag') }}
 {% endblock %}

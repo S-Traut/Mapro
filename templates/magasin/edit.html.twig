@@ -1,24 +1,40 @@
 {% extends "base.html.twig" %}
 
-{% block headScripts %}
-	<link rel="stylesheet" href="{{ asset('css/map.css') }}">
+{% block stylesheets %}
+	<link rel="stylesheet" href="{{ asset('/css/Form/magasin.new.css') }}">
 {% endblock %}
-
-{% block stylesheets %} <link rel="stylesheet" href="{{ asset('/css/Form/magasin.new.css') }}"> {% endblock %}
 
 {% block body %}
-    <div class="form-header">
-        <div class="container">
-            <h1>Editer</h1>
-            <p>Modifiez les informations de votre magasin !</p>
-        </div>
-    </div>
-    <div class="container">
-        {{ include("magasin/form.new.html.twig", {form: form, button: 'Créer'}) }}
-    </div>
-    <div class="shopLocation" data-location="[{{ magasin.latitude }},{{ magasin.longitude }}]"></div>
-{% endblock %}
+	<div class="form-header">
+		<div class="container">
+			<h1>Editer</h1>
+			<p>Modifiez les informations de votre magasin !</p>
+		</div>
+	</div>
+	<div class="container">
+		{{ form_start(form) }}
+		<div class="my-custom-class-for-errors">
+			{{ form_errors(form) }}
+		</div>
+		<div class="row">
+			<div class="col-sm-12 col-md-8 col-lg-6">
+				<h3>Détails du magasin</h3>
+				{{ form_row(form.nom) }}
+				{{ form_row(form.description) }}
+				{{ form_row(form.tel) }}
+				{{ form_row(form.email) }}
+				{{ form_row(form.siren) }}
+				{{ form_row(form.adresse) }}
+				{{ form_row(form.typeMagasin) }}
+				{{ form_row(form.imageFile) }}
+			</div>
+			<div class="col-sm-12 col-md-8 col-lg-6">
 
-{% block javascripts %}
-	{{ encore_entry_script_tags('map') }}
+				<p style="margin: 30px 0px 60px 0px;" class="text-danger text-center">
+				<strong>ATTENTION!</strong><br>La modification d'un magasin sera vérifiée par une personne de l'administration du site afin de s'assurer qu'il n'y ait pas d'abus.</p>
+				{{ form_row(form.Confirmer, { 'label': 'Valider la modification du magasin' }) }}
+			</div>
+		</div>
+		{{ form_end(form) }}
+	</div>
 {% endblock %}

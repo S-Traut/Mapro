@@ -14,9 +14,7 @@
 
 		<!-- Viewport mobile -->
 		<meta name="viewport" content="width=device-width, initial-scale=1.0"> {% block stylesheets %}{% endblock %}
-		<link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
-
-		{% block headScripts %}{% endblock %}
+		<link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css"/> {% block headScripts %}{% endblock %}
 		</head>
 		<body>
 			{% include 'header.html.twig' %}
@@ -30,6 +28,6 @@
 			{{ encore_entry_script_tags('favoris') }}
 			{% block javascripts %}
 			{% endblock %}
+			{% include "footer.html.twig" %}
 		</body>
 	</html>
-

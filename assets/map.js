@@ -32,7 +32,7 @@ if (window.location.pathname.match("(\/shop\/0*[1-9][0-9]*\/edit)")) {
 
 
 const loader = new Loader({
-    apiKey: "AIzaSyAXUQPahIcvHZNrAMxqHo91JS7z5VOLLbI",
+    apiKey: /*"AIzaSyAXUQPahIcvHZNrAMxqHo91JS7z5VOLLbI"*/ "",
     version: "weekly",
 });
 

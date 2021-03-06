@@ -33,9 +33,11 @@
                     </div>
                 </div>
             {% endfor %}
+            {% if magasins.count() == 0 %}
+                <h4 class="col-12 text-center p-3">Vous n'avez pas encore de magasin !</h4>
+            {% endif %}
             <a href="{{ path('new_shop') }}" class="btn btn-info btn-block col-8 mx-auto mb-5" type="button">Ajouter un nouveau magasin</a>
         {% else %}
-            <h4 class="col-12 text-center text-warning p-3">Vous n'avez pas encore de magasin !</h4>
             <a href="{{ path('new_shop') }}" class="btn btn-info btn-block col-8 mx-auto m-2" type="button">Ajouter un nouvel article</a>
         {% endif %}
         

@@ -24,6 +24,8 @@ Encore
     .addEntry('map', './assets/map.js')
     .addEntry('search', './assets/recherche.js')
     .addEntry('favoris','./assets/favoris.js')
+    .addEntry('favmag', './assets/favorisMag.js')
+    .addEntry('magasin', './assets/magasin.js')
 
     // enables the Symfony UX Stimulus bridge (used in assets/bootstrap.js)
     //.enableStimulusBridge('./assets/controllers.json')
