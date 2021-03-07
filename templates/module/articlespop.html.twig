@@ -1,13 +1,3 @@
-<style>
-  .star {
-  font-size: 25px;
-  color:gold;
-  
-  }
-
-</style>
-
-
 
 
 
@@ -18,6 +8,49 @@
 		</div>
 
 		<div class="row row-cols-2 row-cols-md-6 g-4">
+			{% for favArt in favorisArticles %}
+				<div class="col">
+					<div class="card h-100">
+						{% if favArt.getImage.0 is defined %}
+							<img src="{{favArt.getImage.0.image}}" class="img-thumbnail" alt="..." style="height: 140px;">
+						{% else %}
+							<img src="http://placehold.it/300x300" class="img-thumbnail" alt="..." style="height: 140px;">
+						{% endif %}
+
+						<div class="card-body">
+
+
+
+						<a href="/article/{{ favArt.id }}">
+							<h5 class="card-title">{{favArt.nom}}</h5>
+							</a>
+							<p>{{favArt.prix}}€
+							</p>
+
+								 <div class="star">
+
+
+	{% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+		<i class="far fa-star fas" value="{{favArt.id}}"></i>
+	{% endif %}							 
+  
+  </div>
+
+
+
+								
+
+
+
+
+						</div>
+					</div>
+					
+				</div>
+			{% endfor %}
+
+
+
 			{% for article in articles %}
 				<div class="col">
 					<div class="card h-100">
@@ -36,8 +69,14 @@
 							</a>
 							<p>{{article.prix}}€
 							</p>
+
 								 <div class="star">
-  <i class="far fa-star"></i>
+
+
+								 
+  {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+		<i class="far fa-star" value="{{favArt.id}}"></i>
+	{% endif %}	
   </div>
 
 

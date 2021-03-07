@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\Form\FormInterface;
+use App\Repository\FavoriArticleRepository;
 
 class HomeController extends AbstractController
 {
@@ -23,6 +24,7 @@ class HomeController extends AbstractController
         MagasinRepository $magasinRepo,
         PaginatorInterface $paginator,
         ArticleRepository $articleRepo,
+        FavoriArticleRepository $favoriArticleRepo,
         UtilisateurController $utilisateurController
     ): Response {
         if (isset($_COOKIE['userLongitude']) && isset($_COOKIE['userLatitude'])) {
@@ -38,9 +40,36 @@ class HomeController extends AbstractController
             //récup des articles populaire
             $articles = $articleRepo->findArticlesPopulairesHome($longitude, $latitude);
 
+
+            $utilisateur = $this->getUser();
+
+            $listFavArticle = array();
+
+            if ($utilisateur) {
+                $favArticles = $favoriArticleRepo->findByUserId($utilisateur->getId());
+
+                foreach ($articles as $article) {
+                    foreach($favArticles as $favArticle){
+                        if($favArticle->getIdArticle() == $article->getId()){
+                            array_push($listFavArticle, $article);
+                            unset($favArticles[array_search($favArticle,$favArticles)]);
+                            unset($articles[array_search($article, $articles)]);
+                            break 1;
+                        }
+                    }
+                }
+
+            }
+            
+            dump($articles);
+            dump($listFavArticle);
+            
+
             return $this->render('home/home.html.twig', [
                 'articles' => $articles,
+                'favorisArticles' => $listFavArticle,
                 'searchForm' => $searchForm->createView()
+                
             ]);
         }
 
