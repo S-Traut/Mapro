@@ -10,6 +10,13 @@ let isShopEdit = false;
 let shopLocationVariable;
 let homeShops;
 
+let articlesPopulaires = new Swiper('.swiper-container-articles', {
+    direction: 'horizontal',
+    slidesPerView: "auto",
+    spaceBetween: 20,
+    freeMode: true,
+}); 
+
 if(window.location.pathname == "/") {
     homeShops = new Swiper('.swiper-container', {
         direction: 'horizontal',
@@ -122,6 +129,7 @@ function searchShops() {
         resetMarkers();
         if (shops.length == 0) {
             
+            homeShops.appendSlide(`<div class="swiper-slide">Aucun magasin n\'est disponnible autour de chez vous.</div>`);
         }
 
         shops.forEach((shop, index) => {
