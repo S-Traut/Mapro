@@ -49,27 +49,22 @@ class HomeController extends AbstractController
                 $favArticles = $favoriArticleRepo->findByUserId($utilisateur->getId());
 
                 foreach ($articles as $article) {
-                    foreach($favArticles as $favArticle){
-                        if($favArticle->getIdArticle() == $article->getId()){
+                    foreach ($favArticles as $favArticle) {
+                        if ($favArticle->getIdArticle() == $article->getId()) {
                             array_push($listFavArticle, $article);
-                            unset($favArticles[array_search($favArticle,$favArticles)]);
+                            unset($favArticles[array_search($favArticle, $favArticles)]);
                             unset($articles[array_search($article, $articles)]);
                             break 1;
                         }
                     }
                 }
-
             }
-            
-            dump($articles);
-            dump($listFavArticle);
-            
 
             return $this->render('home/home.html.twig', [
                 'articles' => $articles,
                 'favorisArticles' => $listFavArticle,
                 'searchForm' => $searchForm->createView()
-                
+
             ]);
         }
 

@@ -1,7 +1,9 @@
 <div class="article">
 	<div style="display: flex; justify-content: space-between; margin-bottom: 0px;">
 		<p style="margin-bottom: 0px">{{ article.nom }}</p>
-		<i class="far fa-star" value="{{article.id}}"></i>
+		{% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+			<i class="far fa-star" value="{{article.id}}"></i>
+		{% endif %}
 	</div>
 	<p style="margin-bottom: 0px">prix:
 		{{ article.prix }}€</p>
