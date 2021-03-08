@@ -44,7 +44,7 @@ class ArticleController extends AbstractController
             throw $this->createNotFoundException('Article Inexistant !');
         } else {
             $magasin = $article->getMagasin()->getNom();
-            $images = $article->getImage();
+            //$images = $article->getImage();
             // On vérifie que les stats de la page existe
             $statArticle = $statistiqueArticleRepository->findBy(['article' => $id]);
             // si la page n'existe pas on la créer et on ajoute +1
@@ -68,7 +68,7 @@ class ArticleController extends AbstractController
                 'favoris' => $favoris,
                 'article' => $article,
                 'magasin' => $magasin,
-                'images' => $images
+                //'images' => $images
             ]);
         }
     }

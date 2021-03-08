@@ -1,4 +1,5 @@
 <div class="article">
+<<<<<<< HEAD
 	<div style="display: flex; justify-content: space-between; margin-bottom: 0px;">
 		<p style="margin-bottom: 0px">{{ article.nom }}</p>
 		{% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
@@ -15,3 +16,14 @@
 		{% endif %}
 	</div>
 </div>
+=======
+    <div style="display: flex; justify-content: space-between; margin-bottom: 0px;">
+        <p style="margin-bottom: 0px">{{ article.nom }}</p>
+        <i class="far fa-star"></i>
+    </div>
+    <p style="margin-bottom: 0px">prix: {{ article.prix }}€</p>
+    <div style="overflow: hidden;">
+        <img src="{{ vich_uploader_asset(article) }}">
+    </div>
+</div>
+>>>>>>> develop
