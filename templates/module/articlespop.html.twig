@@ -2,6 +2,12 @@
 	<h3>Articles populaires</h3>
 	<div class="swiper-container-articles">
 		<div class="swiper-wrapper">
+			{% for favArticle in favorisArticles %}
+				<div class="swiper-slide" style="max-width: 150px;">
+					{% include "./module/favoriarticle.html.twig" %}
+				</div>
+			{% endfor %}
+
 			{% for article in articles %}
 				<div class="swiper-slide" style="max-width: 150px;">
 					{% include "./module/article.html.twig" %}
