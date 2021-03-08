@@ -31,6 +31,11 @@
 							<a class="nav-link {% if current_menu is defined and current_menu == 'admin' %}text-info active{% else %}text-success{% endif %}" href="{{ path('app_administration_index') }}">Administration</a>
 						{% endif %}
 					</li>
+					<li class="nav-item">
+						{% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+							<a class="nav-link {% if current_menu is defined and current_menu == 'favoris' %}text-info active{% else %}text-success{% endif %}" href="/me/favoris">Mes favoris</a>
+						{% endif %}
+					</li>
 					<li>
 						{% include "module/recherche.html.twig" %}
 					</li>
@@ -40,4 +45,3 @@
 		{% endif %}
 	</div>
 </nav>
-

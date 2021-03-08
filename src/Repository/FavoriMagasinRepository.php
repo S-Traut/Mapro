@@ -19,6 +19,24 @@ class FavoriMagasinRepository extends ServiceEntityRepository
         parent::__construct($registry, FavoriMagasin::class);
     }
 
+    public function findByUserId($id)
+    {
+        return $this->createQueryBuilder('f')
+            ->where('f.idUtilisateur = :val')
+            ->setParameter('val', $id)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findByMagId($idMag)
+    {
+        return $this->createQueryBuilder('f')
+            ->where('f.idMagasin = :val')
+            ->setParameter('val', $idMag)
+            ->getQuery()
+            ->getResult();
+    }
+
     // /**
     //  * @return FavoriMagasin[] Returns an array of FavoriMagasin objects
     //  */
@@ -36,15 +54,19 @@ class FavoriMagasinRepository extends ServiceEntityRepository
     }
     */
 
-    /*
-    public function findOneBySomeField($value): ?FavoriMagasin
+
+    public function findOneBySomeField($idU, $idM): ?FavoriMagasin
     {
+        $parameters = array(
+            'idu' => $idU,
+            'idm' => $idM
+        );
+
         return $this->createQueryBuilder('f')
-            ->andWhere('f.exampleField = :val')
-            ->setParameter('val', $value)
+            ->where('f.idUtilisateur = :idu')
+            ->andWhere('f.idMagasin = :idm')
+            ->setParameters($parameters)
             ->getQuery()
-            ->getOneOrNullResult()
-        ;
+            ->getOneOrNullResult();
     }
-    */
 }

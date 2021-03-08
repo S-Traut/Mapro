@@ -20,45 +20,29 @@ class FavoriMagasin
     private $id;
 
     /**
-     * @ORM\ManyToMany(targetEntity=User::class, inversedBy="favoriMagasins")
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="favoriMagasins")
+     * @ORM\JoinColumn(nullable=false)
      */
     private $idUtilisateur;
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
+     * @ORM\Column(type="integer")
      */
     private $idMagasin;
-
-    public function __construct()
-    {
-        $this->idUtilisateur = new ArrayCollection();
-    }
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    /**
-     * @return Collection|User[]
-     */
-    public function getIdUtilisateur(): Collection
+    public function getIdUtilisateur(): ?User
     {
         return $this->idUtilisateur;
     }
 
-    public function addIdUtilisateur(User $idUtilisateur): self
+    public function setIdUtilisateur(?User $idUtilisateur): self
     {
-        if (!$this->idUtilisateur->contains($idUtilisateur)) {
-            $this->idUtilisateur[] = $idUtilisateur;
-        }
-
-        return $this;
-    }
-
-    public function removeIdUtilisateur(User $idUtilisateur): self
-    {
-        $this->idUtilisateur->removeElement($idUtilisateur);
+        $this->idUtilisateur = $idUtilisateur;
 
         return $this;
     }
@@ -68,7 +52,7 @@ class FavoriMagasin
         return $this->idMagasin;
     }
 
-    public function setIdMagasin(?int $idMagasin): self
+    public function setIdMagasin(int $idMagasin): self
     {
         $this->idMagasin = $idMagasin;
 
