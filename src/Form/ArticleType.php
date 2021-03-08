@@ -59,7 +59,7 @@ class ArticleType extends AbstractType
             ->add('type', null, [
                 'label' => 'Type d\'article',
             ])
-            ->add('Save', SubmitType::class, [
+            ->add('Confirmer', SubmitType::class, [
                 'attr' => [
                     'class' => 'btn btn-primary',
                 ]
