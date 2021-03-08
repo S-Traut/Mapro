@@ -26,8 +26,9 @@ class APIController extends AbstractController
      */
     public function searchAround(MagasinRepository $magasinRepository, UtilisateurController $utilisateurController, Request $request): Response
     {
+        $radius = $request->get('radius') * 0.00001;
         $localisation = new LocalisationVector($request->get('latitude'), $request->get('longitude'));
-        $magasins = $magasinRepository->searchAround($localisation->longitude, $localisation->latitude);
+        $magasins = $magasinRepository->searchAround($localisation->longitude, $localisation->latitude, $radius);
 
         return $this->json($magasins, Response::HTTP_OK, [], [
             ObjectNormalizer::IGNORED_ATTRIBUTES => ['articles', 'typeMagasin', 'statistiqueMagasin', 'etat'],
@@ -51,8 +52,9 @@ class APIController extends AbstractController
      */
     public function searchData(MagasinRepository $magasinRepository, UtilisateurController $utilisateurController, Request $request): Response
     {
+        $radius = $request->get('radius') * 0.00001;
         $localisation = new LocalisationVector($request->get('latitude'), $request->get('longitude'));
-        $magasins = $magasinRepository->searchAround($localisation->longitude, $localisation->latitude);
+        $magasins = $magasinRepository->searchAround($localisation->longitude, $localisation->latitude, $radius);
 
         return $this->json($magasins, Response::HTTP_OK, [], [
             ObjectNormalizer::IGNORED_ATTRIBUTES => ['typeMagasin', 'statistiqueMagasin', 'etat'],

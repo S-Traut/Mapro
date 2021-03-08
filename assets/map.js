@@ -9,6 +9,9 @@ let setLocalisation = document.getElementsByName('set_localisation')[0];
 let isShopEdit = false;
 let shopLocationVariable;
 let homeShops;
+let radiusCircle;
+let slider = document.getElementById("radiusSlider");
+let radius = 1500;
 
 let articlesPopulaires = new Swiper('.swiper-container-articles', {
     direction: 'horizontal',
@@ -66,6 +69,17 @@ function userLocation() {
             disableDefaultUI: true,
         });
 
+        radiusCircle = new google.maps.Circle({
+            strokeColor: "#6cb55a",
+            strokeOpacity: 0.8,
+            strokeWeight: 2,
+            fillOpacity: 0,
+            clickable: false,
+            map,
+            center: userPosition,
+            radius: 1500,
+        });
+
         let userMarker = new google.maps.Marker({
             map,
             position: userPosition ? userPosition : null
@@ -116,12 +130,16 @@ function shopLocation() {
 }
 
 function searchShops() {
+    if(radiusCircle != undefined) {
+        radiusCircle.setCenter(userPosition);
+    }
     
     $.ajax({
         url: "/api/get/searchAround",
         data: {
             latitude: userPosition.lat,
-            longitude: userPosition.lng
+            longitude: userPosition.lng,
+            radius: parseFloat(radius)
         },
         dataType: "json"
     }).done((shops) => {
@@ -196,3 +214,8 @@ if (setLocalisation) {
     });
 }
 
+slider.oninput = function() {
+    radius = this.value * 100;
+    radiusCircle.setRadius(radius);
+    searchShops();
+}   

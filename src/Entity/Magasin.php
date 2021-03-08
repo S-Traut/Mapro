@@ -230,7 +230,7 @@ class Magasin
 
     public function getImage(): ?string
     {
-        return $this->image;
+        return $this->imageName;
     }
 
     public function setImage(string $image): self

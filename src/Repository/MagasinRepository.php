@@ -47,9 +47,9 @@ class MagasinRepository extends ServiceEntityRepository
             ->execute();
     }
 
-    public function searchAround(float $longitude, float $latitude)
+    public function searchAround(float $longitude, float $latitude, float $radius)
     {
-        $sql = 'SQRT(((' . $latitude . ' - Magasin.latitude)*(' . $latitude . ' - Magasin.latitude)) + ((' . $longitude . ' - Magasin.longitude)*(' . $longitude . ' - Magasin.longitude))) < 0.015';
+        $sql = 'SQRT(((' . $latitude . ' - Magasin.latitude)*(' . $latitude . ' - Magasin.latitude)) + ((' . $longitude . ' - Magasin.longitude)*(' . $longitude . ' - Magasin.longitude))) < '. $radius;
 
         return $this->createQueryBuilder('Magasin')
             ->where($sql)

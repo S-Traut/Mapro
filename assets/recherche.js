@@ -1,5 +1,6 @@
 var listNom = [];
 var listData = [];
+let radius = 1500;
 
 function getShops() {
 
@@ -20,7 +21,8 @@ function getShops() {
       url: "/api/get/searchData",
       data: {
         latitude: userPosition.lat,
-        longitude: userPosition.lng
+        longitude: userPosition.lng,
+        radius: radius
       },
       dataType: "json"
     }).done((shops) => {
@@ -105,3 +107,8 @@ $(document).ready(function () {
     }
   });
 });
+
+
+slider.oninput = function() {
+  radius = this.value * 100;
+}   
