@@ -1,98 +1,13 @@
-
-
-
-<div class="container">
-	<div class="articles-pop" style="margin-top: 4em">
-		<div class="titre">
-			<h3>Articles populaire</h3>
-		</div>
-
-		<div class="row row-cols-2 row-cols-md-6 g-4">
-			{% for favArt in favorisArticles %}
-				<div class="col">
-					<div class="card h-100">
-						{% if favArt.getImage.0 is defined %}
-							<img src="{{favArt.getImage.0.image}}" class="img-thumbnail" alt="..." style="height: 140px;">
-						{% else %}
-							<img src="http://placehold.it/300x300" class="img-thumbnail" alt="..." style="height: 140px;">
-						{% endif %}
-
-						<div class="card-body">
-
-
-
-						<a href="/article/{{ favArt.id }}">
-							<h5 class="card-title">{{favArt.nom}}</h5>
-							</a>
-							<p>{{favArt.prix}}€
-							</p>
-
-								 <div class="star">
-
-
-	{% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-		<i class="far fa-star fas" value="{{favArt.id}}"></i>
-	{% endif %}							 
-  
-  </div>
-
-
-
-								
-
-
-
-
-						</div>
-					</div>
-					
-				</div>
-			{% endfor %}
-
-
-
+<div class="container" style="overflow: hidden; margin-top: 50px">
+	<h3>Articles populaires</h3>
+	<div class="swiper-container-articles">
+		<div class="swiper-wrapper">
 			{% for article in articles %}
-				<div class="col">
-					<div class="card h-100">
-						{% if article.getImage.0 is defined %}
-							<img src="{{article.getImage.0.image}}" class="img-thumbnail" alt="..." style="height: 140px;">
-						{% else %}
-							<img src="http://placehold.it/300x300" class="img-thumbnail" alt="..." style="height: 140px;">
-						{% endif %}
-
-						<div class="card-body">
-
-
-
-						<a href="/article/{{ article.id }}">
-							<h5 class="card-title">{{article.nom}}</h5>
-							</a>
-							<p>{{article.prix}}€
-							</p>
-
-								 <div class="star">
-
-
-								 
-  {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-		<i class="far fa-star" value="{{article.id}}"></i>
-	{% endif %}	
-  </div>
-
-
-
-								
-
-
-
-
-						</div>
-					</div>
-					
+				<div class="swiper-slide" style="max-width: 150px;">
+					{% include "./module/article.html.twig" %}
 				</div>
 			{% endfor %}
+
 		</div>
 	</div>
-
 </div>
-
