@@ -1,0 +1,65 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+
+	<div class="form-header">
+		<div class="container">
+			<h1>Mes articles</h1>
+			<p>Créez, consultez et modifiez vos articles</p>
+		</div>
+	</div>
+
+    {% if articles %}
+    <div class="row">
+        <div class="col-10 mx-auto">
+            <a href="{{ path('app_article_new') }}" class="btn btn-info btn-block col-11 col-sm-4 col-md-4 col-lg-4 col-xl-4 float-right m-2" type="button">Ajouter un nouvel article</a>
+        </div>
+    </div>
+    <table class="table col-10 mx-auto">
+        <thead class="thead-light">
+            <tr>
+                <th scope="col">Nom</th>
+                <th scope="col">Description</th>
+                <th scope="col">Prix</th>
+                <th scope="col">Type</th>
+                <th scope="col">Vues</th>
+                <th scope="col">Actions</th>
+            </tr>
+    </thead>
+    
+        {% for article in articles %}
+            <tbody>
+                <tr>
+                    
+
+<div class="flexbox">
+
+	<div class="fav-btn">
+		<span href="" class="favme dashicons dashicons-heart"></span>
+	</div>
+	
+</div>
+
+                    <th scope="row">{{ article.nom }}</th>
+                    <td class="col-md-auto">{{ article.description }}</td>
+                    <td>{{ article.prix }}</td>
+                    <td>{{ article.type }}</td>
+                    <td>{{ article.statistiqueArticle.nbVue }}</td>
+                    <td>
+                        <div class="btn-group">
+                            <a class="btn btn-sm btn-outline-info" href="{{ path('app_article_show', { id: article.id })  }}" type="button"><i class="far fa-eye"></i> Voir</a>
+                            <a class="btn btn-sm btn-outline-secondary" href="{{ path('app_article_edit', { id: article.id })  }}" type="button"><i class="far fa-edit"></i> Editer</a>
+                            <a class="btn btn-sm btn-outline-danger" type="button" href="{{ path('app_article_delete', { id: article.id })  }}"><i class="far fa-trash-alt"></i> Supprimer</a>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        {% endfor %}
+    </table>
+
+    {% else %}
+        <h4 class="col-12 text-center text-warning p-3">Pas d'articles dans votre magasin</h4>
+        <a href="{{ path('app_article_new') }}" class="btn btn-info btn-block col-8 mx-auto m-2" type="button">Ajouter un nouvel article</a>
+    {% endif %}
+    
+{% endblock %}
