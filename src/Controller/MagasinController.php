@@ -36,14 +36,11 @@ class MagasinController extends AbstractController
 
         $utilisateur = $this->getUser();
 
-        $favoris = $favMagRepo->findOneBySomeField($utilisateur->getId(), $id);
-        /*if ($utilisateur) {
-            $favori = $favMagRepo->findOneBySomeField($utilisateur->getId(), $id);
-            if($favori){
+        $favoris = [];
 
-            }
-            dump($favori);
-        }*/
+        if ($utilisateur) {
+            $favoris = $favMagRepo->findOneBySomeField($utilisateur->getId(), $id);
+        }
 
         if (!$magasin) {
             throw $this->createNotFoundException('Magasin Inexistant !');

@@ -9,8 +9,8 @@
 	<p style="margin-bottom: 0px">prix:
 		{{ favArticle.prix }}€</p>
 	<div style="overflow: hidden;">
-		{% if favArticle.getImage[0] is defined  %}
-			<img src="{{favArticle.getImage[0].image}}">
+		{% if favArticle.getImageName[0] is defined  %}
+			<img src="{{favArticle.getImageName[0].imageName}}">
 		{% else %}
 			<img src="http://placehold.it/300x300">
 		{% endif %}

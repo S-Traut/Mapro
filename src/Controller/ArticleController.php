@@ -38,7 +38,10 @@ class ArticleController extends AbstractController
 
         $utilisateur = $this->getUser();
 
-        $favoris = $favArtRepo->findOneBySomeField($utilisateur->getId(), $id);
+        $favoris = [];
+        if ($utilisateur) {
+            $favoris = $favArtRepo->findOneBySomeField($utilisateur->getId(), $id);
+        }
 
         if (!$article) {
             throw $this->createNotFoundException('Article Inexistant !');
