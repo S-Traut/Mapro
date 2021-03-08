@@ -68,7 +68,8 @@ class MagasinFixtures extends Fixture implements DependentFixtureInterface
                     ->setDescription($faker->text(200))
                     ->setEtat(1)
                     ->setMagasin($magasin)
-                    ->setType($typeArticle);
+                    ->setType($typeArticle)
+                    ->setImageName($faker->imageUrl());
                 $manager->persist($article);   
 
                 //Création d'une image d'article             
