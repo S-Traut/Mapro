@@ -17,7 +17,7 @@
 					{% for favori in favoris %}
 						<div class="col">
 							<a href="/shop/{{ favori.id }}" class="card h-100">
-								<img src="http://placehold.it/300x300" class="img-thumbnail" alt="..." style="height: 140px;">
+								<img src="{{ vich_uploader_asset(favori) }}" class="img-thumbnail" alt="..." style="height: 140px;">
 								<div class="card-body">
 									<h5 class="card-title">{{favori.nom}}</h5>
 								</div>
