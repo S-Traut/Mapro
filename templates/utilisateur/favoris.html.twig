@@ -2,17 +2,57 @@
 
 {% block body %}
 
-	{% if favoris is empty %}
+	<div class="form-header">
+		<div class="container">
+			<h1>Mes Favoris</h1>
+			<p>Consultez vos magasins et articles favoris</p>
+		</div>
+	</div>
+
+	{% if favorisMagasins is empty and favorisArticles is empty %}
 		<div class="card m-5">
 			<h2>Vous n'avez pas encore de favoris</h2>
 		</div>
 	{% else %}
 		<div class="container">
 			<div class="favoris" style="margin-top: 4em">
-				<div class="titre">
-					<h3>Magasins favoris</h3>
+				<div class="magasins mt-5 mb-5">
+					<div class="titre">
+						<h3>Magasins</h3>
+					</div>
+
+					<div class="row row-cols-2 row-cols-md-6 g-4">
+						{% for favMagasin in favorisMagasins %}
+							<div class="col">
+								<a href="/shop/{{ favMagasin.id }}" class="card h-100">
+									<img src="http://placehold.it/300x300" class="img-thumbnail" alt="..." style="height: 140px;">
+									<div class="card-body">
+										<h5 class="card-title">{{favMagasin.nom}}</h5>
+									</div>
+								</a>
+							</div>
+						{% endfor %}
+					</div>
 				</div>
 
+<<<<<<< HEAD
+				<div class="articles mt-5 mb-5">
+					<div class="titre">
+						<h3>Articles</h3>
+					</div>
+					<div class="row row-cols-2 row-cols-md-6 g-4">
+						{% for favArticle in favorisArticles %}
+							<div class="col">
+								<a href="/article/{{ favArticle.id }}" class="card h-100">
+									<img src="http://placehold.it/300x300" class="img-thumbnail" alt="..." style="height: 140px;">
+									<div class="card-body">
+										<h5 class="card-title">{{favArticle.nom}}</h5>
+									</div>
+								</a>
+							</div>
+						{% endfor %}
+					</div>
+=======
 				<div class="row row-cols-2 row-cols-md-6 g-4">
 					{% for favori in favoris %}
 						<div class="col">
@@ -24,6 +64,7 @@
 							</a>
 						</div>
 					{% endfor %}
+>>>>>>> develop
 				</div>
 			</div>
 
