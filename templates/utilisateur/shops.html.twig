@@ -27,8 +27,12 @@
                             </div>
                         </div>
                         <div class="card-footer text-center text-muted">
-                            {{ magasin.statistiqueMagasin.nbVue }} Vues | 
-                            {{ magasin.articles|length }} articles
+                            {% if magasin.statistiqueMagasin %}
+                                {{ magasin.statistiqueMagasin.nbVue }} Vues | 
+                                {{ magasin.articles|length }} articles
+                            {% else %}
+                                0 Vues | {{ magasin.articles|length }} articles
+                            {% endif %}
                         </div>
                     </div>
                 </div>
