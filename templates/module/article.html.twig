@@ -1,14 +1,29 @@
 <div class="article">
+<<<<<<< HEAD
+	<div style="display: flex; justify-content: space-between; margin-bottom: 0px;">
+		<p style="margin-bottom: 0px">{{ article.nom }}</p>
+		{% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+			<i class="far fa-star" value="{{article.id}}" style="cursor: pointer"></i>
+		{% endif %}
+	</div>
+	<p style="margin-bottom: 0px">prix:
+		{{ article.prix }}€</p>
+	<div style="overflow: hidden;">
+		{% if article.getImage[0] is defined  %}
+			<img src="{{article.getImage[0].image}}">
+		{% else %}
+			<img src="http://placehold.it/300x300">
+		{% endif %}
+	</div>
+</div>
+=======
     <div style="display: flex; justify-content: space-between; margin-bottom: 0px;">
         <p style="margin-bottom: 0px">{{ article.nom }}</p>
         <i class="far fa-star"></i>
     </div>
     <p style="margin-bottom: 0px">prix: {{ article.prix }}€</p>
     <div style="overflow: hidden;">
-        {% if article.getImage[0] is defined  %}
-            <img src="{{article.getImage[0].image}}">
-        {% else %}
-            <img src="http://placehold.it/300x300">
-        {% endif %}
+        <img src="{{ vich_uploader_asset(article) }}">
     </div>
 </div>
+>>>>>>> develop

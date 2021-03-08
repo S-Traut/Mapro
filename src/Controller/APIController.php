@@ -18,6 +18,8 @@ use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use App\Entity\FavoriArticle;
+use App\Repository\FavoriArticleRepository;
 
 class APIController extends AbstractController
 {
@@ -126,4 +128,59 @@ class APIController extends AbstractController
             200
         );
     }
+
+
+   /**
+    * @Route("/api/set/favoriarticle", name="api_set_favoriarticle")
+    */
+   public function setFavArticle(Request $request){
+
+   $favori= new FavoriArticle();
+
+   $utilisateur= $this->getUser();
+
+   $favori->setIdUtilisateur($utilisateur);
+
+   $favori->setIdArticle(intval($request->request->get('art_id')));
+
+   $em=$this->getDoctrine()->getManager();
+
+   $em->persist($favori);
+
+   $em->flush();
+
+   return new JsonResponse(
+    array(
+        'status' => 'OK'
+    ),
+    200
+   );
+
+   }
+
+
+    /**
+     * @Route("/api/delete/favoriarticle", name="api_delete_favoriarticle")
+     */
+    public function deleteFavoriArt(Request $request, FavoriArticleRepository $favArtRepo)
+    {
+        $utilisateur = $this->getUser();
+
+        $favori = $favArtRepo->findOneBySomeField($utilisateur->getId(), $request->request->get('art_id'));
+
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($favori);
+        $em->flush();
+
+        return new JsonResponse(
+            array(
+                'status' => 'OK'
+            ),
+            200
+        );
+    }
+
+
+   
+
 }

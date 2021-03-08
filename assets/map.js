@@ -165,10 +165,11 @@ function searchShops() {
                 infoWindow.open(map, shopMarker);
             });
             shopMarkers.push(shopMarker);
+            console.log(shop);
 
             homeShops.appendSlide(`
                 <div class="swiper-slide shop-item" style="height: 250px; max-width: 300px">
-                <div class="shop-img"><img src="https://picsum.photos/400"></div>
+                <div class="shop-img"><img src="./images/magasins/${shop.image}"></div>
                 <a style="padding: 0px 10px 0px 10px; font-size: 23px;" href="/shop/${shop.id}">${shop.nom}</a>
                 <p style="padding: 0px 10px 0px 10px;">${shop.adresse}</p>
                 </div> 

@@ -26,7 +26,15 @@
 
 .shop-item .shop-img {
   overflow: hidden;
-  max-height: 150px;
+  height: 150px;
+  width: 100%;
+}
+
+.shop-img img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  height: auto;
   width: 100%;
 }
 

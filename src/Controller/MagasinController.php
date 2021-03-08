@@ -36,7 +36,7 @@ class MagasinController extends AbstractController
 
         $utilisateur = $this->getUser();
 
-        $favori = $favMagRepo->findOneBySomeField($utilisateur->getId(), $id);
+        $favoris = $favMagRepo->findOneBySomeField($utilisateur->getId(), $id);
         /*if ($utilisateur) {
             $favori = $favMagRepo->findOneBySomeField($utilisateur->getId(), $id);
             if($favori){
@@ -68,7 +68,7 @@ class MagasinController extends AbstractController
             }
             $em->flush();
             return $this->render('magasin/show.html.twig', [
-                'favori' => $favori,
+                'favori' => $favoris,
                 'magasin' => $magasin,
                 'articles' => $articles,
                 'articlesPop' => $articlesPop

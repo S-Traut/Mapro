@@ -7,6 +7,7 @@ use App\Entity\Magasin;
 use App\Form\ArticleType;
 use App\Entity\StatistiqueArticle;
 use App\Repository\ArticleRepository;
+use App\Repository\FavoriArticleRepository;
 use App\Repository\MagasinRepository;
 use DateTime;
 use Doctrine\ORM\EntityManager;
@@ -26,14 +27,24 @@ class ArticleController extends AbstractController
     /**
      * @Route("/article/{id<\d+>}")
      */
-    public function show(ArticleRepository $articleRepository, $id, StatistiqueArticleRepository $statistiqueArticleRepository, EntityManagerInterface $em)
-    {
+    public function show(
+        ArticleRepository $articleRepository,
+        $id,
+        StatistiqueArticleRepository $statistiqueArticleRepository,
+        EntityManagerInterface $em,
+        FavoriArticleRepository $favArtRepo
+    ) {
         $article = $articleRepository->find($id);
+
+        $utilisateur = $this->getUser();
+
+        $favoris = $favArtRepo->findOneBySomeField($utilisateur->getId(), $id);
+
         if (!$article) {
             throw $this->createNotFoundException('Article Inexistant !');
         } else {
             $magasin = $article->getMagasin()->getNom();
-            $images = $article->getImage();
+            //$images = $article->getImage();
             // On vérifie que les stats de la page existe
             $statArticle = $statistiqueArticleRepository->findBy(['article' => $id]);
             // si la page n'existe pas on la créer et on ajoute +1
@@ -54,9 +65,10 @@ class ArticleController extends AbstractController
             }
             $em->flush();
             return $this->render('article/show.html.twig', [
+                'favoris' => $favoris,
                 'article' => $article,
                 'magasin' => $magasin,
-                'images' => $images
+                //'images' => $images
             ]);
         }
     }

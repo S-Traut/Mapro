@@ -7,6 +7,8 @@ use App\Form\ChangePasswordType;
 use App\Form\SetLocalisationType;
 use Symfony\Component\HttpFoundation\Request;
 use App\Form\UserType;
+use App\Repository\ArticleRepository;
+use App\Repository\FavoriArticleRepository;
 use App\Repository\FavoriMagasinRepository;
 use App\Repository\LocalisationRepository;
 use App\Repository\MagasinRepository;
@@ -95,8 +97,13 @@ class UtilisateurController extends AbstractController
     /**
      * @Route("me/favoris", name="favoris")
      */
-    public function favoris(FavoriMagasinRepository $favMagRepo, MagasinRepository $magasinRepo, Request $request)
-    {
+    public function favoris(
+        FavoriMagasinRepository $favMagRepo,
+        MagasinRepository $magasinRepo,
+        ArticleRepository $articleRepo,
+        Request $request,
+        FavoriArticleRepository $favArtRepo
+    ) {
         if ($this->isGranted('ROLE_USER') == false)
             return $this->redirectToRoute("landing");
 
@@ -107,31 +114,45 @@ class UtilisateurController extends AbstractController
 
         $utilisateur = $this->getUser();
 
-
-
         $magasins = $magasinRepo->searchAround($longitude, $latitude);
+        $articles = $articleRepo->findAll();
 
-        $listFav = array();
+        $listFavMag = array();
+        $listFavArt = array();
+
 
         if ($utilisateur) {
-            $favoris = $favMagRepo->findByUserId($utilisateur->getId());
+            $favorisArt = $favArtRepo->findByUserId($utilisateur->getId());
+            $favorisMag = $favMagRepo->findByUserId($utilisateur->getId());
 
             foreach ($magasins as $magasin) {
-                foreach ($favoris as $favori) {
-                    if ($favori->getIdMagasin() == $magasin->getId()) {
-                        array_push($listFav, $magasin);
-                        unset($favoris[array_search($favori, $favoris)]);
+                foreach ($favorisMag as $mag) {
+                    if ($mag->getIdMagasin() == $magasin->getId()) {
+                        array_push($listFavMag, $magasin);
+                        unset($favorisMag[array_search($mag, $favorisMag)]);
+                        break 1;
+                    }
+                }
+            }
+
+            foreach ($articles as $article) {
+                foreach ($favorisArt as $art) {
+                    if ($art->getIdArticle() == $article->getId()) {
+                        array_push($listFavArt, $article);
+                        unset($favorisArt[array_search($art, $favorisArt)]);
                         break 1;
                     }
                 }
             }
         }
 
-        dump($listFav);
+        dump($listFavArt);
+        //dump($magasins);
 
 
         return $this->render("utilisateur/favoris.html.twig", [
-            'favoris' => $listFav,
+            'favorisMagasins' => $listFavMag,
+            'favorisArticles' => $listFavArt,
             'current_menu' => 'favoris'
         ]);
     }
