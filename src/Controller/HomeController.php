@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Form\RechercheType;
 use App\Repository\ArticleRepository;
+use App\Repository\FavoriArticleRepository;
 use App\Repository\FavoriMagasinRepository;
 use App\Repository\MagasinRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -12,7 +13,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\Form\FormInterface;
-use App\Repository\FavoriArticleRepository;
 
 class HomeController extends AbstractController
 {
@@ -60,6 +60,7 @@ class HomeController extends AbstractController
                 }
             }
 
+            dump($listFavArticle);
             return $this->render('home/home.html.twig', [
                 'articles' => $articles,
                 'favorisArticles' => $listFavArticle,

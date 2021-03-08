@@ -146,10 +146,6 @@ class UtilisateurController extends AbstractController
             }
         }
 
-        dump($listFavArt);
-        //dump($magasins);
-
-
         return $this->render("utilisateur/favoris.html.twig", [
             'favorisMagasins' => $listFavMag,
             'favorisArticles' => $listFavArt,

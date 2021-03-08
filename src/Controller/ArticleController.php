@@ -27,18 +27,17 @@ class ArticleController extends AbstractController
     /**
      * @Route("/article/{id<\d+>}")
      */
-    public function show(
-        ArticleRepository $articleRepository,
-        $id,
-        StatistiqueArticleRepository $statistiqueArticleRepository,
-        EntityManagerInterface $em,
-        FavoriArticleRepository $favArtRepo
-    ) {
+    public function show(ArticleRepository $articleRepository, $id, StatistiqueArticleRepository $statistiqueArticleRepository, EntityManagerInterface $em, FavoriArticleRepository $favArtRepo)
+    {
         $article = $articleRepository->find($id);
 
         $utilisateur = $this->getUser();
 
-        $favoris = $favArtRepo->findOneBySomeField($utilisateur->getId(), $id);
+        $favoris = [];
+
+        if ($utilisateur) {
+            $favoris = $favArtRepo->findOneBySomeField($utilisateur->getId(), $id);
+        }
 
         if (!$article) {
             throw $this->createNotFoundException('Article Inexistant !');

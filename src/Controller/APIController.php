@@ -4,7 +4,9 @@ namespace App\Controller;
 
 use Amp\Http\Client\Request as ClientRequest;
 use Amp\Http\Status;
+use App\Entity\FavoriArticle;
 use App\Entity\FavoriMagasin;
+use App\Repository\FavoriArticleRepository;
 use App\Repository\FavoriMagasinRepository;
 use App\Repository\MagasinRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -18,8 +20,6 @@ use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use App\Entity\FavoriArticle;
-use App\Repository\FavoriArticleRepository;
 
 class APIController extends AbstractController
 {
@@ -129,34 +129,33 @@ class APIController extends AbstractController
         );
     }
 
+    /**
+     * @Route("/api/set/favoriarticle", name="api_set_favoriarticle")
+     */
+    public function setFavArticle(Request $request)
+    {
 
-   /**
-    * @Route("/api/set/favoriarticle", name="api_set_favoriarticle")
-    */
-   public function setFavArticle(Request $request){
+        $favori = new FavoriArticle();
 
-   $favori= new FavoriArticle();
+        $utilisateur = $this->getUser();
 
-   $utilisateur= $this->getUser();
+        $favori->setIdUtilisateur($utilisateur);
 
-   $favori->setIdUtilisateur($utilisateur);
+        $favori->setIdArticle(intval($request->request->get('art_id')));
 
-   $favori->setIdArticle(intval($request->request->get('art_id')));
+        $em = $this->getDoctrine()->getManager();
 
-   $em=$this->getDoctrine()->getManager();
+        $em->persist($favori);
 
-   $em->persist($favori);
+        $em->flush();
 
-   $em->flush();
-
-   return new JsonResponse(
-    array(
-        'status' => 'OK'
-    ),
-    200
-   );
-
-   }
+        return new JsonResponse(
+            array(
+                'status' => 'OK'
+            ),
+            200
+        );
+    }
 
 
     /**
@@ -179,8 +178,4 @@ class APIController extends AbstractController
             200
         );
     }
-
-
-   
-
 }
