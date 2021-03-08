@@ -74,15 +74,9 @@ class User implements UserInterface
      */
     private $favoriMagasins;
 
-    /**
-     * @ORM\OneToMany(targetEntity=FavoriArticle::class, mappedBy="idUtilisateur", orphanRemoval=true)
-     */
-    private $favoriArticles;
-
     public function __construct()
     {
         $this->favoriMagasins = new ArrayCollection();
-        $this->favoriArticles = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -295,36 +289,6 @@ class User implements UserInterface
             // set the owning side to null (unless already changed)
             if ($favoriMagasin->getIdUtilisateur() === $this) {
                 $favoriMagasin->setIdUtilisateur(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|FavoriArticle[]
-     */
-    public function getFavoriArticles(): Collection
-    {
-        return $this->favoriArticles;
-    }
-
-    public function addFavoriArticle(FavoriArticle $favoriArticle): self
-    {
-        if (!$this->favoriArticles->contains($favoriArticle)) {
-            $this->favoriArticles[] = $favoriArticle;
-            $favoriArticle->setIdUtilisateur($this);
-        }
-
-        return $this;
-    }
-
-    public function removeFavoriArticle(FavoriArticle $favoriArticle): self
-    {
-        if ($this->favoriArticles->removeElement($favoriArticle)) {
-            // set the owning side to null (unless already changed)
-            if ($favoriArticle->getIdUtilisateur() === $this) {
-                $favoriArticle->setIdUtilisateur(null);
             }
         }
 

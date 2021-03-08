@@ -65,7 +65,7 @@ class MagasinController extends AbstractController
             }
             $em->flush();
             return $this->render('magasin/show.html.twig', [
-                'favori' => $favoris,
+                'favori' => $favori,
                 'magasin' => $magasin,
                 'articles' => $articles,
                 'articlesPop' => $articlesPop
