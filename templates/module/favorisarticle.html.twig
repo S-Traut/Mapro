@@ -1,16 +1,16 @@
 <div class="article">
 	<div style="display: flex; justify-content: space-between; margin-bottom: 0px;">
-		<p style="margin-bottom: 0px">{{ favArticle.nom }}</p>
+		<p style="margin-bottom: 0px">{{ favoris.nom }}</p>
 		{% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-			<i class="far fa-star fas" value="{{favArticle.id}}" style="cursor: pointer"></i>
+			<i class="far fa-star fas" value="{{favoris.id}}" style="cursor: pointer"></i>
 		{% endif %}
 
 	</div>
 	<p style="margin-bottom: 0px">prix:
-		{{ favArticle.prix }}€</p>
+		{{ favoris.prix }}€</p>
 	<div style="overflow: hidden;">
-		{% if favArticle.getImageName[0] is defined  %}
-			<img src="{{favArticle.getImageName[0].imageName}}">
+		{% if favoris.getImageName[0] is defined  %}
+			<img src="{{favoris.getImageName[0].imageName}}">
 		{% else %}
 			<img src="http://placehold.it/300x300">
 		{% endif %}
