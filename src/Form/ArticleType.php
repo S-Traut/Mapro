@@ -81,7 +81,7 @@ class ArticleType extends AbstractType
             ])
             ->add('Confirmer', SubmitType::class, [
                 'attr' => [
-                    'class' => 'btn btn-primary',
+                    'class' => 'btn btn-primary btn-block',
                 ]
             ])
         ;
