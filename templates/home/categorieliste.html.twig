@@ -32,7 +32,7 @@
 										</div>
 										<div class="col-1">
 											{% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-												<i class="far fa-star fas" value="{{ favori.id }}" name="favori" style="cursor: pointer"></i>
+												<i class="far fav-magasin fa-star fas" value="{{ favori.id }}" name="favori" style="cursor: pointer"></i>
 											{% endif %}
 										</div>
 									</div>
@@ -56,7 +56,7 @@
 										</div>
 										<div class="col-1">
 											{% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-												<i class="far fa-star" value="{{ donnee.id }}" name="favori" style="cursor: pointer"></i>
+												<i class="far fav-magasin fa-star" value="{{ donnee.id }}" name="favori" style="cursor: pointer"></i>
 											{% endif %}
 										</div>
 									</div>
@@ -76,5 +76,5 @@
 {% endblock %}
 {% block javascripts %}
 	{{ encore_entry_script_tags('search') }}
-	{{ encore_entry_script_tags('favmag') }}
+	{{ encore_entry_script_tags('favoris') }}
 {% endblock %}
