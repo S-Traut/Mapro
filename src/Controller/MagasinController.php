@@ -111,8 +111,10 @@ class MagasinController extends AbstractController
     {
 
         $magasin = $magasinRepository->find($id);
-        if ($this->getUser() != $magasin->getIdUtilisateur() || $this->getUser() == null) {
-            return $this->redirectToRoute('landing');;
+        if (!$this->isGranted('ROLE_ADMIN')) {
+            if ($this->getUser() != $magasin->getIdUtilisateur() || $this->getUser() == null) {
+                return $this->redirectToRoute('landing');;
+            }
         }
 
         if (!$magasin) {
