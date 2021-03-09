@@ -69,7 +69,7 @@ class MagasinFixtures extends Fixture implements DependentFixtureInterface
                     ->setEtat(1)
                     ->setMagasin($magasin)
                     ->setType($typeArticle)
-                    ->setImageName("fixtures/".rand(0, 14).".jpg");
+                    ->setImageName("fixtures/".rand(0, 13).".jpg");
                 $manager->persist($article);   
 
                 //Création d'une image d'article             
