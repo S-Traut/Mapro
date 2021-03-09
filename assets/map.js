@@ -174,7 +174,7 @@ function searchShops() {
                 </div> 
             `);
         });
-    });
+    }); 
 }
 
 
