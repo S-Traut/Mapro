@@ -182,14 +182,6 @@ class Article
         return $this;
     }
 
-    /**
-     * @return Collection|image[]
-     */
-    public function getImage(): Collection
-    {
-        return $this->image;
-    }
-
     public function addImage(image $image): self
     {
         if (!$this->image->contains($image)) {

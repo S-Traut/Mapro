@@ -2,7 +2,7 @@
 
 {% block body %}
 
-	<div class="container">
+	<div class="container" style="min-height: 800px;">
 		<div class="row mt-5">
 			<div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
 				<div id="carouselIndicators" class="carousel slide" data-ride="carousel">
@@ -29,8 +29,7 @@
 						<div class="pb-3">
 							<h2 class="text-success">{{ article.nom }}
 							</h2>
-							<h2 class="text-muted">/
-								{{ magasin }}</h2>
+							<a class="text-muted" href="/shop/{{ article.magasin.id }}"><i class="fas fa-store-alt"></i>{{ magasin }}</a>
 						</div>
 						<div class="content">
 							<div class="bg-light rounded shadow p-2">

@@ -1,6 +1,6 @@
 <div class="article">
 	<div style="display: flex; justify-content: space-between; margin-bottom: 0px;">
-		<p style="margin-bottom: 0px">{{ article.nom }}</p>
+		<a style="margin-bottom: 0px" href="/article/{{ article.id }}">{{ article.nom }}</a>
 		{% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
 			<i class="far fa-star" value="{{article.id}}" style="cursor: pointer"></i>
 		{% endif %}
