@@ -30,6 +30,7 @@ class MagasinRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('Magasin')
             ->where($sql)
             ->andWhere('Magasin.nom LIKE :nom')
+            ->andWhere('Magasin.etat = 1')
             ->setParameter('nom', '%' . $nom . '%')
             ->getQuery()
             ->execute();
@@ -42,6 +43,7 @@ class MagasinRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('Magasin')
             ->where($sql)
             ->andWhere('Magasin.typeMagasin = :type')
+            ->andWhere('Magasin.etat = 1')
             ->setParameter('type', $categorie)
             ->getQuery()
             ->execute();
@@ -53,6 +55,7 @@ class MagasinRepository extends ServiceEntityRepository
 
         return $this->createQueryBuilder('Magasin')
             ->where($sql)
+            ->andWhere('Magasin.etat = 1')
             ->getQuery()
             ->execute();
     }

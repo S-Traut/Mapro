@@ -165,7 +165,6 @@ function searchShops() {
                 infoWindow.open(map, shopMarker);
             });
             shopMarkers.push(shopMarker);
-            console.log(shop);
 
             homeShops.appendSlide(`
                 <div class="swiper-slide shop-item" style="height: 250px; max-width: 300px">

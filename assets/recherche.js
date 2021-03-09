@@ -1,6 +1,8 @@
 var listNom = [];
 var listData = [];
 let radius = 1500;
+let slider = document.getElementById("radiusSlider");
+
 
 function getShops() {
 
@@ -13,7 +15,7 @@ function getShops() {
     if (response.latitude != null && response.longitude != null) {
       userPosition = { lat: parseFloat(response.latitude), lng: parseFloat(response.longitude) };
     }
-    
+
     listNom = [];
     listData = [];
     //récup tous les magasins à proximité
@@ -72,32 +74,15 @@ $(document).ready(function () {
               `)
           } else if (data.nom.toLowerCase() === nom && !data.hasOwnProperty('siren')) {
             //affiche les articles
-            if (data.image[0]) {
-              resultDropdown.append(`
-                <div class="result-option">
-              <a href="/shop/${data.id}" style="text-decoration: none; display:flex; margin: 5px 15px 5px 15px">
-                <i class="fas fa-shopping-cart" style="margin-right: 5px; line-height: 30px"></i>
+            resultDropdown.append(`
+              <div class="result-option">
+              <a href="/article/${data.id}" style="text-decoration: none; display:flex; margin: 5px 15px 5px 15px">
+                <i class="fas fa-tag" style="margin-right: 5px; line-height: 30px"></i>
                 <p style="margin-bottom: 0px; font-size: 16px; line-height: 30px">${data.nom}</p>
               </a>
-              </div>
-              `)
-
-            } else {
-              resultDropdown.append(`
-                <div class="result-option p-3">
-                <a  href="/article/${data.id}" style="text-decoration: none">
-                  <div class="post-thumb" style="float: left">
-                    <img src="http://placehold.it/350x350" style="max-width: 60px; display: block"/>
-                  </div>
-                  <div class="post-content">
-                    <p style="margin-bottom: 0px; font-size: 23px;">${data.nom}</p>
-                    <p style="margin-bottom: 0px;">${data.description}</p>
-                    <p style="margin-bottom: 0px;">${data.prix} €</p>
-                  </div>
-                </a>
-                </div> 
+              </div> 
                 `)
-            }
+
           }
         })
       })
@@ -109,6 +94,6 @@ $(document).ready(function () {
 });
 
 
-slider.oninput = function() {
+slider.oninput = function () {
   radius = this.value * 100;
 }   

@@ -114,7 +114,7 @@ class UtilisateurController extends AbstractController
 
         $utilisateur = $this->getUser();
 
-        $magasins = $magasinRepo->searchAround($longitude, $latitude);
+        $magasins = $magasinRepo->findAll();
         $articles = $articleRepo->findAll();
 
         $listFavMag = array();
