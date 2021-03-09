@@ -60,7 +60,6 @@ class HomeController extends AbstractController
                 }
             }
 
-            dump($listFavArticle);
             return $this->render('home/home.html.twig', [
                 'articles' => $articles,
                 'favorisArticles' => $listFavArticle,
