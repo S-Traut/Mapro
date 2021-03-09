@@ -12,12 +12,12 @@
             {% for magasin in magasins %}
                 <div class="col-sm-8 mx-auto">
                     <div class="card mb-3">
-                        <h5 class="card-header">{{ magasin.nom }}</h5> 
+                        <h5 class="card-header">{{ magasin.nom }}{% if magasin.etat == 0 %} <div class="text-danger">En attente de validation</div>{% endif %}</h5> 
                         <div class="card-body">   
                             <p class="card-text">{{ magasin.adresse}}</p>
                             <div class="d-flex justify-content-between align-items-center">
                                 <div class="btn-group">
-                                    <a class="btn btn-sm btn-outline-info" href="{{ path('app_magasin_show', { id: magasin.id })  }}" type="button"><i class="far fa-eye"></i> Voir</a>
+                                    <a class="btn btn-sm {% if magasin.etat == 0 %}btn-outline-dark{% else %}btn-outline-info{% endif %}" href="{{ path('app_magasin_show', { id: magasin.id })  }}" type="button" {% if magasin.etat == 0 %}style=" pointer-events: none"{% endif %}><i class="far fa-eye"></i> Voir</a>
                                     <a class="btn btn-sm btn-outline-secondary" href="{{ path('app_magasin_edit', { id: magasin.id }) }}" type="button"><i class="far fa-edit"></i> Editer</a>
                                     <a class="btn btn-sm btn-outline-danger" type="button" href="{{ path('app_magasin_delete', { id: magasin.id })  }}"><i class="far fa-trash-alt"></i> Supprimer</a>
                                 </div>
