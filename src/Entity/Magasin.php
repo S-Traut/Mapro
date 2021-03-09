@@ -228,18 +228,6 @@ class Magasin
         return $this;
     }
 
-    public function getImage(): ?string
-    {
-        return $this->imageName;
-    }
-
-    public function setImage(string $image): self
-    {
-        $this->image = $image;
-
-        return $this;
-    }
-
     /**
      * @return Collection|Article[]
      */
