@@ -46,7 +46,7 @@ class MagasinController extends AbstractController
             throw $this->createNotFoundException('Magasin Inexistant !');
         } else {
             if($magasin->getEtat() == 0) {
-                return $this->redirectToRoute('Landing');
+                return $this->redirectToRoute('landing');
             }
 
             $articles = $articleRepository->findArticlesByMagasinId($id);
