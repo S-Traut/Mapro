@@ -9,10 +9,6 @@
 	<p style="margin-bottom: 0px">prix:
 		{{ favoris.prix }}€</p>
 	<div style="overflow: hidden;">
-		{% if favoris.getImageName[0] is defined  %}
 			<img src="{{favoris.getImageName[0].imageName}}">
-		{% else %}
-			<img src="http://placehold.it/300x300">
-		{% endif %}
 	</div>
 </div>
