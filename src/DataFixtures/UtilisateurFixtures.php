@@ -33,9 +33,9 @@ class UtilisateurFixtures extends Fixture
         $utilisateurTest->setRoles(['ROLE_VENDEUR']);
         $utilisateurTest->setNom("TAUFF");
         $utilisateurTest->setPrenom("Kriss");
-        $password = $this->encoder->encodePassword($utilisateurTest, 'Kriss');
+        $password = $this->encoder->encodePassword($utilisateurTest, 'vendeur');
         $utilisateurTest->setPassword($password);
-        $utilisateurTest->setEmail("kriss@gmail.com");
+        $utilisateurTest->setEmail("vendeur@vendeur.com");
         $manager->persist($utilisateurTest);
 
         $utilisateurTest = new User();
@@ -64,6 +64,15 @@ class UtilisateurFixtures extends Fixture
         $password = $this->encoder->encodePassword($utilisateurTest, 'Harry');
         $utilisateurTest->setPassword($password);
         $utilisateurTest->setEmail("harry@gmail.com");
+        $manager->persist($utilisateurTest);
+
+        $utilisateurTest = new User();
+        $utilisateurTest->setRoles(['ROLE_CLIENT']);
+        $utilisateurTest->setNom("KEVIN");
+        $utilisateurTest->setPrenom("Jean");
+        $password = $this->encoder->encodePassword($utilisateurTest, 'client');
+        $utilisateurTest->setPassword($password);
+        $utilisateurTest->setEmail("client@client.com");
         $manager->persist($utilisateurTest);
 
         $manager->flush();
