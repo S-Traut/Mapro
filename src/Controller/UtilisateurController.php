@@ -31,7 +31,6 @@ class UtilisateurController extends AbstractController
             return $this->redirectToRoute("landing");
 
         $utilisateur = $this->getUser();
-        //dump($utilisateur);
         $form = $this->createForm(UserType::class, $utilisateur);
         $form_password = $this->createForm(ChangePasswordType::class);
         $form_localisation = $this->createForm(SetLocalisationType::class);

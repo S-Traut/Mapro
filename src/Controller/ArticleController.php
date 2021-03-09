@@ -79,7 +79,7 @@ class ArticleController extends AbstractController
     {
         $articles = $articleRepository->findArticlesByMagasinId($id);
         $magasin = $magasinRepository->find($id);
-        dump($articles);
+        
         if ($magasin) {
             if ($magasin->getIdUtilisateur() != $this->getUser() || $this->getUser() == null) {
                 return $this->redirectToRoute('landing');
