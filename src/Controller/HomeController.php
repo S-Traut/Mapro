@@ -99,13 +99,13 @@ class HomeController extends AbstractController
         $utilisateur = $this->getUser();
 
         $listFav = array();
-
         if ($utilisateur) {
             $favoris = $favoriRepo->findByUserId($utilisateur->getId());
 
             foreach ($donnees as $donnee) {
                 foreach ($favoris as $favori) {
                     if ($favori->getIdMagasin() == $donnee->getId()) {
+                        dump('if');
                         array_push($listFav, $donnee);
                         unset($favoris[array_search($favori, $favoris)]);
                         unset($donnees[array_search($donnee, $donnees)]);

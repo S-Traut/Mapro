@@ -4,7 +4,7 @@
 
 {% block body %}
 	<div id="map" style="height: 600px"></div>
-	
+
 	<div class="container slidecontainer">
 		<input type="range" min="5" max="30" value="15" class="slider" id="radiusSlider">
 	</div>
@@ -24,5 +24,5 @@
 {% block javascripts %}
 	{{ encore_entry_script_tags('search') }}
 	{{ encore_entry_script_tags('map') }}
-	{{ encore_entry_script_tags('favorisArticle') }}
+	{{ encore_entry_script_tags('favoris') }}
 {% endblock %}
