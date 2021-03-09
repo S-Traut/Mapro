@@ -2,24 +2,25 @@
 
 namespace App\Controller;
 
-use Amp\Http\Client\Request as ClientRequest;
 use Amp\Http\Status;
 use App\Entity\FavoriArticle;
 use App\Entity\FavoriMagasin;
-use App\Repository\FavoriArticleRepository;
-use App\Repository\FavoriMagasinRepository;
+use App\Repository\ArticleRepository;
 use App\Repository\MagasinRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Repository\FavoriArticleRepository;
+use App\Repository\FavoriMagasinRepository;
+use Symfony\Component\Serializer\Serializer;
+use Amp\Http\Client\Request as ClientRequest;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Serializer\Encoder\JsonEncoder;
-use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
-use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
-use Symfony\Component\Serializer\Serializer;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 class APIController extends AbstractController
 {
@@ -177,5 +178,21 @@ class APIController extends AbstractController
             ),
             200
         );
+    }
+
+    /**
+    * @Route("/api/searchArticle")
+    */
+    public function searchArticle(Request $request, ArticleRepository $articleRepository)
+    {
+        $articles = $articleRepository->findBy(['magasin' => $request->request->get('mag_id')]);
+       // return $this->json($articles, Response::HTTP_OK);
+
+        return $this->json($articles, Response::HTTP_OK, [], [
+            ObjectNormalizer::CIRCULAR_REFERENCE_HANDLER => function ($object) {
+                return $object;
+            }
+        ]);
+      
     }
 }
