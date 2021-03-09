@@ -3,7 +3,7 @@ import { Loader } from "@googlemaps/js-api-loader"
 let shopPosition = null;
 
 const loader = new Loader({
-    apiKey: /*"AIzaSyAXUQPahIcvHZNrAMxqHo91JS7z5VOLLbI"*/ "",
+    apiKey: "AIzaSyAXUQPahIcvHZNrAMxqHo91JS7z5VOLLbI",
     version: "weekly",
 });
 
