@@ -4,6 +4,7 @@
 	<script src="{{asset('./js/swiper.js')}}"></script>
 	{{ encore_entry_script_tags('magasin') }}
 	{{ encore_entry_script_tags('favmag') }}
+	{{ encore_entry_script_tags('rechercheArticle') }}
 {% endblock %}
 
 {% block body %}
@@ -53,11 +54,8 @@
 		<section>
 			<div class="row">
 				<div class="col-12">
-					<h4>PRODUITS EN VENTE</h4>
-					<form class="form-inline">
-						<input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-						<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-					</form>
+					<h4>PRODUITS EN VENTE</h4>	
+					{% include "module/recherche.html.twig" %}
 				</div>
 			</div>
 		</section>
