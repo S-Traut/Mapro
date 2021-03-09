@@ -150,10 +150,7 @@ class ArticleController extends AbstractController
             throw $this->createNotFoundException('Article Inexistant !');
         }
         $shopid = $article->getMagasin()->getId();
-        $images = $article->getImage();
-        foreach ($images as $image) {
-            $em->remove($image);
-        }
+        
         $em->remove($article);
         $em->flush();
 
@@ -171,10 +168,17 @@ class ArticleController extends AbstractController
      */
     public function edit(Article $article, EntityManagerInterface $em, Request $request)
     {
+        if (!$this->isGranted('ROLE_ADMIN')) {
+            if ($article->getMagasin()->getIdUtilisateur() != $this->getUser() || $this->getUser() == null) {
+                return $this->redirectToRoute('landing');
+            }
+        }
+        
         $form = $this->createForm(ArticleType::class, $article);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $em->persist($article);
             $em->flush();
             return $this->redirectToRoute('app_article_list', ['id' => $article->getMagasin()->getId()]);
         }

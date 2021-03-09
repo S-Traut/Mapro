@@ -92,7 +92,6 @@ class MagasinController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             //PLACEHOLDERS
-            $magasin->setImage("https://www.retaildetail.be/sites/default/files/news/The%20Body%20Shop.jpg");
             $magasin->setEtat(0);
             $magasin->setIdUtilisateur($this->getUser());
             $em->persist($magasin);
@@ -119,9 +118,6 @@ class MagasinController extends AbstractController
         if (!$magasin) {
             throw $this->createNotFoundException('Magasin Inexistant !');
         }
-
-        //$magasin = new Magasin();
-
 
         $form = $this->createForm(CreationMagasinType::class, $magasin);
         $form->handleRequest($request);
@@ -155,10 +151,6 @@ class MagasinController extends AbstractController
 
         $articles = $shop->getArticles();
         foreach ($articles as $article) {
-            $images = $article->getImage();
-            foreach ($images as $image) {
-                $em->remove($image);
-            }
             $em->remove($article);
         }
 
