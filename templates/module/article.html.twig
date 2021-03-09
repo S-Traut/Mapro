@@ -8,10 +8,6 @@
 	<p style="margin-bottom: 0px">prix:
 		{{ article.prix }}€</p>
 	<div style="overflow: hidden;">
-		{% if article.getImageName[0] is defined  %}
-			<img src="{{article.getImageName[0].imageName}}">
-		{% else %}
-			<img src="http://placehold.it/300x300">
-		{% endif %}
+		<img src="{{ vich_uploader_asset(article) }}">
 	</div>
 </div>
