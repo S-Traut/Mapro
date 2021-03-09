@@ -116,7 +116,7 @@ class APIController extends AbstractController
     {
         $utilisateur = $this->getUser();
 
-        $favori = $favMagRepo->findOneBySomeField($utilisateur->getId(), $request->request->get('mag_id'));
+        $favori = $favMagRepo->findOneBySomeField($utilisateur->getId(), $request->get('mag_id'));
 
         $em = $this->getDoctrine()->getManager();
         $em->remove($favori);
@@ -124,7 +124,7 @@ class APIController extends AbstractController
 
         return new JsonResponse(
             array(
-                'status' => 'OK'
+                'status' => 'OK',
             ),
             200
         );

@@ -1,46 +1,47 @@
-$(document).ready(function(){
-    
-    $('.far').on('click', function(e) {
+$(document).ready(function () {
+
+    $('.far').on('click', function (e) {
         e.preventDefault();
-        
+
         var id = $(this).attr('value')
         var type = 'favoriarticle'
 
-        const valId = type == 'favorimag' ? {mag_id: id} : {art_id : id};
-        if($(this).hasClass('fav-magasin')){
-            type= 'favorimag'
+        if ($(this).hasClass('fav-magasin')) {
+            type = 'favorimag'
         }
 
-        if($(this).hasClass('fas')){
+        const valId = type == 'favorimag' ? { mag_id: id } : { art_id: id };
 
-            //sup favori
-            $.ajax({  
-                type: "POST",
-                url: `/api/delete/${type}`,
-                data: valId​​​​​,
-             })
-
-                 
-        }else {
-            
-             //ajout favori
-            $.ajax({  
-                type: "POST",
-                url: `/api/set/${type}`,
-                data: valId​​​​​, 
-             })
-             
+        if ($(this).hasClass('fas')) {
+            if (type == 'favorimag') {
+                $.ajax({
+                    type: "POST",
+                    url: `/api/delete/${type}`,
+                    data: { mag_id: id }
+                })
+            } else {
+                $.ajax({
+                    type: "POST",
+                    url: `/api/delete/${type}`,
+                    data: { art_id: id }
+                })
+            }
+        } else {
+            if (type == 'favorimag') {
+                //ajout favori
+                $.ajax({
+                    type: "POST",
+                    url: `/api/set/${type}`,
+                    data: {mag_id: id},
+                })
+            } else {
+                $.ajax({
+                    type: "POST",
+                    url: `/api/set/${type}`,
+                    data: {art_id: id},
+                })
+            }
         }
-
-        $(this).toggleClass('fas') 
-
-        
-    
+        $(this).toggleClass('fas')
     })
-
 })
-
-
-
-
-
