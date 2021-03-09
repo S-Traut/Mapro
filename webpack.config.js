@@ -23,7 +23,7 @@ Encore
     .addEntry('app', './assets/app.js')
     .addEntry('map', './assets/map.js')
     .addEntry('search', './assets/recherche.js')
-    .addEntry('favmag', './assets/favorisMag.js')
+    .addEntry('favmag', './assets/favoris.js')
     .addEntry('magasin', './assets/magasin.js')
     .addEntry('file', './assets/file.js')
     .addEntry('favorisArticle', './assets/favorisArticle.js')

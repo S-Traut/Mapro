@@ -20,15 +20,15 @@
 
 					<div class="favori mt-3 mb-3">
 						{% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-
-							{% if favori is empty %}
+							{% if favori is null %}
 								<h5 style="display: inline">Ajouter aux favoris :
 								</h5>
-								<i class="far fa-star" value="{{ magasin.id }}" name="favori" style="cursor: pointer"></i>
+								<i class="far fav-magasin fa-star" value="{{ magasin.id }}" name="favori" style="cursor: pointer"></i>
 							{% else %}
+
 								<h5 style="display: inline">Favori :
 								</h5>
-								<i class="far fa-star fas" value="{{ magasin.id }}" name="favori" style="cursor: pointer"></i>
+								<i class="far fav-magasin fa-star fas" value="{{ magasin.id }}" name="favori" style="cursor: pointer"></i>
 							{% endif %}
 						{% endif %}
 					</div>
@@ -54,7 +54,7 @@
 		<section>
 			<div class="row">
 				<div class="col-12">
-					<h4>PRODUITS EN VENTE</h4>	
+					<h4>PRODUITS EN VENTE</h4>
 					<div class="search-box input-group">
 						<i class="fas fa-search" style="line-height: 36px;"></i>
 						<input id="recherche" type="text" class="form-control" placeholder="Rechercher un article..." autocomplete="off">

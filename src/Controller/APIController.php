@@ -181,18 +181,17 @@ class APIController extends AbstractController
     }
 
     /**
-    * @Route("/api/searchArticle")
-    */
+     * @Route("/api/searchArticle")
+     */
     public function searchArticle(Request $request, ArticleRepository $articleRepository)
     {
         $articles = $articleRepository->findBy(['magasin' => $request->request->get('mag_id')]);
-       // return $this->json($articles, Response::HTTP_OK);
+        // return $this->json($articles, Response::HTTP_OK);
 
         return $this->json($articles, Response::HTTP_OK, [], [
             ObjectNormalizer::CIRCULAR_REFERENCE_HANDLER => function ($object) {
                 return $object;
             }
         ]);
-      
     }
 }
