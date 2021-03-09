@@ -23,11 +23,11 @@ class MagasinFixtures extends Fixture implements DependentFixtureInterface
     {
         $faker = Faker::create('fr_FR');
         $typesMagasin = [];
-        for ($i = 0; $i < 6; $i++) {
+        $nomTypes = ["Alimentaire", "Vêtements", "Jeux", "Librairie", "Bien-être", "Electronique", "Santé"];
+        foreach ($nomTypes as $type) {
             //Création des types magasins
             $typeMagasin = new TypeMagasin();
-            $typeMagasin
-                ->setType($faker->text(10));
+            $typeMagasin->setType($type);
             $manager->persist($typeMagasin);
             array_push($typesMagasin, $typeMagasin);
         }
@@ -50,7 +50,7 @@ class MagasinFixtures extends Fixture implements DependentFixtureInterface
                 ->setTel($faker->phoneNumber)
                 ->setAdresse($faker->address)
                 ->setDescription($faker->text(200))
-                ->setImageName($faker->url());
+                ->setImageName("fixtures/".rand(0, 10).".jpg");
             $manager->persist($magasin);
 
             //Création des types articles

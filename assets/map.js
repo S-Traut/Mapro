@@ -42,7 +42,7 @@ if (window.location.pathname.match("(\/shop\/0*[1-9][0-9]*\/edit)")) {
 
 
 const loader = new Loader({
-    apiKey: /*"AIzaSyAXUQPahIcvHZNrAMxqHo91JS7z5VOLLbI"*/ "",
+    apiKey: "AIzaSyAXUQPahIcvHZNrAMxqHo91JS7z5VOLLbI",
     version: "weekly",
 });
 
@@ -168,7 +168,7 @@ function searchShops() {
 
             homeShops.appendSlide(`
                 <div class="swiper-slide shop-item" style="height: 250px; max-width: 300px">
-                <div class="shop-img"><img src="./images/magasins/${shop.image}"></div>
+                <div class="shop-img"><img src="./images/magasins/${shop.imageName}"></div>
                 <a style="padding: 0px 10px 0px 10px; font-size: 23px;" href="/shop/${shop.id}">${shop.nom}</a>
                 <p style="padding: 0px 10px 0px 10px;">${shop.adresse}</p>
                 </div> 
