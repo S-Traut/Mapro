@@ -63,15 +63,20 @@ class User implements UserInterface
      * @ORM\Column(type="string", length=15, nullable=true)
      */
     private $telephone;
-     
+
     /**
      * @ORM\Column(type="string", length=15, nullable=true)
      */
     private $isVerified = false;
 
+    /**
+     * @ORM\OneToMany(targetEntity=FavoriMagasin::class, mappedBy="idUtilisateur", orphanRemoval=true)
+     */
+    private $favoriMagasins;
+
     public function __construct()
     {
-        $this->magasins = new ArrayCollection();
+        $this->favoriMagasins = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -247,7 +252,7 @@ class User implements UserInterface
 
         return $this;
     }
-    
+
     public function isVerified(): bool
     {
         return $this->isVerified;
@@ -256,6 +261,36 @@ class User implements UserInterface
     public function setIsVerified(bool $isVerified): self
     {
         $this->isVerified = $isVerified;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|FavoriMagasin[]
+     */
+    public function getFavoriMagasins(): Collection
+    {
+        return $this->favoriMagasins;
+    }
+
+    public function addFavoriMagasin(FavoriMagasin $favoriMagasin): self
+    {
+        if (!$this->favoriMagasins->contains($favoriMagasin)) {
+            $this->favoriMagasins[] = $favoriMagasin;
+            $favoriMagasin->setIdUtilisateur($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFavoriMagasin(FavoriMagasin $favoriMagasin): self
+    {
+        if ($this->favoriMagasins->removeElement($favoriMagasin)) {
+            // set the owning side to null (unless already changed)
+            if ($favoriMagasin->getIdUtilisateur() === $this) {
+                $favoriMagasin->setIdUtilisateur(null);
+            }
+        }
 
         return $this;
     }

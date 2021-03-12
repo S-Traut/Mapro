@@ -23,6 +23,11 @@ Encore
     .addEntry('app', './assets/app.js')
     .addEntry('map', './assets/map.js')
     .addEntry('search', './assets/recherche.js')
+    .addEntry('favoris', './assets/favoris.js')
+    .addEntry('magasin', './assets/magasin.js')
+    .addEntry('file', './assets/file.js')
+    .addEntry('favorisArticle', './assets/favorisArticle.js')
+    .addEntry('rechercheArticle', './assets/rechercheArticle.js')
 
     // enables the Symfony UX Stimulus bridge (used in assets/bootstrap.js)
     //.enableStimulusBridge('./assets/controllers.json')

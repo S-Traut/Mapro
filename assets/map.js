@@ -9,6 +9,16 @@ let setLocalisation = document.getElementsByName('set_localisation')[0];
 let isShopEdit = false;
 let shopLocationVariable;
 let homeShops;
+let radiusCircle;
+let slider = document.getElementById("radiusSlider");
+let radius = 1500;
+
+let articlesPopulaires = new Swiper('.swiper-container-articles', {
+    direction: 'horizontal',
+    slidesPerView: "auto",
+    spaceBetween: 20,
+    freeMode: true,
+}); 
 
 if(window.location.pathname == "/") {
     homeShops = new Swiper('.swiper-container', {
@@ -57,6 +67,17 @@ function userLocation() {
             center: userPosition ? userPosition : { lat: 47.0725, lng: 2.4605 },
             zoom: userPosition ? 13 : 5,
             disableDefaultUI: true,
+        });
+
+        radiusCircle = new google.maps.Circle({
+            strokeColor: "#6cb55a",
+            strokeOpacity: 0.8,
+            strokeWeight: 2,
+            fillOpacity: 0,
+            clickable: false,
+            map,
+            center: userPosition,
+            radius: 1500,
         });
 
         let userMarker = new google.maps.Marker({
@@ -109,12 +130,16 @@ function shopLocation() {
 }
 
 function searchShops() {
+    if(radiusCircle != undefined) {
+        radiusCircle.setCenter(userPosition);
+    }
     
     $.ajax({
         url: "/api/get/searchAround",
         data: {
             latitude: userPosition.lat,
-            longitude: userPosition.lng
+            longitude: userPosition.lng,
+            radius: parseFloat(radius)
         },
         dataType: "json"
     }).done((shops) => {
@@ -122,6 +147,7 @@ function searchShops() {
         resetMarkers();
         if (shops.length == 0) {
             
+            homeShops.appendSlide(`<div class="swiper-slide">Aucun magasin n\'est disponnible autour de chez vous.</div>`);
         }
 
         shops.forEach((shop, index) => {
@@ -142,13 +168,13 @@ function searchShops() {
 
             homeShops.appendSlide(`
                 <div class="swiper-slide shop-item" style="height: 250px; max-width: 300px">
-                <div class="shop-img"><img src="https://picsum.photos/400"></div>
+                <div class="shop-img"><img src="./images/magasins/${shop.imageName}"></div>
                 <a style="padding: 0px 10px 0px 10px; font-size: 23px;" href="/shop/${shop.id}">${shop.nom}</a>
                 <p style="padding: 0px 10px 0px 10px;">${shop.adresse}</p>
                 </div> 
             `);
         });
-    });
+    }); 
 }
 
 
@@ -188,3 +214,8 @@ if (setLocalisation) {
     });
 }
 
+slider.oninput = function() {
+    radius = this.value * 100;
+    radiusCircle.setRadius(radius);
+    searchShops();
+}   

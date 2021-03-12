@@ -119,11 +119,7 @@ class AdministrationController extends AbstractController
 
             $articles = $shop->getArticles();
             foreach($articles as $article){
-                $images = $article->getImage();
-                foreach($images as $image){
-                    $em->remove($image);
-            }
-            $em->remove($article);
+                $em->remove($article);
             }
             $em->remove($shop);
             $em->flush();

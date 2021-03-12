@@ -23,11 +23,11 @@ class MagasinFixtures extends Fixture implements DependentFixtureInterface
     {
         $faker = Faker::create('fr_FR');
         $typesMagasin = [];
-        for ($i = 0; $i < 6; $i++) {
+        $nomTypes = ["Alimentaire", "Vêtements", "Jeux", "Librairie", "Bien-être", "Electronique", "Santé"];
+        foreach ($nomTypes as $type) {
             //Création des types magasins
             $typeMagasin = new TypeMagasin();
-            $typeMagasin
-                ->setType($faker->text(10));
+            $typeMagasin->setType($type);
             $manager->persist($typeMagasin);
             array_push($typesMagasin, $typeMagasin);
         }
@@ -43,14 +43,14 @@ class MagasinFixtures extends Fixture implements DependentFixtureInterface
                 ->setTypeMagasin($typesMagasin[random_int(0, 5)])
                 ->setEmail($faker->email)
                 ->setEtat(1)
-                ->setImage($faker->imageUrl())
                 ->setLatitude($latitude)
                 ->setLongitude($longitude)
                 ->setNom($faker->company)
                 ->setSiren($faker->siren)
                 ->setTel($faker->phoneNumber)
                 ->setAdresse($faker->address)
-                ->setDescription($faker->text(200));
+                ->setDescription($faker->text(200))
+                ->setImageName("fixtures/".rand(0, 10).".jpg");
             $manager->persist($magasin);
 
             //Création des types articles
@@ -68,7 +68,8 @@ class MagasinFixtures extends Fixture implements DependentFixtureInterface
                     ->setDescription($faker->text(200))
                     ->setEtat(1)
                     ->setMagasin($magasin)
-                    ->setType($typeArticle);
+                    ->setType($typeArticle)
+                    ->setImageName("fixtures/".rand(0, 13).".jpg");
                 $manager->persist($article);   
 
                 //Création d'une image d'article             

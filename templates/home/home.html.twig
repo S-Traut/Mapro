@@ -1,34 +1,17 @@
 {% extends "base.html.twig" %}
 
-{% block headScripts %}
-{% endblock %}
+{% block headScripts %}{% endblock %}
 
 {% block body %}
+	<div id="map" style="height: 600px"></div>
 
-	<!-- grille catégories -->
+	<div class="container slidecontainer">
+		<input type="range" min="5" max="30" value="15" class="slider" id="radiusSlider">
+	</div>
+
 	{% include 'module/categories.html.twig' %}
 
-	<div class="container">
-		<div class="col-md-7 mx-auto mt-5">
-			<div class="search-box input-group mb-3">
-				<input id="recherche" type="text" class="form-control" placeholder="Recherche" style="width: 100%" autocomplete="off">
-				<div class="result"></div>
-			</div>
-		</div>
-	</div>
-
-	
-
-	<!-- Résultat de recherche -->
-	<div class="container">
-		<div id="search-result" class="mb-5"></div>
-	</div>
-
-	
-
-	<!-- Magasins autour -->
-	<div class="container">
-		<div id="map" style="height: 400px"></div>
+	<div class="container" style="margin-top: 50px">
 		<h3>Magasins autour de chez vous !</h3>
 		<div class="swiper-container">
 			<div class="swiper-wrapper"></div>
@@ -36,10 +19,10 @@
 	</div>
 
 
-	<!-- grille des plus consultés -->
 	{% include 'module/articlespop.html.twig' %}
 {% endblock %}
 {% block javascripts %}
 	{{ encore_entry_script_tags('search') }}
 	{{ encore_entry_script_tags('map') }}
+	{{ encore_entry_script_tags('favoris') }}
 {% endblock %}

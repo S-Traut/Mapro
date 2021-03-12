@@ -1,21 +1,6 @@
-<div class="d-flex justify-content-center" style="margin: 50px 0px 50px 0px">
-	<div class="col-sm-7 ">
-		<div class="form-group text-center ">
-			{{ form_start(searchForm) }}
-			<div class="row">
-				<div class="col-9">
-					{{ form_row(searchForm.mot_cle, {label:false, 'attr':{'placeholder': 'Recherche'}})}}
-				</div>
-				<div class="col-3">
-					{{ form_row(searchForm.choix, {label:false})}}
-				</div>
-			</div>
 
-			<button class="btn btn-outline-secondary" style="margin-top: 10px">Rechercher</button>
-
-			{{ form_end(searchForm) }}
-
-			<div id="map" style="height: 400px; margin-top: 30px;"></div>
-		</div>
+	<div class="search-box input-group">
+		<i class="fas fa-search" style="line-height: 36px;"></i>
+		<input id="recherche" type="text" class="form-control" placeholder="Rechercher un magasin, ou un article..." autocomplete="off">
+		<div class="result"></div>
 	</div>
-</div>

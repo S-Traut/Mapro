@@ -25,11 +25,12 @@ class MagasinRepository extends ServiceEntityRepository
     public function search($nom, $longitude, $latitude)
     {
 
-        $sql = 'SQRT((' . $latitude . ' - Magasin.latitude)*(' . $latitude . ' - Magasin.latitude) + (' . $longitude . ' - Magasin.longitude)*(' . $longitude . ' - Magasin.longitude)) < 10.0';
+        $sql = 'SQRT((' . $latitude . ' - Magasin.latitude)*(' . $latitude . ' - Magasin.latitude) + (' . $longitude . ' - Magasin.longitude)*(' . $longitude . ' - Magasin.longitude)) <  0.015';
 
         return $this->createQueryBuilder('Magasin')
             ->where($sql)
             ->andWhere('Magasin.nom LIKE :nom')
+            ->andWhere('Magasin.etat = 1')
             ->setParameter('nom', '%' . $nom . '%')
             ->getQuery()
             ->execute();
@@ -37,22 +38,24 @@ class MagasinRepository extends ServiceEntityRepository
 
     public function searchCategorie($categorie, $longitude, $latitude)
     {
-        $sql = 'SQRT((' . $latitude . ' - Magasin.latitude)*(' . $latitude . ' - Magasin.latitude) + (' . $longitude . ' - Magasin.longitude)*(' . $longitude . ' - Magasin.longitude)) < 10.0';
+        $sql = 'SQRT((' . $latitude . ' - Magasin.latitude)*(' . $latitude . ' - Magasin.latitude) + (' . $longitude . ' - Magasin.longitude)*(' . $longitude . ' - Magasin.longitude)) <  0.015';
 
         return $this->createQueryBuilder('Magasin')
             ->where($sql)
             ->andWhere('Magasin.typeMagasin = :type')
+            ->andWhere('Magasin.etat = 1')
             ->setParameter('type', $categorie)
             ->getQuery()
             ->execute();
     }
 
-    public function searchAround(float $longitude, float $latitude)
+    public function searchAround(float $longitude, float $latitude, float $radius)
     {
-        $sql = 'SQRT(((' . $latitude . ' - Magasin.latitude)*(' . $latitude . ' - Magasin.latitude)) + ((' . $longitude . ' - Magasin.longitude)*(' . $longitude . ' - Magasin.longitude))) < 0.015';
+        $sql = 'SQRT(((' . $latitude . ' - Magasin.latitude)*(' . $latitude . ' - Magasin.latitude)) + ((' . $longitude . ' - Magasin.longitude)*(' . $longitude . ' - Magasin.longitude))) < '. $radius;
 
         return $this->createQueryBuilder('Magasin')
             ->where($sql)
+            ->andWhere('Magasin.etat = 1')
             ->getQuery()
             ->execute();
     }

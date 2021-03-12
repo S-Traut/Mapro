@@ -7,7 +7,11 @@ use App\Form\ChangePasswordType;
 use App\Form\SetLocalisationType;
 use Symfony\Component\HttpFoundation\Request;
 use App\Form\UserType;
+use App\Repository\ArticleRepository;
+use App\Repository\FavoriArticleRepository;
+use App\Repository\FavoriMagasinRepository;
 use App\Repository\LocalisationRepository;
+use App\Repository\MagasinRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\CurrencyType;
@@ -27,7 +31,6 @@ class UtilisateurController extends AbstractController
             return $this->redirectToRoute("landing");
 
         $utilisateur = $this->getUser();
-        //dump($utilisateur);
         $form = $this->createForm(UserType::class, $utilisateur);
         $form_password = $this->createForm(ChangePasswordType::class);
         $form_localisation = $this->createForm(SetLocalisationType::class);
@@ -87,6 +90,65 @@ class UtilisateurController extends AbstractController
         return $this->render('utilisateur/shops.html.twig', [
             'magasins' => $magasins,
             'current_menu' => 'shops'
+        ]);
+    }
+
+    /**
+     * @Route("me/favoris", name="favoris")
+     */
+    public function favoris(
+        FavoriMagasinRepository $favMagRepo,
+        MagasinRepository $magasinRepo,
+        ArticleRepository $articleRepo,
+        Request $request,
+        FavoriArticleRepository $favArtRepo
+    ) {
+        if ($this->isGranted('ROLE_USER') == false)
+            return $this->redirectToRoute("landing");
+
+        //récupérer les coordonnées géo de l'utilisateur
+        $cookies = $request->cookies;
+        $longitude = $cookies->get('userLongitude');
+        $latitude = $cookies->get('userLatitude');
+
+        $utilisateur = $this->getUser();
+
+        $magasins = $magasinRepo->findAll();
+        $articles = $articleRepo->findAll();
+
+        $listFavMag = array();
+        $listFavArt = array();
+
+
+        if ($utilisateur) {
+            $favorisArt = $favArtRepo->findByUserId($utilisateur->getId());
+            $favorisMag = $favMagRepo->findByUserId($utilisateur->getId());
+
+            foreach ($magasins as $magasin) {
+                foreach ($favorisMag as $mag) {
+                    if ($mag->getIdMagasin() == $magasin->getId()) {
+                        array_push($listFavMag, $magasin);
+                        unset($favorisMag[array_search($mag, $favorisMag)]);
+                        break 1;
+                    }
+                }
+            }
+
+            foreach ($articles as $article) {
+                foreach ($favorisArt as $art) {
+                    if ($art->getIdArticle() == $article->getId()) {
+                        array_push($listFavArt, $article);
+                        unset($favorisArt[array_search($art, $favorisArt)]);
+                        break 1;
+                    }
+                }
+            }
+        }
+
+        return $this->render("utilisateur/favoris.html.twig", [
+            'favorisMagasins' => $listFavMag,
+            'favorisArticles' => $listFavArt,
+            'current_menu' => 'favoris'
         ]);
     }
 

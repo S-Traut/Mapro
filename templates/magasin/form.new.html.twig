@@ -2,9 +2,24 @@
     <div class="my-custom-class-for-errors">
         {{ form_errors(form) }}
     </div>
+    <div class="row">   
+        <div class="col-sm-12 col-md-8 col-lg-6">
+            <h3>Détails du magasin</h3>
+            {{ form_row(form.nom) }}
+            {{ form_row(form.description) }}
+            {{ form_row(form.tel) }}
+            {{ form_row(form.email) }}
+            {{ form_row(form.siren) }}
+            {{ form_row(form.adresse) }}
+            {{ form_row(form.typeMagasin) }}
+            {{ form_row(form.imageFile) }}
+        </div>  
+        <div class="col-sm-12 col-md-8 col-lg-6">
+            <h3>Localisez votre magasin</h3>
+            <div id="map"></div>
 
-    <h3>Localisez votre magasin !</h3>
-    <div id="map"></div>
-
-    <h3>Détails</h3>
+            <p style="margin: 30px 0px 60px 0px;" class="text-danger text-center"><strong>ATTENTION!</strong><br>La création d'un magasin sera vérifiée par une personne de l'administration du site afin de s'assurer qu'il n'y ait pas d'abus.</p>
+            {{ form_row(form.Confirmer, { 'label': 'Valider la création du magasin' }) }}
+        </div>        
+    </div>
 {{ form_end(form) }}

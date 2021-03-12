@@ -1,14 +1,31 @@
 {% extends "base.html.twig" %}
 
 
-
 {% block body %}
-    <div class="form-header">
-        <div class="container">
-            <h1>Modifier mon article</h1>
-        </div>
-    </div>
-    <div class="container">
-        {{ include("form.html.twig", {form: form, button: 'Créer'}) }}
-    </div>
+	<div class="form-header">
+		<div class="container">
+			<h1>Modifier un article</h1>
+		</div>
+	</div>
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-12 col-md-8 col-lg-5">
+				{{ form_start(form)}}
+                    <div class="my-custom-class-for-errors">
+                        {{ form_errors(form) }}
+                    </div>
+                    {{ form_row(form.nom)}}
+                    {{ form_row(form.description)}}
+                    {{ form_row(form.prix)}}
+                    {{ form_row(form.type)}}
+                    {{ form_row(form.imageFile, { 'required' : false })}}
+                    {{ form_row(form.Confirmer)}}
+                {{ form_end(form)}}
+			</div>
+		</div>
+	</div>
 {% endblock %}
+{% block javascripts %}
+    {{ encore_entry_script_tags('file') }}
+{% endblock %}
+

@@ -12,12 +12,12 @@
             {% for magasin in magasins %}
                 <div class="col-sm-8 mx-auto">
                     <div class="card mb-3">
-                        <h5 class="card-header">{{ magasin.nom }}</h5> 
+                        <h5 class="card-header">{{ magasin.nom }}{% if magasin.etat == 0 %} <div class="text-danger">En attente de validation</div>{% endif %}</h5> 
                         <div class="card-body">   
                             <p class="card-text">{{ magasin.adresse}}</p>
                             <div class="d-flex justify-content-between align-items-center">
                                 <div class="btn-group">
-                                    <a class="btn btn-sm btn-outline-info" href="{{ path('app_magasin_show', { id: magasin.id })  }}" type="button"><i class="far fa-eye"></i> Voir</a>
+                                    <a class="btn btn-sm {% if magasin.etat == 0 %}btn-outline-dark{% else %}btn-outline-info{% endif %}" href="{{ path('app_magasin_show', { id: magasin.id })  }}" type="button" {% if magasin.etat == 0 %}style=" pointer-events: none"{% endif %}><i class="far fa-eye"></i> Voir</a>
                                     <a class="btn btn-sm btn-outline-secondary" href="{{ path('app_magasin_edit', { id: magasin.id }) }}" type="button"><i class="far fa-edit"></i> Editer</a>
                                     <a class="btn btn-sm btn-outline-danger" type="button" href="{{ path('app_magasin_delete', { id: magasin.id })  }}"><i class="far fa-trash-alt"></i> Supprimer</a>
                                 </div>
@@ -27,15 +27,21 @@
                             </div>
                         </div>
                         <div class="card-footer text-center text-muted">
-                            {{ magasin.statistiqueMagasin.nbVue }} Vues | 
-                            {{ magasin.articles|length }} articles
+                            {% if magasin.statistiqueMagasin %}
+                                {{ magasin.statistiqueMagasin.nbVue }} Vues | 
+                                {{ magasin.articles|length }} articles
+                            {% else %}
+                                0 Vues | {{ magasin.articles|length }} articles
+                            {% endif %}
                         </div>
                     </div>
                 </div>
             {% endfor %}
+            {% if magasins.count() == 0 %}
+                <h4 class="col-12 text-center p-3">Vous n'avez pas encore de magasin !</h4>
+            {% endif %}
             <a href="{{ path('new_shop') }}" class="btn btn-info btn-block col-8 mx-auto mb-5" type="button">Ajouter un nouveau magasin</a>
         {% else %}
-            <h4 class="col-12 text-center text-warning p-3">Vous n'avez pas encore de magasin !</h4>
             <a href="{{ path('new_shop') }}" class="btn btn-info btn-block col-8 mx-auto m-2" type="button">Ajouter un nouvel article</a>
         {% endif %}
         

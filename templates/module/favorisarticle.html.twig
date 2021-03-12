@@ -1,0 +1,14 @@
+<div class="article">
+	<div style="display: flex; justify-content: space-between; margin-bottom: 0px;">
+		<a style="margin-bottom: 0px" href="/article/{{ favoris.id }}">{{ favoris.nom }}</a>
+		{% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+			<i class="far fa-star fas" value="{{favoris.id}}" style="cursor: pointer"></i>
+		{% endif %}
+
+	</div>
+	<p style="margin-bottom: 0px">prix:
+		{{ favoris.prix }}€</p>
+	<div style="overflow: hidden;">
+			<img src="{{favoris.getImageName[0].imageName}}">
+	</div>
+</div>
